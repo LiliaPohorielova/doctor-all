@@ -2,8 +2,10 @@ package ua.com.alevel.persistence.entity.patient;
 
 import ua.com.alevel.persistence.entity.BaseEntity;
 import ua.com.alevel.persistence.entity.appointment.PatientAppointment;
+import ua.com.alevel.persistence.entity.user.PatientUser;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -16,7 +18,8 @@ public class Patient extends BaseEntity {
     @Column(name = "firstname")
     private String firstname;
 
-    private Integer age;
+    @Column(name = "date_of_birth")
+    private LocalDate dateOfBirth;
     private Boolean patientVisible;
 
     @OneToMany(
@@ -25,6 +28,10 @@ public class Patient extends BaseEntity {
             fetch = FetchType.LAZY
     )
     private Set<PatientAppointment> patientAppointments;
+
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_user_id", referencedColumnName = "id")
+    private PatientUser patientUser;
 
     public Set<PatientAppointment> getPatientAppointments() {
         return patientAppointments;
@@ -50,12 +57,12 @@ public class Patient extends BaseEntity {
         this.firstname = firstname;
     }
 
-    public Integer getAge() {
-        return age;
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public Boolean getPatientVisible() {
