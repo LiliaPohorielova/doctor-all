@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="utf-8">
+    <title>New Book</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mb-2 mt-2">
+
+                <div class="card text-white bg-danger mb-3">
+                    <div class="card-header">Do you hava problem?</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Danger info</h5>
+                        <p class="card-text" th:if="${showMessage}" th:text="${errorMessage}">Sorry, something went wrong.</p>
+                        <p class="card-text" th:unless="${showMessage}">Sorry, something went wrong.</p>
+                        <p class="card-text">
+                            If you want to return to the previous page - <a href="#" th:onclick="|back()|" type="button" class="btn btn-light">click here</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block layout:fragment="scripts">
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
+</th:block>
+
+</body>
+</html>
