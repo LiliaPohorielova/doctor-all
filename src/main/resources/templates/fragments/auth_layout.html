@@ -19,18 +19,32 @@
             <div sec:authorize="hasRole('ROLE_ADMIN')">
                 <nav class="navbar navbar-dark bg-dark">
                     <a class="nav-item nav-link" th:href="@{/admin/dashboard}">Dashboard</a>
-                    <a class="nav-item nav-link" th:href="@{/admin/books}">Books</a>
-                    <a class="nav-item nav-link" th:href="@{/admin/orders}">Orders</a>
-                    <a class="nav-item nav-link" th:href="@{/admin/cards}">Cards</a>
-                    <a class="nav-item nav-link" th:href="@{/admin/personals}">Personals</a>
+                    <a class="nav-item nav-link" th:href="@{/admin/doctors}">Doctors</a>
+                    <a class="nav-item nav-link" th:href="@{/admin/patients}">Patients</a>
+                    <a class="nav-item nav-link" th:href="@{/admin/departments}">Departments</a>
+                    <a class="nav-item nav-link" th:href="@{/admin/news}">News</a>
                     <a class="nav-item nav-link" onclick="document.forms['logoutForm'].submit()" style="cursor: pointer !important;">Logout</a>
                 </nav>
             </div>
 
-            <div sec:authorize="hasRole('ROLE_PERSONAL')">
+            <div sec:authorize="hasRole('ROLE_PATIENT')">
                 <nav class="navbar navbar-dark bg-dark">
-                    <a class="nav-item nav-link" th:href="@{/personal/dashboard}">Dashboard</a>
-                    <a class="nav-item nav-link" th:href="@{/personal/books}">Books</a>
+                    <a class="nav-item nav-link" th:href="@{/patient/dashboard}">Dashboard</a>
+                    <a class="nav-item nav-link" th:href="@{/patient/doctors}">Doctors</a>
+                    <a class="nav-item nav-link" th:href="@{/patient/news}">News</a>
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                    <a class="nav-item nav-link" onclick="document.forms['logoutForm'].submit()" style="cursor: pointer !important;">Logout</a>
+                </nav>
+            </div>
+
+            <div sec:authorize="hasRole('ROLE_DOCTOR')">
+                <nav class="navbar navbar-dark bg-dark">
+                    <a class="nav-item nav-link" th:href="@{/doctor/dashboard}">Dashboard</a>
+                    <a class="nav-item nav-link" th:href="@{/doctor/patients}">Patients</a>
+                    <a class="nav-item nav-link" th:href="@{/doctor/news}">News</a>
                     <form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>

@@ -52,5 +52,10 @@ public class ClinicApplication {
         admin.setEmail("admin@mail.com");
         admin.setPassword(encoder.encode("rootroot"));
         adminRepository.save(admin);*/
+
+/*        DoctorUser doctor = new DoctorUser();
+        doctor.setEmail("doctor@mail.com");
+        doctor.setPassword(encoder.encode("rootroot"));
+        doctorRepository.save(doctor);*/
     }
 }

@@ -7,26 +7,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ua.com.alevel.config.security.SecurityService;
-/*import ua.com.alevel.facade.AuthValidatorFacade;
-import ua.com.alevel.facade.RegistrationFacade;*/
+import ua.com.alevel.facade.AuthValidatorFacade;
+import ua.com.alevel.facade.RegistrationFacade;
 import ua.com.alevel.persistence.type.RoleType;
 import ua.com.alevel.util.SecurityUtil;
 import ua.com.alevel.web.controller.AbstractController;
-/*import ua.com.alevel.web.dto.request.register.AuthDto;*/
+import ua.com.alevel.web.dto.request.register.AuthDto;
 
 @Controller
 public class AuthController extends AbstractController {
 
-    //    private final RegistrationFacade registrationFacade;
-//    private final AuthValidatorFacade authValidatorFacade;
+    private final RegistrationFacade registrationFacade;
+    private final AuthValidatorFacade authValidatorFacade;
     private final SecurityService securityService;
 
     public AuthController(
-//            RegistrationFacade registrationFacade,
-//            AuthValidatorFacade authValidatorFacade,
+            RegistrationFacade registrationFacade,
+            AuthValidatorFacade authValidatorFacade,
             SecurityService securityService) {
-//        this.registrationFacade = registrationFacade;
-//        this.authValidatorFacade = authValidatorFacade;
+        this.registrationFacade = registrationFacade;
+        this.authValidatorFacade = authValidatorFacade;
         this.securityService = securityService;
     }
 
@@ -54,7 +54,7 @@ public class AuthController extends AbstractController {
         return "login";
     }
 
-/*    @GetMapping("/registration")
+    @GetMapping("/registration")
     public String registration(Model model) {
         if (securityService.isAuthenticated()) {
             return redirectProcess(model);
@@ -73,7 +73,7 @@ public class AuthController extends AbstractController {
         registrationFacade.registration(authForm);
         securityService.autoLogin(authForm.getEmail(), authForm.getPasswordConfirm());
         return redirectProcess(model);
-    }*/
+    }
 
     private String redirectProcess(Model model) {
         showMessage(model, false);
