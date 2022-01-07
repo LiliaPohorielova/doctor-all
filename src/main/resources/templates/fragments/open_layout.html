@@ -12,39 +12,50 @@
 </head>
 
 <body>
-    <div layout:fragment="content">
-        <nav class="navbar navbar-expend-md navbar-light bg-light sticky-top">
+<div layout:fragment="content">
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"><i class="fas fa-heartbeat"></i>DoctorAll</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive">
+            <a class="navbar-brand abs" href="#">
+                <i class="fas fa-heartbeat"></i>
+                DoctorAll
+            </a>
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+                    aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav">
                     <li class="nav-item active">
-                        <a href="#" class="nav-link">Home</a>
+                        <a class="nav-item nav-link a1" th:href="@{/open/dashboard}">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">About us</a>
+                        <a class="nav-item nav-link a2" th:href="@{/open/department}">Department</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Services</a>
+                        <a class="nav-item nav-link a3" th:href="@{/open/doctors}">Doctors</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Team</a>
+                        <a class="nav-item nav-link a3" th:href="@{/open/blog}">Blog</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Contact</a>
+                        <a class="nav-item nav-link a3" th:href="@{/open/about}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-item nav-link a3" th:href="@{/open/contact}">Contact</a>
                     </li>
                 </ul>
-
+                <ul class="navbar-nav w-100 justify-content-end">
+                    <li class="nav-item">
+                        <a class="btn btn-outline-primary a5" th:href="@{/login}">Make an appointment</a>
+                    </li>
+                </ul>
             </div>
         </div>
-        </nav>
+    </nav>
 
-        <section layout:fragment="open_content"></section>
+    <section layout:fragment="open_content"></section>
 
-    </div>
+</div>
 </div>
 </body>
 </html>
