@@ -8,6 +8,6 @@ public class MainController {
 
     @GetMapping
     public String main() {
-        return "redirect:/login";
+        return "redirect:/open/dashboard";
     }
 }

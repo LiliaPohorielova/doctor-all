@@ -51,7 +51,7 @@ public class AuthController extends AbstractController {
         if (logout != null) {
             showInfo(model, "You have been logged out successfully.");
         }
-        return "login";
+        return "redirect:/open/dashboard";
     }
 
     @GetMapping("/registration")
@@ -86,7 +86,7 @@ public class AuthController extends AbstractController {
         if (SecurityUtil.hasRole(RoleType.ROLE_DOCTOR.name())) {
             return "redirect:/doctor/dashboard";
         }
-        return "redirect:/login";
+        return "redirect:/open/dashboard";
 
     }
 }
