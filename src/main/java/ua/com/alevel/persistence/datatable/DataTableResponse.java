@@ -18,6 +18,7 @@ public class DataTableResponse<E extends BaseEntity> {
     private Map<Object, Object> otherParamMap;
 
     public DataTableResponse() {
+        this.currentPage = 1;
         this.pageSize = 10;
         this.items = Collections.emptyList();
         this.otherParamMap = Collections.emptyMap();

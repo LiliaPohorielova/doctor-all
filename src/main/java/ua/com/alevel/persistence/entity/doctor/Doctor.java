@@ -2,10 +2,12 @@ package ua.com.alevel.persistence.entity.doctor;
 
 import ua.com.alevel.persistence.entity.BaseEntity;
 import ua.com.alevel.persistence.entity.department.DoctorsDepartment;
+import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.entity.slot.Slot;
 import ua.com.alevel.persistence.type.DoctorSpecialization;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
