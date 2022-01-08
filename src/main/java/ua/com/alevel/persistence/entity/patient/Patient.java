@@ -75,6 +75,10 @@ public class Patient extends BaseEntity {
         this.patientVisible = patientVisible;
     }
 
+    public PatientUser getPatientUser() {
+        return patientUser;
+    }
+
     @Override
     public boolean equals(Object o) {
         return super.equals(o);

@@ -8,12 +8,9 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ua.com.alevel.persistence.entity.user.PatientUser;
-import ua.com.alevel.persistence.entity.user.DoctorUser;
-import ua.com.alevel.persistence.entity.user.Admin;
 import ua.com.alevel.persistence.repository.user.AdminRepository;
 import ua.com.alevel.persistence.repository.user.DoctorRepository;
-import ua.com.alevel.persistence.repository.user.PatientRepository;
+import ua.com.alevel.persistence.repository.user.PatientUserRepository;
 
 @SpringBootApplication(exclude = {
         DataSourceAutoConfiguration.class,
@@ -24,16 +21,16 @@ public class ClinicApplication {
     private final BCryptPasswordEncoder encoder;
     private final AdminRepository adminRepository;
     private final DoctorRepository doctorRepository;
-    private final PatientRepository patientRepository;
+    private final PatientUserRepository patientUserRepository;
 
     public ClinicApplication(BCryptPasswordEncoder encoder,
                              AdminRepository adminRepository,
                              DoctorRepository doctorRepository,
-                             PatientRepository patientRepository) {
+                             PatientUserRepository patientUserRepository) {
         this.encoder = encoder;
         this.adminRepository = adminRepository;
         this.doctorRepository = doctorRepository;
-        this.patientRepository = patientRepository;
+        this.patientUserRepository = patientUserRepository;
     }
 
     public static void main(String[] args) {
