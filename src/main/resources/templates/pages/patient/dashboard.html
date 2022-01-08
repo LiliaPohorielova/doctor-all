@@ -15,40 +15,53 @@
         Patient
         Logged user: <span sec:authentication="name"></span>
     </h1>
-    <h3>Hello <td th:text="${patient.getFirstname()}"></td> !</h3>
-    <div class="row">
-        <div class="col-12">
-            <div class="card mb-2 mt-2">
-                <div class="card-header">
-                    Account Information
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <img class="rounded-circle mt-5" width="150px" src="https://i.ibb.co/Xb00T10/Orblopym.png">
+                    <span class="font-weight-bold" th:text="${patient.getFirstname()}"></span>
+                    <span class="text-black-50" th:text="${patient.getPatientUser().getEmail()}"></span><span> </span>
                 </div>
-                <div class="card-body">
-                    <table class="table table-hover">
-                        <tr>
-                            <th>id</th>
-                            <td th:text="${patient.getId()}"></td>
-                        </tr>
-                        <tr>
-                            <th>first name</th>
-                            <td th:text="${patient.getFirstname()}"></td>
-                        </tr>
-                        <tr>
-                            <th>last name</th>
-                            <td th:text="${patient.getLastname()}"></td>
-                        </tr>
-                        <tr>
-                            <th>created</th>
-                            <td th:text="${#calendars.format(patient.getCreated(),'dd MMMM yyyy')}"></td>
-                        </tr>
-                        <tr>
-                            <th>updated</th>
-                            <td th:text="${#calendars.format(patient.getUpdated(),'dd MMMM yyyy')}"></td>
-                        </tr>
-                        <tr>
-                            <th>email</th>
-                            <td th:text="${patient.getPatientUser().getEmail()}"></td>
-                        </tr>
-                    </table>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h4 class="text-right">Account Information</h4>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control"
+                                                                                       th:value="${patient.getFirstname()}">
+                        </div>
+                        <div class="col-md-6"><label class="labels">Surname</label><input type="text"
+                                                                                          class="form-control"
+                                                                                          th:value="${patient.getLastname()}">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12"><label class="labels">Phone Number</label><input type="text"
+                                                                                                class="form-control"
+                                                                                                placeholder="enter phone number"
+                                                                                                value="">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12"><label class="labels">Date Of Birth</label><input type="text"
+                                                                                                 class="form-control"
+                                                                                                 placeholder="enter address line 1"
+                                                                                                 value="">
+
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12"><label class="labels">Address</label><input type="text"
+                                                                                           class="form-control"
+                                                                                           placeholder="enter address line 1"
+                                                                                           value=""></div>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <button class="btn btn-primary profile-button" type="button">Edit Profile</button>
+                    </div>
                 </div>
             </div>
         </div>
