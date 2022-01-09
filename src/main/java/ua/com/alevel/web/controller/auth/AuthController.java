@@ -17,16 +17,10 @@ import ua.com.alevel.web.dto.request.register.AuthDto;
 @Controller
 public class AuthController extends AbstractController {
 
-    private final RegistrationFacade registrationFacade;
-    private final AuthValidatorFacade authValidatorFacade;
     private final SecurityService securityService;
 
     public AuthController(
-            RegistrationFacade registrationFacade,
-            AuthValidatorFacade authValidatorFacade,
             SecurityService securityService) {
-        this.registrationFacade = registrationFacade;
-        this.authValidatorFacade = authValidatorFacade;
         this.securityService = securityService;
     }
 
@@ -54,40 +48,8 @@ public class AuthController extends AbstractController {
         return "login";
     }
 
-    @GetMapping("/registration")
-    public String registration(Model model) {
-        if (securityService.isAuthenticated()) {
-            return redirectProcess(model);
-        }
-        model.addAttribute("authForm", new AuthDto());
-        return "registration";
-    }
-
-    @PostMapping("/registration")
-    public String registration(@ModelAttribute("authForm") AuthDto authForm, BindingResult bindingResult, Model model) {
-        showMessage(model, false);
-        authValidatorFacade.validate(authForm, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return "registration";
-        }
-        registrationFacade.registration(authForm);
-        securityService.autoLogin(authForm.getEmail(), authForm.getPasswordConfirm());
-        return redirectProcess(model);
-    }
-
-    private String redirectProcess(Model model) {
-        showMessage(model, false);
-        if (SecurityUtil.hasRole(RoleType.ROLE_ADMIN.name())) {
-            return "redirect:/admin/dashboard";
-        }
-        if (SecurityUtil.hasRole(RoleType.ROLE_PATIENT.name())) {
-            return "redirect:/patient/dashboard";
-        }
-        if (SecurityUtil.hasRole(RoleType.ROLE_DOCTOR.name())) {
-            return "redirect:/doctor/dashboard";
-        }
-        return "redirect:/login";
-
+    public SecurityService getSecurityService() {
+        return securityService;
     }
 }
 

@@ -31,7 +31,7 @@ public class Patient extends BaseEntity {
     )
     private Set<PatientAppointment> patientAppointments;
 
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_user_id", referencedColumnName = "id")
     private PatientUser patientUser;
 
@@ -77,6 +77,10 @@ public class Patient extends BaseEntity {
 
     public PatientUser getPatientUser() {
         return patientUser;
+    }
+
+    public void setPatientUser(PatientUser patientUser) {
+        this.patientUser = patientUser;
     }
 
     @Override

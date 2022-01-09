@@ -20,7 +20,7 @@ insert into doctors values (9, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, '
 insert into doctors values (10, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Arsen', 'Makashvilli', 'Timurovich', 'CARDIOLOGIST', 1);
 insert into doctors values (11, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Dmitrii', 'Prakiv', 'Stepanovich', 'SURGEON', 2);
 insert into doctors values (12, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Ivan', 'Divakov', 'Petrovich', 'SURGEON', 1);
-
+/*
 insert into patients
 values (1, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), '2002-01-05', 'Mykyta', 'Antonenko', true);
 insert into patients
@@ -99,3 +99,4 @@ insert into patient_appointments
 values (2, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 2, 4);
 insert into patient_appointments
 values (3, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 3, 7);
+*/
