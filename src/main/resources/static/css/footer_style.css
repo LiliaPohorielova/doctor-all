@@ -1,0 +1,11 @@
+.footer.h6 {
+    color: #F8F9FB!important;
+}
+.footer.p.text-muted {
+    color: rgb(248, 249, 251) !important;
+}
+
+a:hover {
+    text-decoration: none;
+    color: blue!important;
+}
