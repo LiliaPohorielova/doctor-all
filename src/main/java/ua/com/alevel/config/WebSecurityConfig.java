@@ -30,9 +30,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        String[] staticResources  =  {
+                "/css/**",
+                "/images/**",
+                "/fonts/**",
+                "/js/**",
+                "/resources/**",
+        };
+
         http
                 .authorizeRequests()
-                .antMatchers("/css/**", "/js/**", "/patient/registration", "/open/dashboard/**", "/").permitAll()
+                .antMatchers(staticResources).permitAll()
+                .antMatchers( "/patient/registration", "/open/dashboard/**", "/").permitAll()
                 .antMatchers("/doctor/**").access("hasRole('ROLE_DOCTOR')")
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/patient/**").access("hasRole('ROLE_PATIENT')")
