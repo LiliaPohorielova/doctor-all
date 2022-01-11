@@ -2,7 +2,7 @@ package ua.com.alevel.facade;
 
 import ua.com.alevel.web.dto.request.register.AuthDto;
 
-public interface RegistrationFacade {
+public interface RegistrationFacade<AU extends AuthDto> {
 
-    void registration(AuthDto dto);
+    void registration(AU au);
 }

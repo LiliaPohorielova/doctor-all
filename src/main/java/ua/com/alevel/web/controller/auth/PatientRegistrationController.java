@@ -8,12 +8,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ua.com.alevel.config.security.SecurityService;
 import ua.com.alevel.facade.AuthValidatorFacade;
-import ua.com.alevel.facade.RegistrationFacade;
 import ua.com.alevel.facade.impl.PatientRegistrationFacadeImpl;
 import ua.com.alevel.persistence.type.RoleType;
 import ua.com.alevel.util.SecurityUtil;
 import ua.com.alevel.web.controller.AbstractController;
-import ua.com.alevel.web.dto.request.register.AuthDto;
+import ua.com.alevel.web.dto.request.register.PatientRequestDto;
 
 @Controller
 public class PatientRegistrationController extends AbstractController {
@@ -35,16 +34,16 @@ public class PatientRegistrationController extends AbstractController {
         if (securityService.isAuthenticated()) {
             return redirectProcess(model);
         }
-        model.addAttribute("authForm", new AuthDto());
-        return "registration";
+        model.addAttribute("authForm", new PatientRequestDto());
+        return "/pages/patient/registration";
     }
 
     @PostMapping("/patient/registration")
-    public String registration(@ModelAttribute("authForm") AuthDto authForm, BindingResult bindingResult, Model model) {
+    public String registration(@ModelAttribute("authForm") PatientRequestDto authForm, BindingResult bindingResult, Model model) {
         showMessage(model, false);
         authValidatorFacade.validate(authForm, bindingResult);
         if (bindingResult.hasErrors()) {
-            return "registration";
+            return "/pages/patient/registration";
         }
         registrationFacade.registration(authForm);
         securityService.autoLogin(authForm.getEmail(), authForm.getPasswordConfirm());

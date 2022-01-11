@@ -1,3 +1,8 @@
 package ua.com.alevel.service;
 
-public interface PatientService { }
+import ua.com.alevel.persistence.entity.patient.Patient;
+
+public interface PatientService {
+
+    void savePatient(Patient patient1);
+}
