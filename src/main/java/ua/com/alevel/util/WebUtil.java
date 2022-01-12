@@ -2,13 +2,8 @@ package ua.com.alevel.util;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.WebRequest;
-import ua.com.alevel.persistence.datatable.DataTableRequest;
-import ua.com.alevel.persistence.datatable.DataTableResponse;
-import ua.com.alevel.persistence.entity.BaseEntity;
-import ua.com.alevel.web.dto.request.PageAndSizeData;
-import ua.com.alevel.web.dto.request.SortData;
-import ua.com.alevel.web.dto.response.PageData;
-import ua.com.alevel.web.dto.response.ResponseDto;
+import ua.com.alevel.web.dto.request.data.PageAndSizeData;
+import ua.com.alevel.web.dto.request.data.SortData;
 
 import java.util.Objects;
 

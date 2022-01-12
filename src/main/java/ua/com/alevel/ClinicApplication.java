@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ua.com.alevel.persistence.repository.user.AdminRepository;
-import ua.com.alevel.persistence.repository.user.DoctorRepository;
+import ua.com.alevel.persistence.repository.user.AdminUserRepository;
+import ua.com.alevel.persistence.repository.user.DoctorUserRepository;
 import ua.com.alevel.persistence.repository.user.PatientUserRepository;
 
 @SpringBootApplication(exclude = {
@@ -19,17 +19,17 @@ import ua.com.alevel.persistence.repository.user.PatientUserRepository;
 public class ClinicApplication {
 
     private final BCryptPasswordEncoder encoder;
-    private final AdminRepository adminRepository;
-    private final DoctorRepository doctorRepository;
+    private final AdminUserRepository adminUserRepository;
+    private final DoctorUserRepository doctorUserRepository;
     private final PatientUserRepository patientUserRepository;
 
     public ClinicApplication(BCryptPasswordEncoder encoder,
-                             AdminRepository adminRepository,
-                             DoctorRepository doctorRepository,
+                             AdminUserRepository adminUserRepository,
+                             DoctorUserRepository doctorUserRepository,
                              PatientUserRepository patientUserRepository) {
         this.encoder = encoder;
-        this.adminRepository = adminRepository;
-        this.doctorRepository = doctorRepository;
+        this.adminUserRepository = adminUserRepository;
+        this.doctorUserRepository = doctorUserRepository;
         this.patientUserRepository = patientUserRepository;
     }
 
@@ -43,9 +43,9 @@ public class ClinicApplication {
 /*        PatientUser patient = new PatientUser();
         patient.setEmail("patient@mail.com");
         patient.setPassword(encoder.encode("rootroot"));
-        patientRepository.save(patient);
+        patientUserRepository.save(patient);*/
 
-        Admin admin = new Admin();
+/*        Admin admin = new Admin();
         admin.setEmail("admin@mail.com");
         admin.setPassword(encoder.encode("rootroot"));
         adminRepository.save(admin);*/

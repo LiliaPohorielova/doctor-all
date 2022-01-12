@@ -6,7 +6,7 @@
       layout:decorate="~{fragments/patient_layout}">
 <head>
     <meta charset="utf-8">
-    <title>Create an account</title>
+    <title>Patient - Account</title>
 </head>
 <body>
 
@@ -30,45 +30,47 @@
                         <h4 class="text-right">Account Information</h4>
                     </div>
                     <div class="row mt-2">
-                        <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control"
-                                                                                       th:value="${patient.getFirstname()}">
+                        <div class="col-md-12"><label class="labels">Firstname</label><input type="text"
+                                                                                            class="form-control"
+                                                                                            th:value="${patient.getFirstname()}">
                         </div>
-                        <div class="col-md-6"><label class="labels">Surname</label><input type="text"
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12"><label class="labels">Lastname</label><input type="text"
+                                                                                           class="form-control"
+                                                                                           th:value="${patient.getLastname()}">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12"><label class="labels">Gender</label><input type="text"
                                                                                           class="form-control"
-                                                                                          th:value="${patient.getLastname()}">
+                                                                                          th:value="${T(ua.com.alevel.persistence.type.Gender).valueOf(patient.getGender())}">
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-12"><label class="labels">Phone Number</label><input type="text"
                                                                                                 class="form-control"
-                                                                                                placeholder="enter phone number"
-                                                                                                value="">
+                                                                                                th:value="${patient.getPhoneNumber()}">
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-12"><label class="labels">Date Of Birth</label>
-                            <input type="text" class="form-control" placeholder="enter address line 1" value="">
                             <div class="input-group date" id="datepicker1">
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control"
+                                       th:value="${patient.getDateOfBirthChangeFormat()}">
                                 <span class="input-group-append">
                                     <span class="input-group-text bg-white d-block">
                                         <i class="fa fa-calendar"
                                            onclick="$(function() {
-                                                    console.log(window.location.toString());
-                                                    $('#datepicker1').datepicker();
-                                                    console.log(window.location.toString());
-                                                    });">
+                                                                $('#datepicker1').datepicker({
+                                                                        format: 'dd/mm/yyyy'
+                                                                    });
+                                                                });">
                                         </i>
                                     </span>
                                 </span>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-12"><label class="labels">Address</label><input type="text"
-                                                                                           class="form-control"
-                                                                                           placeholder="enter address line 1"
-                                                                                           value=""></div>
                     </div>
                     <div class="mt-5 text-center">
                         <button class="btn btn-primary profile-button" type="button">Edit Profile</button>

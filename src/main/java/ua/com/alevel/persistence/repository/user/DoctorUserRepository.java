@@ -4,4 +4,4 @@ import org.springframework.stereotype.Repository;
 import ua.com.alevel.persistence.entity.user.DoctorUser;
 
 @Repository
-public interface DoctorRepository extends UserRepository<DoctorUser> { }
+public interface DoctorUserRepository extends UserRepository<DoctorUser> { }

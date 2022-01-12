@@ -1,12 +1,17 @@
 package ua.com.alevel.persistence.entity.patient;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 import ua.com.alevel.persistence.entity.BaseEntity;
 import ua.com.alevel.persistence.entity.appointment.PatientAppointment;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.user.PatientUser;
+import ua.com.alevel.persistence.type.Gender;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,9 +25,20 @@ public class Patient extends BaseEntity {
     @Column(name = "firstname")
     private String firstname;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gender")
+    private Gender gender;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
     @Column(name = "date_of_birth")
-    private LocalDate dateOfBirth;
-    private Boolean patientVisible;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
+    private Date dateOfBirth;
+
+    @Column(name = "image_url")
+    private String imageUrl;
 
     @OneToMany(
             mappedBy = "slot",
@@ -35,8 +51,17 @@ public class Patient extends BaseEntity {
     @JoinColumn(name = "patient_user_id", referencedColumnName = "id")
     private PatientUser patientUser;
 
+    @ManyToMany(mappedBy = "patients", cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+    private Set<Doctor> doctors;
+
     public Set<PatientAppointment> getPatientAppointments() {
         return patientAppointments;
+    }
+
+    public Patient() {
+        this.dateOfBirth = new Date();
+        this.doctors = new HashSet<>();
+        this.patientAppointments = new HashSet<>();
     }
 
     public void setPatientAppointments(Set<PatientAppointment> patientAppointments) {
@@ -59,20 +84,48 @@ public class Patient extends BaseEntity {
         this.firstname = firstname;
     }
 
-    public LocalDate getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public String getDateOfBirthChangeFormat() {
+        return new SimpleDateFormat("dd/MM/yyyy").format(dateOfBirth);
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Boolean getPatientVisible() {
-        return patientVisible;
+    public Gender getGender() {
+        return gender;
     }
 
-    public void setPatientVisible(Boolean patientVisible) {
-        this.patientVisible = patientVisible;
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Set<Doctor> getDoctors() {
+        return doctors;
+    }
+
+    public void setDoctors(Set<Doctor> doctors) {
+        this.doctors = doctors;
     }
 
     public PatientUser getPatientUser() {

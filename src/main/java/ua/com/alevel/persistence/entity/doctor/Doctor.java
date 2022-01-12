@@ -4,6 +4,8 @@ import ua.com.alevel.persistence.entity.BaseEntity;
 import ua.com.alevel.persistence.entity.department.DoctorsDepartment;
 import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.entity.slot.Slot;
+import ua.com.alevel.persistence.entity.user.DoctorUser;
+import ua.com.alevel.persistence.entity.user.PatientUser;
 import ua.com.alevel.persistence.type.DoctorSpecialization;
 
 import javax.persistence.*;
@@ -14,14 +16,25 @@ import java.util.Set;
 @Table(name = "doctors")
 public class Doctor extends BaseEntity {
 
+    @Column(name = "lastname")
     private String lastname;
+
+    @Column(name = "firstname")
     private String firstname;
+
+    @Column(name = "middle_name")
     private String middleName;
-    private Boolean doctorVisible;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "specialization")
     private DoctorSpecialization specialization;
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctor_user_id", referencedColumnName = "id")
+    private DoctorUser doctorUser;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private DoctorsDepartment department;
@@ -32,9 +45,17 @@ public class Doctor extends BaseEntity {
     )
     private Set<Slot> appointments;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "declaration",
+            joinColumns = @JoinColumn(name = "doctor"),
+            inverseJoinColumns = @JoinColumn(name = "patient"))
+    private Set<Patient> patients;
+
     public Doctor() {
         super();
-        doctorVisible = true;
+        this.patients = new HashSet<>();
+        this.appointments = new HashSet<>();
     }
 
     public String getLastname() {
@@ -69,14 +90,6 @@ public class Doctor extends BaseEntity {
         this.specialization = specialization;
     }
 
-    public Boolean getDoctorVisible() {
-        return doctorVisible;
-    }
-
-    public void setDoctorVisible(Boolean doctorVisible) {
-        this.doctorVisible = doctorVisible;
-    }
-
     public DoctorsDepartment getDepartment() {
         return department;
     }
@@ -91,6 +104,30 @@ public class Doctor extends BaseEntity {
 
     public void setAppointments(Set<Slot> appointments) {
         this.appointments = appointments;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Set<Patient> getPatients() {
+        return patients;
+    }
+
+    public void setPatients(Set<Patient> patients) {
+        this.patients = patients;
+    }
+
+    public DoctorUser getDoctorUser() {
+        return doctorUser;
+    }
+
+    public void setDoctorUser(DoctorUser doctorUser) {
+        this.doctorUser = doctorUser;
     }
 
     @Override

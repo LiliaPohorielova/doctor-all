@@ -1,4 +1,4 @@
-package ua.com.alevel.web.dto.request;
+package ua.com.alevel.web.dto.request.data;
 
 public class SortData {
 

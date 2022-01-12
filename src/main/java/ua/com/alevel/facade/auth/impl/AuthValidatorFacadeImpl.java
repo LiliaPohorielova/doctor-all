@@ -1,11 +1,11 @@
-package ua.com.alevel.facade.impl;
+package ua.com.alevel.facade.auth.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import ua.com.alevel.config.security.SecurityService;
-import ua.com.alevel.facade.AuthValidatorFacade;
-import ua.com.alevel.web.dto.request.register.AuthDto;
+import ua.com.alevel.facade.auth.AuthValidatorFacade;
+import ua.com.alevel.web.dto.request.auth.AuthDto;
 
 @Service
 public class AuthValidatorFacadeImpl implements AuthValidatorFacade {

@@ -6,7 +6,7 @@
       layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Patient Registration</title>
+    <title>Doctor Registration</title>
 </head>
 <body>
 <div class="container">
@@ -40,7 +40,7 @@
                     <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                         <div class="card bg-dark text-white" style="border-radius: 1rem;">
                             <div class="card-body p-5 text-center">
-                                <form method="POST" th:object="${authForm}" th:action="@{/patient/registration}">
+                                <form method="POST" th:object="${authForm}" th:action="@{/doctor/registration}">
                                     <div class="mb-md-5 mt-md-4 pb-5">
                                         <h2 class="fw-bold mb-2 text-uppercase">Create account</h2>
                                         <p class="text-white-50 mb-5">Please enter your login and password!</p>
@@ -60,39 +60,21 @@
                                         </div>
 
                                         <div class="form-outline form-white mb-4">
-                                            <select class="form-control" id="gender" th:field="*{gender}">
-                                                <option th:each="type : ${T(ua.com.alevel.persistence.type.Gender).values()}"
+                                            <input type="text" th:field="*{middleName}" id="middleName"
+                                                   class="form-control form-control-lg" required="required"
+                                                   pattern="[A-Za-z]{1,30}"/>
+                                            <label class="form-label" for="middleName">Middle Name</label>
+                                        </div>
+
+                                        <div class="form-outline form-white mb-4">
+                                            <select class="form-control" id="gender" th:field="*{specialization}">
+                                                <option th:each="type : ${T(ua.com.alevel.persistence.type.DoctorSpecialization).values()}"
                                                         th:value="${type}"
                                                         th:text="${type}">
                                                 </option>
                                             </select>
-                                            <label class="form-label" for="gender">Gender</label>
+                                            <label class="form-label" for="gender">Specialization</label>
                                         </div>
-
-                                        <div class="form-outline form-white mb-4">
-                                            <input type="tel" th:field="*{phoneNumber}" id="phone" name="phone"
-                                                   placeholder="380989391322" pattern="380[0-9]{9}" required>
-                                            <label class="form-label" for="phone">Phone Number</label>
-                                        </div>
-
-                                        <div class="form-outline form-white mb-4">
-                                            <div class="input-group date" id="datepicker1">
-                                                <input type="text" th:field="*{dateOfBirth}" class="form-control">
-                                                <span class="input-group-append">
-                                                    <span class="input-group-text bg-white d-block">
-                                                     <i class="fa fa-calendar"
-                                                        onclick="$(function() {
-                                                                $('#datepicker1').datepicker({
-                                                                        format: 'dd/mm/yyyy'
-                                                                    });
-                                                                });">
-                                                    </i>
-                                                    </span>
-                                             </span>
-                                            </div>
-                                            <label class="form-label" for="datepicker1">Date Of Birth</label>
-                                        </div>
-
                                         <div class="form-outline form-white mb-4">
                                             <input type="email" th:field="*{email}" id="email"
                                                    class="form-control form-control-lg"/>

@@ -1,7 +1,4 @@
-package ua.com.alevel.web.dto.request.register;
-
-import ua.com.alevel.persistence.entity.patient.Patient;
-import ua.com.alevel.persistence.entity.user.PatientUser;
+package ua.com.alevel.web.dto.request.auth;
 
 public class AuthDto {
 

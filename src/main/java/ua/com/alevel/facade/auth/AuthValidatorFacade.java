@@ -1,4 +1,4 @@
-package ua.com.alevel.facade;
+package ua.com.alevel.facade.auth;
 
 import org.springframework.validation.Validator;
 

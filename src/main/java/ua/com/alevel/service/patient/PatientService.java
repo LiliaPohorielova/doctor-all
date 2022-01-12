@@ -1,4 +1,4 @@
-package ua.com.alevel.service;
+package ua.com.alevel.service.patient;
 
 import ua.com.alevel.persistence.entity.patient.Patient;
 
