@@ -10,7 +10,7 @@ public class DataTableResponse<E extends BaseEntity> {
 
     private int currentPage;
     private int pageSize;
-    private int totalPages;
+    private int totalPageSize;
     private long itemsSize;
     private String sort;
     private String order;
@@ -40,20 +40,28 @@ public class DataTableResponse<E extends BaseEntity> {
         this.pageSize = pageSize;
     }
 
-    public int getTotalPages() {
-        return totalPages;
-    }
-
-    public void setTotalPages(int totalPages) {
-        this.totalPages = totalPages;
-    }
-
     public long getItemsSize() {
         return itemsSize;
     }
 
     public void setItemsSize(long itemsSize) {
         this.itemsSize = itemsSize;
+    }
+
+    public List<E> getItems() {
+        return items;
+    }
+
+    public void setItems(List<E> items) {
+        this.items = items;
+    }
+
+    public Map<Object, Object> getOtherParamMap() {
+        return otherParamMap;
+    }
+
+    public void setOtherParamMap(Map<Object, Object> otherParamMap) {
+        this.otherParamMap = otherParamMap;
     }
 
     public String getSort() {
@@ -72,19 +80,11 @@ public class DataTableResponse<E extends BaseEntity> {
         this.order = order;
     }
 
-    public List<E> getItems() {
-        return items;
+    public int getTotalPageSize() {
+        return totalPageSize;
     }
 
-    public void setItems(List<E> items) {
-        this.items = items;
-    }
-
-    public Map<Object, Object> getOtherParamMap() {
-        return otherParamMap;
-    }
-
-    public void setOtherParamMap(Map<Object, Object> otherParamMap) {
-        this.otherParamMap = otherParamMap;
+    public void setTotalPageSize(int totalPageSize) {
+        this.totalPageSize = totalPageSize;
     }
 }

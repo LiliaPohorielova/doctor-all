@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{fragments/admin_layout}">
+<head>
+    <meta charset="utf-8">
+    <title>Admin - Account</title>
+</head>
+<body>
+
+<div layout:fragment="admin_content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-2 mt-2">
+                <div class="card-header">
+                    All Doctors
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Lastname</th>
+                            <th>Firstname</th>
+                            <th>Middle name</th>
+                            <th>Specialization</th>
+                            <th>Email</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="doctor,iter : ${doctors}">
+                            <td th:text="${iter.count}"></td>
+                            <td th:text="${doctor.getLastname()}"></td>
+                            <td th:text="${doctor.getFirstname()}"></td>
+                            <td th:text="${doctor.getMiddleName()}"></td>
+                            <td th:text="${doctor.getSpecialization()}"></td>
+                            <td th:text="${doctor.getDoctorUser().getEmail()}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,11 +1,10 @@
 package ua.com.alevel.persistence.crud.impl;
 
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import ua.com.alevel.exception.EntityNotFoundException;
 import ua.com.alevel.persistence.crud.CrudRepositoryHelper;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
@@ -43,26 +42,39 @@ public class CrudRepositoryHelperImpl<
     }
 
     @Override
-    public DataTableResponse<E> findAll(R repository, DataTableRequest request) {
-        Sort sort = request.getOrder().equals("desc")
-                ? Sort.by(request.getSort()).descending()
-                : Sort.by(request.getSort()).ascending();
-        Page<E> entityPage = repository.findAll(
-                PageRequest.of(request.getPage() - 1, request.getSize(), sort));
+    public DataTableResponse<E> findAll(R repository, DataTableRequest dataTableRequest) {
+        int page = dataTableRequest.getPage() - 1;
+        int size = dataTableRequest.getSize();
+        String sortParam = dataTableRequest.getSort();
+        String orderParam = dataTableRequest.getOrder();
+
+        Sort sort = orderParam.equals("desc")
+                ? Sort.by(sortParam).descending()
+                : Sort.by(sortParam).ascending();
+
+        if (MapUtils.isNotEmpty(dataTableRequest.getRequestParamMap())) {
+            System.out.println("dataTableRequest = " + dataTableRequest.getRequestParamMap());
+        }
+
+        PageRequest request = PageRequest.of(page, size, sort);
+
+        Page<E> pageEntity = repository.findAll(request);
+
         DataTableResponse<E> dataTableResponse = new DataTableResponse<>();
-        dataTableResponse.setCurrentPage(request.getPage());
-        dataTableResponse.setPageSize(request.getSize());
-        dataTableResponse.setOrder(request.getOrder());
-        dataTableResponse.setSort(request.getSort());
-        dataTableResponse.setItemsSize(entityPage.getTotalElements());
-        dataTableResponse.setTotalPages(entityPage.getTotalPages());
-        dataTableResponse.setItems(entityPage.getContent());
+        dataTableResponse.setSort(sortParam);
+        dataTableResponse.setOrder(orderParam);
+        dataTableResponse.setPageSize(size);
+        dataTableResponse.setCurrentPage(page);
+        dataTableResponse.setItemsSize(pageEntity.getTotalElements());
+        dataTableResponse.setTotalPageSize(pageEntity.getTotalPages());
+        dataTableResponse.setItems(pageEntity.getContent());
+
         return dataTableResponse;
     }
 
     private void checkExist(R repository, Long id) {
         if (!repository.existsById(id)) {
-            throw new EntityNotFoundException("this entity is not found");
+            throw new RuntimeException("entity not found");
         }
     }
 }

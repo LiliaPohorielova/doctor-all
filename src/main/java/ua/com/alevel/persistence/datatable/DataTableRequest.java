@@ -1,6 +1,6 @@
 package ua.com.alevel.persistence.datatable;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public class DataTableRequest {
@@ -12,7 +12,7 @@ public class DataTableRequest {
     private Map<String, String[]> requestParamMap;
 
     public DataTableRequest() {
-        requestParamMap = Collections.emptyMap();
+        this.requestParamMap = new HashMap<>();
     }
 
     public int getPage() {

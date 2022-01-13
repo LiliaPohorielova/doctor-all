@@ -8,9 +8,13 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import ua.com.alevel.persistence.entity.doctor.Doctor;
+import ua.com.alevel.persistence.repository.doctor.DoctorRepository;
 import ua.com.alevel.persistence.repository.user.AdminUserRepository;
 import ua.com.alevel.persistence.repository.user.DoctorUserRepository;
 import ua.com.alevel.persistence.repository.user.PatientUserRepository;
+
+import java.util.List;
 
 @SpringBootApplication(exclude = {
         DataSourceAutoConfiguration.class,
@@ -21,15 +25,17 @@ public class ClinicApplication {
     private final BCryptPasswordEncoder encoder;
     private final AdminUserRepository adminUserRepository;
     private final DoctorUserRepository doctorUserRepository;
+    private final DoctorRepository doctorRepository;
     private final PatientUserRepository patientUserRepository;
 
     public ClinicApplication(BCryptPasswordEncoder encoder,
                              AdminUserRepository adminUserRepository,
                              DoctorUserRepository doctorUserRepository,
-                             PatientUserRepository patientUserRepository) {
+                             DoctorRepository doctorRepository, PatientUserRepository patientUserRepository) {
         this.encoder = encoder;
         this.adminUserRepository = adminUserRepository;
         this.doctorUserRepository = doctorUserRepository;
+        this.doctorRepository = doctorRepository;
         this.patientUserRepository = patientUserRepository;
     }
 
@@ -39,6 +45,11 @@ public class ClinicApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void listen() {
+/*        List<Doctor> doctors = doctorRepository.findAll();
+        for (Doctor doctor:
+             doctors) {
+            System.out.println(doctor);
+        }*/
 
 /*        PatientUser patient = new PatientUser();
         patient.setEmail("patient@mail.com");
@@ -48,7 +59,7 @@ public class ClinicApplication {
 /*        Admin admin = new Admin();
         admin.setEmail("admin@mail.com");
         admin.setPassword(encoder.encode("rootroot"));
-        adminRepository.save(admin);*/
+        adminUserRepository.save(admin);*/
 
 /*        DoctorUser doctor = new DoctorUser();
         doctor.setEmail("doctor@mail.com");

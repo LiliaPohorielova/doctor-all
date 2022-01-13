@@ -147,6 +147,7 @@ public class Doctor extends BaseEntity {
                 ", firstname='" + firstname + '\'' +
                 ", middleName='" + middleName + '\'' +
                 ", specialization=" + specialization +
+                ", doctorUser=" + doctorUser.getId() +
                 '}';
     }
 }

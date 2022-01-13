@@ -13,6 +13,7 @@ import ua.com.alevel.persistence.entity.user.DoctorUser;
 import ua.com.alevel.persistence.repository.user.DoctorUserRepository;
 import ua.com.alevel.service.doctor.DoctorUserService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,14 +21,15 @@ public class DoctorUserServiceImpl implements DoctorUserService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final DoctorUserRepository doctorUserRepository;
-    private final CrudRepositoryHelper<DoctorUser, DoctorUserRepository> crudRepositoryHelper;
-
+    private final CrudRepositoryHelper<DoctorUser, DoctorUserRepository> doctorUserRepositoryHelper;
+    
+    
     public DoctorUserServiceImpl(
-            BCryptPasswordEncoder bCryptPasswordEncoder,
-            DoctorUserRepository doctorUserRepository, CrudRepositoryHelper<DoctorUser, DoctorUserRepository> crudRepositoryHelper) {
+            BCryptPasswordEncoder bCryptPasswordEncoder, DoctorUserRepository doctorUserRepository,
+            CrudRepositoryHelper<DoctorUser, DoctorUserRepository> doctorUserRepositoryHelper) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.doctorUserRepository = doctorUserRepository;
-        this.crudRepositoryHelper = crudRepositoryHelper;
+        this.doctorUserRepositoryHelper = doctorUserRepositoryHelper;
     }
 
     public DoctorUser findByEmail(String email) {
@@ -41,26 +43,35 @@ public class DoctorUserServiceImpl implements DoctorUserService {
             throw new EntityExistException("this doctor is exist");
         }
         doctor.setPassword(bCryptPasswordEncoder.encode(doctor.getPassword()));
-        crudRepositoryHelper.create(doctorUserRepository, doctor);
+        doctorUserRepositoryHelper.create(doctorUserRepository, doctor);
     }
 
     @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public void update(DoctorUser entity) {
-
+        doctorUserRepositoryHelper.update(doctorUserRepository, entity);
     }
 
     @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public void delete(Long id) {
-
+        doctorUserRepositoryHelper.delete(doctorUserRepository, id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<DoctorUser> findById(Long id) {
-        return Optional.empty();
+        return doctorUserRepositoryHelper.findById(doctorUserRepository, id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public DataTableResponse<DoctorUser> findAll(DataTableRequest request) {
-        return null;
+        return doctorUserRepositoryHelper.findAll(doctorUserRepository, request);
+    }
+
+    @Override
+    public List<DoctorUser> findAll() {
+        return doctorUserRepository.findAll();
     }
 }

@@ -5,16 +5,12 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       layout:decorate="~{fragments/admin_layout}">
 <head>
-    <meta charset="utf-8">
-    <title>Admin - Account</title>
+    <meta charset="UTF-8">
+    <title>Admin - Patients</title>
 </head>
 <body>
+<div layout:fragment="data_table_content">
 
-<div layout:fragment="admin_content">
-    <h1>
-        Admin
-        Logged user: <span sec:authentication="name"></span>
-    </h1>
 </div>
 </body>
 </html>
