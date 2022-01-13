@@ -56,6 +56,5 @@ public class DoctorRegistrationController extends AbstractController {
             return "redirect:/doctor/dashboard";
         }
         return "redirect:/login";
-
     }
 }

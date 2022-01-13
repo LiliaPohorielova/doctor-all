@@ -1,6 +1,7 @@
 package ua.com.alevel.service.doctor.impl;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.alevel.persistence.crud.CrudRepositoryHelper;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
@@ -11,6 +12,7 @@ import ua.com.alevel.persistence.repository.doctor.DoctorRepository;
 import ua.com.alevel.service.doctor.DoctorService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
@@ -28,23 +30,37 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public void create(Doctor entity) {
+        doctorRepositoryHelper.create(doctorRepository, entity);
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public void update(Doctor entity) {
+        doctorRepositoryHelper.update(doctorRepository, entity);
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public void delete(Long id) {
+        doctorRepositoryHelper.delete(doctorRepository, id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Doctor> findById(Long id) {
+        return doctorRepositoryHelper.findById(doctorRepository, id);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public DataTableResponse<Doctor> findAll(DataTableRequest request) {
-        List<Doctor> doctors = doctorRepositoryHelper.findAll(doctorRepository, request).getItems();
-        for (Doctor doctor:
-                doctors) {
-            System.out.println(doctor);
-        }
         return doctorRepositoryHelper.findAll(doctorRepository, request);
     }
 
     @Override
     public List<Doctor> findAll() {
-        List<Doctor> doctors = doctorRepository.findAll();
-        for (Doctor doctor:
-                doctors) {
-            System.out.println(doctor);
-        }
         return doctorRepository.findAll();
     }
 }

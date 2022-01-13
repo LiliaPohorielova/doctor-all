@@ -6,6 +6,7 @@ import ua.com.alevel.facade.doctor.DoctorFacade;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
+import ua.com.alevel.persistence.entity.user.DoctorUser;
 import ua.com.alevel.service.doctor.DoctorService;
 import ua.com.alevel.service.doctor.DoctorUserService;
 import ua.com.alevel.util.WebUtil;
@@ -31,22 +32,33 @@ public class DoctorFacadeImpl implements DoctorFacade {
 
     @Override
     public void create(DoctorRequestDto doctorRequestDto) {
-
+        Doctor doctor = new Doctor();
+        doctor.setLastname(doctorRequestDto.getLastname());
+        doctor.setFirstname(doctorRequestDto.getFirstname());
+        doctor.setMiddleName(doctorRequestDto.getMiddleName());
+        doctor.setSpecialization(doctorRequestDto.getSpecialization());
+        doctorService.create(doctor);
     }
 
     @Override
     public void update(DoctorRequestDto doctorRequestDto, Long id) {
-
+        Doctor doctor = doctorService.findById(id).get();
+        doctor.setLastname(doctorRequestDto.getLastname());
+        doctor.setFirstname(doctorRequestDto.getFirstname());
+        doctor.setMiddleName(doctorRequestDto.getMiddleName());
+        doctor.setSpecialization(doctorRequestDto.getSpecialization());
+        doctorService.update(doctor);
     }
 
     @Override
     public void delete(Long id) {
-
+        doctorService.delete(id);
     }
 
     @Override
     public DoctorResponseDto findById(Long id) {
-        return null;
+        Doctor doctor = doctorService.findById(id).get();
+        return new DoctorResponseDto(doctor);
     }
 
     @Override
@@ -60,11 +72,6 @@ public class DoctorFacadeImpl implements DoctorFacade {
         dataTableRequest.setOrder(sortData.getOrder());
 
         DataTableResponse<Doctor> all = doctorService.findAll(dataTableRequest);
-        List<Doctor> doctors = all.getItems();
-        for (Doctor doctor:
-                doctors) {
-            System.out.println(doctor);
-        }
 
         List< DoctorResponseDto> list = all.getItems().
                 stream().
@@ -88,5 +95,11 @@ public class DoctorFacadeImpl implements DoctorFacade {
         List<Doctor> all = doctorService.findAll();
         List<DoctorResponseDto> items = all.stream().map(DoctorResponseDto::new).collect(Collectors.toList());
         return items;
+    }
+
+    @Override
+    public DoctorUser getDoctorUser(Long id) {
+        DoctorUser user = doctorService.findById(id).get().getDoctorUser();
+        return user;
     }
 }

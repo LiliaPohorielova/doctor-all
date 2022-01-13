@@ -5,16 +5,11 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       layout:decorate="~{fragments/patient_layout}">
 <head>
-    <meta charset="utf-8">
-    <title>Patient - Account</title>
+    <meta charset="UTF-8">
+    <title>Edit Profile</title>
 </head>
 <body>
-
 <div layout:fragment="patient_content">
-    <h1>
-        Patient
-        Logged user: <span sec:authentication="name"></span>
-    </h1>
     <div class="container rounded bg-white mt-5 mb-5">
         <div class="row">
             <div class="col-md-3 border-right">
@@ -31,38 +26,49 @@
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-12"><label class="labels">Firstname</label><input type="text"
-                                                                                            class="form-control"
-                                                                                            th:value="${patient.getFirstname()}" readonly>
+                                                                                             class="form-control"
+                                                                                             th:value="${patient.getFirstname()}">
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-12"><label class="labels">Lastname</label><input type="text"
-                                                                                           class="form-control"
-                                                                                           th:value="${patient.getLastname()}" readonly>
+                                                                                            class="form-control"
+                                                                                            th:value="${patient.getLastname()}">
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-12"><label class="labels">Gender</label><input type="text"
                                                                                           class="form-control"
-                                                                                          th:value="${T(ua.com.alevel.persistence.type.Gender).valueOf(patient.getGender())}" readonly>
+                                                                                          th:value="${T(ua.com.alevel.persistence.type.Gender).valueOf(patient.getGender())}">
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-12"><label class="labels">Phone Number</label><input type="text"
                                                                                                 class="form-control"
-                                                                                                th:value="${patient.getPhoneNumber()}" readonly>
+                                                                                                th:value="${patient.getPhoneNumber()}">
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-12"><label class="labels">Date Of Birth</label>
                             <div class="input-group date" id="datepicker1">
                                 <input type="text" class="form-control"
-                                       th:value="${patient.getDateOfBirthChangeFormat()}" readonly>
+                                       th:value="${patient.getDateOfBirthChangeFormat()}">
+                                <span class="input-group-append">
+                                    <span class="input-group-text bg-white d-block">
+                                        <i class="fa fa-calendar"
+                                           onclick="$(function() {
+                                                                $('#datepicker1').datepicker({
+                                                                        format: 'dd/mm/yyyy'
+                                                                    });
+                                                                });">
+                                        </i>
+                                    </span>
+                                </span>
                             </div>
                         </div>
                     </div>
                     <div class="mt-5 text-center">
-                        <a class="btn btn-primary profile-button" type="button" href="#">Edit Profile</a>
+                        <button class="btn btn-primary profile-button" type="button">Edit Profile</button>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
                             Create new appointment
@@ -110,7 +116,5 @@
             </div>
         </div>
     </div>
-</div>
-
 </body>
 </html>

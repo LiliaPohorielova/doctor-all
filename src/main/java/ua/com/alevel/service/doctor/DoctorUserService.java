@@ -9,5 +9,7 @@ public interface DoctorUserService extends BaseCrudService<DoctorUser> {
     
     DoctorUser findByEmail(String email);
 
+    boolean existByEmail(String email);
+
     List<DoctorUser> findAll();
 }

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/admin_layout}">
+<head>
+    <meta charset="utf-8">
+    <title>Admin - Doctors Details</title>
+</head>
+<body>
+<div layout:fragment="admin_content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-2 mt-2">
+                <div class="card-header">
+                    Details Doctor
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>ID</th>
+                            <td th:text="${doctor.getId()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Lastname</th>
+                            <td th:text="${doctor.getLastname()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Firstname</th>
+                            <td th:text="${doctor.getFirstname()}"></td>
+                        </tr>
+                        <tr>
+                            <th>MiddleName</th>
+                            <td th:text="${doctor.getMiddleName()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td th:text="${doctor.getDoctorUser().getEmail()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Created</th>
+                            <td th:text="${#calendars.format(doctor.getCreated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>Updated</th>
+                            <td th:text="${#calendars.format(doctor.getUpdated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>Specialization</th>
+                            <td th:text="${T(ua.com.alevel.persistence.type.DoctorSpecialization).valueOf(doctor.getSpecialization())}"></td>
+                        </tr>
+                    </table>
+                    <hr>
+                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-2" role="group" aria-label="Second group">
+                            <a th:href="@{/admin/doctors}" type="button" class="btn btn-primary">Back</a>
+                        </div>
+                        <div class="btn-group mr-2" role="group" aria-label="Third group">
+                            <a href="#" type="button" class="btn btn-success">Add
+                                new patient</a>
+                            <a href="#" type="button" class="btn btn-success">Add
+                                new appointments</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

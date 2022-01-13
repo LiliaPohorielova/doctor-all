@@ -37,6 +37,11 @@ public class DoctorUserServiceImpl implements DoctorUserService {
     }
 
     @Override
+    public boolean existByEmail(String email) {
+        return doctorUserRepository.existsByEmail(email);
+    }
+
+    @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
     public void create(DoctorUser doctor) {
         if (doctorUserRepository.existsByEmail(doctor.getEmail())) {
