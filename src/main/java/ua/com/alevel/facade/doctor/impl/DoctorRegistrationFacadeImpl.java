@@ -42,4 +42,9 @@ public class DoctorRegistrationFacadeImpl implements DoctorRegistrationFacade {
     public DoctorUser findByEmail(String email) {
         return doctorUserService.findByEmail(email);
     }
+
+    @Override
+    public void delete(Long id) {
+        doctorUserService.delete(id);
+    }
 }
