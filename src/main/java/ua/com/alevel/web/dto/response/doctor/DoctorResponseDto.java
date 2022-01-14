@@ -16,14 +16,16 @@ public class DoctorResponseDto extends ResponseDto {
     public DoctorResponseDto() { }
 
     public DoctorResponseDto(Doctor doctor) {
-        setId(doctor.getId());
-        setCreated(doctor.getCreated());
-        setUpdated(doctor.getUpdated());
-        this.lastname = doctor.getLastname();
-        this.firstname = doctor.getFirstname();
-        this.middleName = doctor.getMiddleName();
-        this.specialization = doctor.getSpecialization();
-        this.doctorUser = doctor.getDoctorUser();
+        if (doctor != null) {
+            setId(doctor.getId());
+            setCreated(doctor.getCreated());
+            setUpdated(doctor.getUpdated());
+            this.lastname = doctor.getLastname();
+            this.firstname = doctor.getFirstname();
+            this.middleName = doctor.getMiddleName();
+            this.specialization = doctor.getSpecialization();
+            this.doctorUser = doctor.getDoctorUser();
+        }
     }
 
     public String getLastname() {
