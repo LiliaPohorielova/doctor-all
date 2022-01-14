@@ -1,8 +1,18 @@
 package ua.com.alevel.service.patient;
 
+import ua.com.alevel.persistence.datatable.DataTableRequest;
+import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.patient.Patient;
+import ua.com.alevel.service.BaseCrudService;
 
-public interface PatientService {
+import java.util.List;
 
-    void savePatient(Patient patient1);
+public interface PatientService extends BaseCrudService<Patient> {
+
+    void savePatient(Patient patient);
+
+    DataTableResponse<Patient> findAll(DataTableRequest request);
+
+    List<Patient> findAll();
+
 }

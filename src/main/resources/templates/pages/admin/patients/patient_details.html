@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/admin_layout}">
+<head>
+    <meta charset="utf-8">
+    <title>Admin - Patients Details</title>
+</head>
+<body>
+<div layout:fragment="admin_content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-2 mt-2">
+                <div class="card-header">
+                    Details Patient
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>ID</th>
+                            <td th:text="${patient.getId()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Lastname</th>
+                            <td th:text="${patient.getLastname()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Firstname</th>
+                            <td th:text="${patient.getFirstname()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Gender</th>
+                            <td th:text="${patient.getGender()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td th:text="${patient.getPatientUser().getEmail()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Phone Number</th>
+                            <td th:text="${patient.getPhoneNumber()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Date Of Birth</th>
+                            <td th:text="${#calendars.format(patient.getDateOfBirth(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>Created</th>
+                            <td th:text="${#calendars.format(patient.getCreated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>Updated</th>
+                            <td th:text="${#calendars.format(patient.getUpdated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                    </table>
+                    <hr>
+                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-2" role="group" aria-label="Second group">
+                            <a th:href="@{/admin/patients}" type="button" class="btn btn-primary">Back</a>
+                        </div>
+                        <div class="btn-group mr-2" role="group" aria-label="Third group">
+                            <a href="#" type="button" class="btn btn-success">Add
+                                new patient</a>
+                            <a href="#" type="button" class="btn btn-success">Add
+                                new appointments</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

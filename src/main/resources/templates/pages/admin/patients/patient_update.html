@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/admin_layout}">
+<head>
+    <meta charset="utf-8">
+    <title>Update Patient</title>
+</head>
+<body>
+
+<div layout:fragment="admin_content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mt-2">
+                <div class="card-header">
+                    <h4>Update patient</h4>
+                </div>
+                <div class="card-body">
+                    <form action="#" th:action="@{'/admin/patients/update/' + ${patient.getId()}}" th:object="${patient}"
+                          method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="lastname">Lastname patient</label>
+                            <input type="text" class="form-control" id="lastname" aria-describedby="name"
+                                   placeholder="Enter patient's last name" th:field="*{lastname}">
+                        </div>
+                        <div class="form-group">
+                            <label for="firstname">Firstname patient</label>
+                            <input type="text" class="form-control" id="firstname" aria-describedby="name"
+                                   placeholder="Enter patient's first name" th:field="*{firstname}">
+                        </div>
+                        <div class="form-group">
+                            <label for="type">Specialization</label>
+                            <select class="form-control" id="type" th:field="*{gender}">
+                                <option th:each="type : ${T(ua.com.alevel.persistence.type.Gender).values()}"
+                                        th:value="${type}"
+                                        th:text="${type}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-outline form-white mb-4">
+                            <input type="tel" th:field="*{phoneNumber}" id="phone" name="phone"
+                                   placeholder="380989391322" pattern="380[0-9]{9}" required>
+                            <label class="form-label" for="phone">Phone Number</label>
+                        </div>
+
+                        <div class="form-outline form-white mb-4">
+                            <div class="input-group date" id="datepicker1">
+                                <input type="text" th:field="*{dateOfBirth}" class="form-control">
+                                <span class="input-group-append">
+                                                    <span class="input-group-text bg-white d-block">
+                                                     <i class="fa fa-calendar"
+                                                        onclick="$(function() {
+                                                                $('#datepicker1').datepicker({
+                                                                        format: 'dd/mm/yyyy'
+                                                                    });
+                                                                });">
+                                                    </i>
+                                                    </span>
+                                             </span>
+                            </div>
+                            <label class="form-label" for="datepicker1">Date Of Birth</label>
+                        </div>
+                        <div class="form-patient">
+                        </div>
+                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group mr-2" role="group" aria-label="Second group">
+                                <a th:href="@{/admin/patients}" type="button" class="btn btn-primary">Back</a>
+                            </div>
+                            <div class="btn-group mr-2" role="group" aria-label="Third group">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
