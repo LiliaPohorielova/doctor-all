@@ -52,7 +52,7 @@
             <div sec:authorize="hasRole('ROLE_DOCTOR')">
                 <nav class="navbar navbar-dark bg-dark">
                     <a class="nav-item nav-link" th:href="@{/doctor/dashboard}">Dashboard</a>
-                    <a class="nav-item nav-link" th:href="@{/doctor/patients}">Patients</a>
+                    <a class="nav-item nav-link" th:href="@{/doctor/my_patients}">Patients</a>
                     <a class="nav-item nav-link" th:href="@{/doctor/news}">News</a>
                     <form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

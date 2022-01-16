@@ -122,6 +122,16 @@ public class Doctor extends BaseEntity {
         this.patients = patients;
     }
 
+    public void addPatient(Patient patient) {
+        patients.add(patient);
+        patient.getDoctors().add(this);
+    }
+
+    public void removePatient(Patient patient) {
+        patients.remove(patient);
+        patient.getDoctors().remove(this);
+    }
+
     public DoctorUser getDoctorUser() {
         return doctorUser;
     }

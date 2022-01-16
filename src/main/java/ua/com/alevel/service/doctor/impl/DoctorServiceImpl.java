@@ -7,26 +7,56 @@ import ua.com.alevel.persistence.crud.CrudRepositoryHelper;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
-import ua.com.alevel.persistence.entity.user.DoctorUser;
+import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.repository.doctor.DoctorRepository;
+import ua.com.alevel.persistence.repository.patient.PatientRepository;
 import ua.com.alevel.service.doctor.DoctorService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
 
     private DoctorRepository doctorRepository;
     private final CrudRepositoryHelper<Doctor, DoctorRepository> doctorRepositoryHelper;
+    private final CrudRepositoryHelper<Patient, PatientRepository> patientRepositoryHelper;
+    private final PatientRepository patientRepository;
 
-    public DoctorServiceImpl(DoctorRepository doctorRepository, CrudRepositoryHelper<Doctor, DoctorRepository> doctorRepositoryHelper) {
+    public DoctorServiceImpl(DoctorRepository doctorRepository, CrudRepositoryHelper<Doctor, DoctorRepository> doctorRepositoryHelper, CrudRepositoryHelper<Patient, PatientRepository> patientRepositoryHelper, PatientRepository patientRepository) {
         this.doctorRepository = doctorRepository;
         this.doctorRepositoryHelper = doctorRepositoryHelper;
+        this.patientRepositoryHelper = patientRepositoryHelper;
+        this.patientRepository = patientRepository;
     }
 
     public void saveDoctor(Doctor doctor) {
         doctorRepository.save(doctor);
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public void addPatient(Long doctorId, Long patientId) {
+        Doctor doctor = doctorRepositoryHelper.findById(doctorRepository, doctorId).get();
+        Patient patient = patientRepositoryHelper.findById(patientRepository, patientId).get();
+        doctor.addPatient(patient);
+        doctorRepositoryHelper.update(doctorRepository, doctor);
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public void removePatient(Long doctorId, Long patientId) {
+        Doctor doctor = doctorRepositoryHelper.findById(doctorRepository, doctorId).get();
+        Patient patient = patientRepositoryHelper.findById(patientRepository, patientId).get();
+        doctor.removePatient(patient);
+        doctorRepositoryHelper.update(doctorRepository, doctor);
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public Set<Patient> getPatients(Long id) {
+        return doctorRepositoryHelper.findById(doctorRepository, id).get().getPatients();
     }
 
     @Override

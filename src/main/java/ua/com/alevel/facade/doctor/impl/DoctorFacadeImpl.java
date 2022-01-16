@@ -6,17 +6,22 @@ import ua.com.alevel.facade.doctor.DoctorFacade;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
+import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.entity.user.DoctorUser;
 import ua.com.alevel.service.doctor.DoctorService;
 import ua.com.alevel.service.doctor.DoctorUserService;
+import ua.com.alevel.service.patient.PatientService;
 import ua.com.alevel.util.WebUtil;
 import ua.com.alevel.web.dto.request.data.PageAndSizeData;
 import ua.com.alevel.web.dto.request.data.SortData;
 import ua.com.alevel.web.dto.request.doctor.DoctorRequestDto;
 import ua.com.alevel.web.dto.response.PageData;
 import ua.com.alevel.web.dto.response.doctor.DoctorResponseDto;
+import ua.com.alevel.web.dto.response.patient.PatientResponseDto;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,10 +29,39 @@ public class DoctorFacadeImpl implements DoctorFacade {
 
     private final DoctorUserService doctorUserService;
     private final DoctorService doctorService;
+    private final PatientService patientService;
 
-    public DoctorFacadeImpl(DoctorUserService doctorUserService, DoctorService doctorService) {
+    public DoctorFacadeImpl(DoctorUserService doctorUserService, DoctorService doctorService, PatientService patientService) {
         this.doctorUserService = doctorUserService;
         this.doctorService = doctorService;
+        this.patientService = patientService;
+    }
+
+    @Override
+    public void addPatient(Long doctorId, Long patientId) {
+        Doctor doctor = doctorService.findById(doctorId).get();
+        Patient patient = patientService.findById(patientId).get();
+        doctor.addPatient(patient);
+        doctorService.update(doctor);
+    }
+
+    @Override
+    public void removePatient(Long doctorId, Long patientId) {
+        Doctor doctor = doctorService.findById(doctorId).get();
+        Patient patient = patientService.findById(patientId).get();
+        doctor.removePatient(patient);
+        doctorService.update(doctor);
+    }
+
+    @Override
+    public Set<PatientResponseDto> getPatients(Long id) {
+        Set<Patient> patients = doctorService.findById(id).get().getPatients();
+        Set<PatientResponseDto> set = new HashSet<>();
+        for (Patient patient : patients) {
+            PatientResponseDto patientResponseDto = new PatientResponseDto(patient);
+            set.add(patientResponseDto);
+        }
+        return set;
     }
 
     @Override
