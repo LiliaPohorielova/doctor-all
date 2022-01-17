@@ -13,10 +13,16 @@
         <div class="col-12">
             <div class="card mb-2 mt-2">
                 <div class="card-header">
-                    Details Doctor
+                    <h5 class="card-title" style="padding-top: 5px">Details Doctor</h5>
                 </div>
                 <div class="card-body">
                     <table class="table table-hover">
+                        <tr>
+                            <th>Image</th>
+                            <td><img class="rounded-circle mt-5" width="150px"
+                                     src="https://www.pinclipart.com/picdir/big/169-1694849_physicians-doctor-icon-clipart.png">
+                            </td>
+                        </tr>
                         <tr>
                             <th>ID</th>
                             <td th:text="${doctor.getId()}"></td>
@@ -50,14 +56,49 @@
                             <td th:text="${T(ua.com.alevel.persistence.type.DoctorSpecialization).valueOf(doctor.getSpecialization())}"></td>
                         </tr>
                     </table>
-                    <hr>
+                    <p style="padding: 5px 5px 0px 0px"></p>
+                    <div class="card mb-3">
+                        <h5 class="card-header">All Patient's Doctors</h5>
+                        <div class="card-body">
+                            <table class="table table-sm table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Lastname</th>
+                                    <th>Firstname</th>
+                                    <th>Email</th>
+                                    <th>Details</th>
+                                    <th>Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="patient,iter : ${patients}">
+                                    <td th:text="${iter.count}"></td>
+                                    <td th:text="${patient.getLastname()}"></td>
+                                    <td th:text="${patient.getFirstname()}"></td>
+                                    <td th:text="${patient.getPatientUser().getEmail()}"></td>
+                                    <td>
+                                        <a th:href="@{'/patients/delete/doctor/' + ${patient.getId()} + '/' + ${doctor.getId()}}"
+                                           type="button" class="btn btn-success">details</a>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{'/patients/delete/doctor/' + ${patient.getId()} + '/' + ${doctor.getId()}}"
+                                           type="button" class="btn btn-danger">delete</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                        <div class="btn-group mr-2" role="group" aria-label="Second group">
+                        <div class="btn-group" role="group" style="margin-right: 5px">
                             <a th:href="@{/admin/doctors}" type="button" class="btn btn-primary">Back</a>
                         </div>
-                        <div class="btn-group mr-2" role="group" aria-label="Third group">
+                        <div class="btn-group" role="group" style="margin-right: 5px">
                             <a href="#" type="button" class="btn btn-success">Add
                                 new patient</a>
+                        </div>
+                        <div class="btn-group" role="group" style="margin-right: 5px">
                             <a href="#" type="button" class="btn btn-success">Add
                                 new appointments</a>
                         </div>

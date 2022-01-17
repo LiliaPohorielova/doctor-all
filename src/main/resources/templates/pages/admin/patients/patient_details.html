@@ -13,10 +13,16 @@
         <div class="col-12">
             <div class="card mb-2 mt-2">
                 <div class="card-header">
-                    Details Patient
+                    <h5 class="card-title" style="padding-top: 5px">Details Patient</h5>
                 </div>
                 <div class="card-body">
                     <table class="table table-hover">
+                        <tr>
+                            <th>Image</th>
+                            <td><img class="rounded-circle mt-5" width="150px"
+                                     src="https://i.ibb.co/B4q638y/pat-icon.png">
+                            </td>
+                        </tr>
                         <tr>
                             <th>ID</th>
                             <td th:text="${patient.getId()}"></td>
@@ -54,14 +60,51 @@
                             <td th:text="${#calendars.format(patient.getUpdated(),'dd MMMM yyyy')}"></td>
                         </tr>
                     </table>
-                    <hr>
+                    <div class="card mb-3">
+                        <h5 class="card-header">All Patient's Doctors</h5>
+                        <div class="card-body">
+                            <table class="table table-sm table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Lastname</th>
+                                    <th>Firstname</th>
+                                    <th>MiddleName</th>
+                                    <th>Specialization</th>
+                                    <th>Details</th>
+                                    <th>Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="doctor,iter : ${doctors}">
+                                    <td th:text="${iter.count}"></td>
+                                    <td th:text="${doctor.getLastname()}"></td>
+                                    <td th:text="${doctor.getFirstname()}"></td>
+                                    <td th:text="${doctor.getMiddleName()}"></td>
+                                    <td th:text="${doctor.getSpecialization().toString()}"></td>
+                                    <td>
+                                        <a th:href="@{'/patients/doctor_details/' + ${doctor.getId()}}"
+                                           type="button" class="btn btn-success">details</a>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{'/patients/delete/doctor/' + ${doctor.getId()}}"
+                                           type="button" class="btn btn-danger">delete</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <a th:href="@{'/patient/all_doctors/'}" class="btn btn-primary">Add doctor</a>
+                        </div>
+                    </div>
                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                        <div class="btn-group mr-2" role="group" aria-label="Second group">
+                        <div class="btn-group" role="group" style="margin-right: 5px">
                             <a th:href="@{/admin/patients}" type="button" class="btn btn-primary">Back</a>
                         </div>
-                        <div class="btn-group mr-2" role="group" aria-label="Third group">
+                        <div class="btn-group" role="group" style="margin-right: 5px">
                             <a href="#" type="button" class="btn btn-success">Add
-                                new patient</a>
+                                new doctor</a>
+                        </div>
+                        <div class="btn-group" role="group" style="margin-right: 5px">
                             <a href="#" type="button" class="btn btn-success">Add
                                 new appointments</a>
                         </div>

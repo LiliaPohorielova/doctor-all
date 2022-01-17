@@ -5,6 +5,7 @@ import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.facade.patient.PatientFacade;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
+import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.entity.user.PatientUser;
 import ua.com.alevel.service.patient.PatientService;
@@ -14,9 +15,13 @@ import ua.com.alevel.web.dto.request.data.PageAndSizeData;
 import ua.com.alevel.web.dto.request.data.SortData;
 import ua.com.alevel.web.dto.request.patient.PatientRequestDto;
 import ua.com.alevel.web.dto.response.PageData;
+import ua.com.alevel.web.dto.response.doctor.DoctorResponseDto;
 import ua.com.alevel.web.dto.response.patient.PatientResponseDto;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -103,5 +108,16 @@ public class PatientFacadeImpl implements PatientFacade {
     public PatientUser getPatientUser(Long id) {
         PatientUser user = patientService.findById(id).get().getPatientUser();
         return user;
+    }
+
+    @Override
+    public Set<DoctorResponseDto> getDoctors(Long id) {
+        Set<Doctor> doctors = patientService.getDoctors(id);
+        Set<DoctorResponseDto> list = new HashSet<>();
+        for (Doctor doctor : doctors) {
+            DoctorResponseDto doctorResponseDto = new DoctorResponseDto(doctor);
+            list.add(doctorResponseDto);
+        }
+        return list;
     }
 }

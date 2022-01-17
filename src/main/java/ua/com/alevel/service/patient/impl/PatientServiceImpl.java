@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.alevel.persistence.crud.CrudRepositoryHelper;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
+import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.repository.patient.PatientRepository;
@@ -14,6 +15,7 @@ import ua.com.alevel.service.patient.PatientService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -63,5 +65,10 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public List<Patient> findAll() {
         return patientRepository.findAll();
+    }
+
+    @Override
+    public Set<Doctor> getDoctors(Long id) {
+        return patientRepositoryHelper.findById(patientRepository, id).get().getDoctors();
     }
 }

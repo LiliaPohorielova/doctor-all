@@ -21,10 +21,12 @@ import ua.com.alevel.web.controller.AbstractController;
 import ua.com.alevel.web.dto.request.doctor.DoctorRequestDto;
 import ua.com.alevel.web.dto.response.PageData;
 import ua.com.alevel.web.dto.response.doctor.DoctorResponseDto;
+import ua.com.alevel.web.dto.response.patient.PatientResponseDto;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static ua.com.alevel.util.WebUtil.DEFAULT_ORDER_PARAM_VALUE;
 
@@ -113,8 +115,10 @@ public class AdminDoctorController extends AbstractController {
     }
 
     @GetMapping("/details/{id}")
-    public String findById(@PathVariable Long id, Model model) {
+    public String detailsByDoctorId(@PathVariable Long id, Model model) {
+        Set<PatientResponseDto> patients = doctorFacade.getPatients(id);
         model.addAttribute("doctor", doctorFacade.findById(id));
+        model.addAttribute("patients", patients);
         return "pages/admin/doctors/doctor_details";
     }
 

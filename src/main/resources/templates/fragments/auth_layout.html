@@ -24,7 +24,7 @@
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
             <div sec:authorize="hasRole('ROLE_ADMIN')">
-                <nav class="navbar navbar-dark bg-dark">
+                <nav class="navbar navbar-dark bg-dark" style="padding-right: 15px">
                     <a class="nav-item nav-link" th:href="@{/admin/dashboard}">Dashboard</a>
                     <a class="nav-item nav-link" th:href="@{/admin/doctors}">Doctors</a>
                     <a class="nav-item nav-link" th:href="@{/admin/patients}">Patients</a>
@@ -37,20 +37,20 @@
             </div>
 
             <div sec:authorize="hasRole('ROLE_PATIENT')">
-                <nav class="navbar navbar-dark bg-dark">
+                <nav class="navbar navbar-dark bg-dark" style="padding-right: 15px">
                     <a class="nav-item nav-link" th:href="@{/patient/dashboard}">Dashboard</a>
-                    <a class="nav-item nav-link" th:href="@{/patient/doctors}">Doctors</a>
+                    <a class="nav-item nav-link" th:href="@{/patient/my_doctors}">Doctors</a>
                     <a class="nav-item nav-link" th:href="@{/patient/news}">News</a>
                     <form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
-                    <a class="nav-item nav-link" onclick="document.forms['logoutForm'].submit()" style="cursor: pointer !important;">Logout</a>
+                    <a class="btn btn-outline-danger a5" onclick="document.forms['logoutForm'].submit()" style="cursor: pointer !important;">Logout</a>
                 </nav>
             </div>
 
             <div sec:authorize="hasRole('ROLE_DOCTOR')">
-                <nav class="navbar navbar-dark bg-dark">
+                <nav class="navbar navbar-dark bg-dark" style="padding-right: 15px">
                     <a class="nav-item nav-link" th:href="@{/doctor/dashboard}">Dashboard</a>
                     <a class="nav-item nav-link" th:href="@{/doctor/my_patients}">Patients</a>
                     <a class="nav-item nav-link" th:href="@{/doctor/news}">News</a>
@@ -58,7 +58,7 @@
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
-                    <a class="nav-item nav-link" onclick="document.forms['logoutForm'].submit()" style="cursor: pointer !important;">Logout</a>
+                    <a class="btn btn-outline-danger a5" onclick="document.forms['logoutForm'].submit()" style="cursor: pointer !important;">Logout</a>
                 </nav>
             </div>
 

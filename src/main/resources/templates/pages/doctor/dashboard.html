@@ -32,25 +32,25 @@
                     <div class="row mt-2">
                         <div class="col-md-12"><label class="labels">Firstname</label><input type="text"
                                                                                              class="form-control"
-                                                                                             th:value="${doctor.getFirstname()}">
+                                                                                             th:value="${doctor.getFirstname()}" readonly>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-12"><label class="labels">Lastname</label><input type="text"
                                                                                             class="form-control"
-                                                                                            th:value="${doctor.getLastname()}">
+                                                                                            th:value="${doctor.getLastname()}" readonly>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-12"><label class="labels">Middle Name</label><input type="text"
                                                                                             class="form-control"
-                                                                                            th:value="${doctor.getMiddleName()}">
+                                                                                            th:value="${doctor.getMiddleName()}" readonly>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-12"><label class="labels">Specialization</label><input type="text"
                                                                                           class="form-control"
-                                                                                          th:value="${T(ua.com.alevel.persistence.type.DoctorSpecialization).valueOf(doctor.getSpecialization())}">
+                                                                                          th:value="${T(ua.com.alevel.persistence.type.DoctorSpecialization).valueOf(doctor.getSpecialization())}" readonly>
                         </div>
                     </div>
                     <div class="mt-5 text-center">

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{fragments/patient_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient - About Doctor</title>
+</head>
+<body>
+<div layout:fragment="patient_content">
+    <div class="card">
+        <h5 class="card-header">It Must Be Modal</h5>
+        <div class="container rounded bg-white">
+            <div class="row">
+                <div class="col-md-3 border-right">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                        <img class="rounded-circle mt-5" width="150px"
+                             src="https://www.pinclipart.com/picdir/big/169-1694849_physicians-doctor-icon-clipart.png">
+                        <span class="font-weight-bold" th:text="${doctor.getFirstname()}"></span>
+                        <span class="text-black-50" th:text="${doctor.getDoctorUser().getEmail()}"></span><span> </span>
+                    </div>
+                </div>
+                <div class="col-md-5 border-right">
+                    <div class="p-3 py-5">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h4 class="text-right">Information About Doctor</h4>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12"><label class="labels">Firstname</label><input type="text"
+                                                                                                 class="form-control"
+                                                                                                 th:value="${doctor.getFirstname()}"
+                                                                                                 readonly>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12"><label class="labels">Lastname</label><input type="text"
+                                                                                                class="form-control"
+                                                                                                th:value="${doctor.getLastname()}"
+                                                                                                readonly>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12"><label class="labels">Middle Name</label><input type="text"
+                                                                                                   class="form-control"
+                                                                                                   th:value="${doctor.getMiddleName()}"
+                                                                                                   readonly>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12"><label class="labels">Specialization</label><input type="text"
+                                                                                                      class="form-control"
+                                                                                                      th:value="${T(ua.com.alevel.persistence.type.DoctorSpecialization).valueOf(doctor.getSpecialization())}"
+                                                                                                      readonly>
+                            </div>
+                        </div>
+                        <div class="mt-5 text-center">
+                            <a th:href="@{'/patient/my_doctors'}" class="btn btn-primary">Back</a>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
+                                Create appointment to this doctor
+                            </button>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Create New Appointment</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="col-md-12 dateOfBirth"><label class="labels">Date Of
+                                                appointment</label>
+                                                <div class="input-group date" id="datepicker">
+                                                    <input type="text" class="form-control">
+                                                    <span class="input-group-append">
+                                                         <span class="input-group-text bg-white d-block">
+                                                             <i class="fa fa-calendar"
+                                                                onclick="$(function() {
+                                                                console.log(window.location.toString());
+                                                                $('#datepicker').datepicker();
+                                                                console.log(window.location.toString());
+                                                                });">
+                                                            </i>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

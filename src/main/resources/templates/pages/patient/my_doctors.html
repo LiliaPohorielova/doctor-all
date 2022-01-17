@@ -3,18 +3,18 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      layout:decorate="~{fragments/doctor_layout}">
+      layout:decorate="~{fragments/patient_layout}">
 <head>
     <meta charset="utf-8">
-    <title>Doctor - My Patients</title>
+    <title>Patient - My Doctors</title>
 </head>
 <body>
 
-<div layout:fragment="doctor_content">
+<div layout:fragment="patient_content">
     <div class="container rounded bg-white mt-5 mb-5 p-5">
-        <h1 class="pb-3">This is your patients</h1>
+        <h1 class="pb-3">This is your doctors</h1>
         <div class="card">
-            <h5 class="card-header">All My Patients</h5>
+            <h5 class="card-header">All My Doctors</h5>
             <div class="card-body">
                 <table class="table table-sm table-hover">
                     <thead>
@@ -22,30 +22,32 @@
                         <th>#</th>
                         <th>Lastname</th>
                         <th>Firstname</th>
-                        <th>Email</th>
+                        <th>MiddleName</th>
+                        <th>Specialization</th>
                         <th>Details</th>
                         <th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="patient,iter : ${patients}">
+                    <tr th:each="doctor,iter : ${doctors}">
                         <td th:text="${iter.count}"></td>
-                        <td th:text="${patient.getLastname()}"></td>
-                        <td th:text="${patient.getFirstname()}"></td>
-                        <td th:text="${patient.getPatientUser().getEmail()}"></td>
+                        <td th:text="${doctor.getLastname()}"></td>
+                        <td th:text="${doctor.getFirstname()}"></td>
+                        <td th:text="${doctor.getMiddleName()}"></td>
+                        <td th:text="${doctor.getSpecialization().toString()}"></td>
                         <td>
-                            <a th:href="@{'/doctor/about_patient/' + ${patient.getId()}}"
+                            <a th:href="@{'/patient/about_doctor/' + ${doctor.getId()}}"
                                type="button" class="btn btn-success">details</a>
                         </td>
                         <td>
-                            <a th:href="@{'/doctor/delete_patient/' + ${patient.getId()}}"
+                            <a th:href="@{'/patient/delete_doctor/' + ${doctor.getId()}}"
                                type="button" class="btn btn-danger"
-                               onclick="return confirm('Are you sure you want to Delete this Patient?');">delete</a>
+                               onclick="return confirm('Are you sure you want to Delete this Doctor?');">delete</a>
                         </td>
                     </tr>
                     </tbody>
                 </table>
-                <a th:href="@{'/doctor/all_patients/'}" class="btn btn-primary">Add patient</a>
+                <a th:href="@{'/patient/all_doctors/'}" class="btn btn-primary">Add doctor</a>
             </div>
         </div>
     </div>
