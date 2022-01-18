@@ -1,5 +1,7 @@
 package ua.com.alevel.service.patient;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.doctor.Doctor;

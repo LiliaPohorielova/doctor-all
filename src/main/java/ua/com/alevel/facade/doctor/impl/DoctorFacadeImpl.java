@@ -65,6 +65,35 @@ public class DoctorFacadeImpl implements DoctorFacade {
     }
 
     @Override
+    public PageData<PatientResponseDto> getPatientsTable(Long id, WebRequest request) {
+        PageAndSizeData pageAndSizeData = WebUtil.generatePageAndSizeData(request);
+        SortData sortData = WebUtil.generateSortData(request);
+        DataTableRequest dataTableRequest = new DataTableRequest();
+        dataTableRequest.setSize(pageAndSizeData.getSize());
+        dataTableRequest.setPage(pageAndSizeData.getPage());
+        dataTableRequest.setSort(sortData.getSort());
+        dataTableRequest.setOrder(sortData.getOrder());
+
+        DataTableResponse<Patient> patients = doctorService.findPatientsByDoctor(doctorService.findById(id).get(),dataTableRequest);
+
+        List< PatientResponseDto> list = patients.getItems().
+                stream().
+                map( PatientResponseDto::new).
+                collect(Collectors.toList());
+
+        PageData< PatientResponseDto> pageData = new PageData<>();
+        pageData.setItems(list);
+        pageData.setCurrentPage(pageAndSizeData.getPage());
+        pageData.setPageSize(pageAndSizeData.getSize());
+        pageData.setOrder(sortData.getOrder());
+        pageData.setSort(sortData.getSort());
+        pageData.setItemsSize(patients.getItemsSize());
+        pageData.initPaginationState(pageData.getCurrentPage());
+
+        return pageData;
+    }
+
+    @Override
     public void create(DoctorRequestDto doctorRequestDto) {
         Doctor doctor = new Doctor();
         doctor.setLastname(doctorRequestDto.getLastname());

@@ -22,4 +22,6 @@ public interface DoctorService extends BaseCrudService<Doctor> {
     void addPatient(Long doctorId, Long patientId);
 
     void removePatient(Long doctorId, Long patientId);
+
+    DataTableResponse<Patient> findPatientsByDoctor(Doctor doctor, DataTableRequest dataTableRequest);
 }

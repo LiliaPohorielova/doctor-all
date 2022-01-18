@@ -8,8 +8,6 @@ import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.patient.Patient;
-import ua.com.alevel.persistence.entity.patient.Patient;
-import ua.com.alevel.persistence.repository.patient.PatientRepository;
 import ua.com.alevel.persistence.repository.patient.PatientRepository;
 import ua.com.alevel.service.patient.PatientService;
 
@@ -20,7 +18,7 @@ import java.util.Set;
 @Service
 public class PatientServiceImpl implements PatientService {
 
-    private PatientRepository patientRepository;
+    private final PatientRepository patientRepository;
     private final CrudRepositoryHelper<Patient, PatientRepository> patientRepositoryHelper;
 
     public PatientServiceImpl(PatientRepository patientRepository, CrudRepositoryHelper<Patient, PatientRepository> patientRepositoryHelper) {

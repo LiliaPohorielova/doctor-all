@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{fragments/doctor_layout}">
+<head>
+    <meta charset="utf-8">
+    <title>Doctor - My Patients</title>
+</head>
+<body>
+
+<div layout:fragment="data_table_content">
+        <tr th:each="patient,iter : ${pageData.getItems()}">
+            <td th:text="${iter.count}"></td>
+            <td th:text="${patient.getLastname()}"></td>
+            <td th:text="${patient.getFirstname()}"></td>
+            <td th:text="${patient.getGender().toString()}"></td>
+            <td th:text="${patient.getPatientUser().getEmail()}"></td>
+            <td>
+                <a th:href="@{'/doctor/about_patient/' + ${patient.getId()}}"
+                   type="button" class="btn btn-success">details</a>
+            </td>
+            <td>
+                <a th:href="@{'/doctor/delete_patient/' + ${patient.getId()}}"
+                   type="button" class="btn btn-danger"
+                   onclick="return confirm('Are you sure you want to Delete this Patient?');">delete</a>
+            </td>
+        </tr>
+</div>
+</body>
+</html>
