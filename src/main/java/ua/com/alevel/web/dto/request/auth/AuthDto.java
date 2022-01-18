@@ -1,6 +1,8 @@
 package ua.com.alevel.web.dto.request.auth;
 
-public class AuthDto {
+import ua.com.alevel.web.dto.request.RequestDto;
+
+public class AuthDto extends RequestDto {
 
     private String firstname;
     private String lastname;

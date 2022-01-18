@@ -1,10 +1,10 @@
 package ua.com.alevel.web.controller.patient;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.facade.doctor.DoctorFacade;
 import ua.com.alevel.facade.patient.PatientFacade;
@@ -13,10 +13,13 @@ import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.entity.user.DoctorUser;
 import ua.com.alevel.persistence.entity.user.PatientUser;
+import ua.com.alevel.persistence.type.DoctorSpecialization;
 import ua.com.alevel.util.SecurityUtil;
 import ua.com.alevel.web.dto.response.doctor.DoctorResponseDto;
 import ua.com.alevel.web.dto.response.patient.PatientResponseDto;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -45,7 +48,6 @@ public class PatientController {
 
     @GetMapping("/my_doctors")
     public String myPatients(WebRequest webRequest, Model model) {
-
         String user = SecurityUtil.getUsername();
         PatientUser patientUserData = patientUserFacade.findByEmail(user);
         Patient patient = patientUserData.getPatient();
@@ -88,4 +90,45 @@ public class PatientController {
         model.addAttribute("doctor", doctorFacade.findById(doctorId));
         return "pages/patient/about_doctor";
     }
+
+    @GetMapping("/book_appointment")
+    public String bookAppointment(Model model) {
+        /*model.addAttribute("appointmentForm", new AppointmentForm());
+        model.addAttribute("specializationList", DoctorSpecialization.values());
+        LocalDate now = LocalDate.now();
+        model.addAttribute("now", now);*/
+
+        return "pages/appointment/book-appointments";
+    }
+
+/*    @PostMapping("/book_appointment")
+    public String bookAppointment(@ModelAttribute("appointmentForm") AppointmentForm appointmentForm, Model model){
+
+        List<Doctor> doctors = doctorService.findBySpecialization(Integer.parseInt(appointmentForm.getSpecialization()));
+
+        List<Appointment> availableAppointments = new ArrayList<>();
+
+        for (Doctor doctor: doctors) {
+            List<Appointment> searchedAppointments = appointmentService.getAppointment(doctor,workplaceService.findById(Integer.parseInt(appointmentForm.getLocation())), appointmentForm.getDate());
+            if (!searchedAppointments.isEmpty())
+                availableAppointments = searchedAppointments;
+        }
+
+        model.addAttribute("availableAppointments",availableAppointments);
+        model.addAttribute("appointmentForm",appointmentForm);
+        model.addAttribute("specializationList",specializationService.getAll());
+        model.addAttribute("workplaceList",workplaceService.getAll());
+        return "pages/appointment/book-appointments";
+    }
+
+    @PostMapping("/choosehour")
+    public String choosehour(@ModelAttribute("appointmentForm") AppointmentForm appointmentForm, @RequestParam(value = "id") Integer id, Authentication auth, BindingResult bindingResult, Model model){
+        String user = auth.getName();
+        LoginData loginData = loginService.findByEmail(user);
+        Patient patient = loginData.getPatient();
+
+        appointmentService.bookAppointment(id,patient);
+
+        return "redirect:/patient/dashboard";
+    }*/
 }

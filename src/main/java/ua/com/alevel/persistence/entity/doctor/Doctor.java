@@ -5,7 +5,6 @@ import ua.com.alevel.persistence.entity.department.DoctorsDepartment;
 import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.entity.slot.Slot;
 import ua.com.alevel.persistence.entity.user.DoctorUser;
-import ua.com.alevel.persistence.entity.user.PatientUser;
 import ua.com.alevel.persistence.type.DoctorSpecialization;
 
 import javax.persistence.*;
@@ -43,7 +42,7 @@ public class Doctor extends BaseEntity {
             cascade = CascadeType.PERSIST,
             fetch = FetchType.LAZY
     )
-    private Set<Slot> appointments;
+    private Set<Slot> slots;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
@@ -55,7 +54,7 @@ public class Doctor extends BaseEntity {
     public Doctor() {
         super();
         this.patients = new HashSet<>();
-        this.appointments = new HashSet<>();
+        this.slots = new HashSet<>();
     }
 
     public String getLastname() {
@@ -98,12 +97,12 @@ public class Doctor extends BaseEntity {
         this.department = department;
     }
 
-    public Set<Slot> getAppointments() {
-        return appointments;
+    public Set<Slot> getSlots() {
+        return slots;
     }
 
-    public void setAppointments(Set<Slot> appointments) {
-        this.appointments = appointments;
+    public void setSlots(Set<Slot> appointments) {
+        this.slots = appointments;
     }
 
     public String getImageUrl() {

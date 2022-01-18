@@ -7,7 +7,7 @@ import ua.com.alevel.web.dto.request.auth.AuthDto;
 import ua.com.alevel.web.dto.response.PageData;
 import ua.com.alevel.web.dto.response.ResponseDto;
 
-public interface BaseFacade<REQ extends AuthDto, RES extends ResponseDto>{
+public interface BaseFacade<REQ extends RequestDto, RES extends ResponseDto>{
 
     void create(REQ req);
     void update(REQ req, Long id);

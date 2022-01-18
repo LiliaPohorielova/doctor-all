@@ -15,12 +15,10 @@ import ua.com.alevel.facade.doctor.DoctorFacade;
 import ua.com.alevel.facade.doctor.DoctorRegistrationFacade;
 import ua.com.alevel.facade.patient.PatientFacade;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
-import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.entity.user.DoctorUser;
 import ua.com.alevel.util.SecurityUtil;
 import ua.com.alevel.web.controller.AbstractController;
 import ua.com.alevel.web.dto.response.PageData;
-import ua.com.alevel.web.dto.response.doctor.DoctorResponseDto;
 import ua.com.alevel.web.dto.response.patient.PatientResponseDto;
 
 import java.util.ArrayList;
@@ -67,22 +65,11 @@ public class DoctorController extends AbstractController {
 
     @GetMapping("/my_patients")
     public String myPatients(Model model) {
-
         String user = SecurityUtil.getUsername();
         DoctorUser doctorUserData = doctorUserFacade.findByEmail(user);
         Doctor doctor = doctorUserData.getDoctor();
         Set<PatientResponseDto> patients = doctorFacade.getPatients(doctor.getId());
         model.addAttribute("patients", patients);
-        //TODO: Table patients WebRequest
-        /*HeaderName[] columnTitles = getColumnTitles();
-        PageData<PatientResponseDto> response = doctorFacade.getPatients(webRequest);
-        response.initPaginationState(response.getCurrentPage());
-        List<HeaderData> headerDataList = getHeaderDataList(columnTitles, response);
-
-        model.addAttribute("headerDataList", headerDataList);
-        model.addAttribute("createUrl", "/doctor/my_patients");
-        model.addAttribute("pageData", response);
-        model.addAttribute("cardHeader", "My Patients");*/
         return "pages/doctor/my_patients";
     }
 

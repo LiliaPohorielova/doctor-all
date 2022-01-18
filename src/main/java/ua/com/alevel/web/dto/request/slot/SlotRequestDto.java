@@ -1,35 +1,20 @@
-package ua.com.alevel.persistence.entity.slot;
+package ua.com.alevel.web.dto.request.slot;
 
-import ua.com.alevel.persistence.entity.BaseEntity;
 import ua.com.alevel.persistence.entity.appointment.PatientAppointment;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.type.SlotStatus;
+import ua.com.alevel.web.dto.request.RequestDto;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Entity
-@Table(name = "slots")
-public class Slot extends BaseEntity {
+public class SlotRequestDto extends RequestDto {
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "doctor_id", referencedColumnName = "id")
     private Doctor doctor;
-
-    @Column(name = "app_date")
     private LocalDate appDate;
-
-    @Column(name = "start_time")
     private LocalTime startTime;
     private SlotStatus status;
-
-    @OneToOne(mappedBy = "slot")
     private PatientAppointment patientAppointment;
-
-    public Slot() {
-        super();
-    }
 
     public Doctor getDoctor() {
         return doctor;
@@ -37,7 +22,6 @@ public class Slot extends BaseEntity {
 
     public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
-        doctor.getSlots().add(this);
     }
 
     public LocalDate getAppDate() {

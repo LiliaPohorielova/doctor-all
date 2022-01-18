@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div class="row animate-box">
+        <div class="col-md-6 col-md-offset-3 text-center qbootstrap-heading">
+            <h2>Book appointment</h2>
+            <p>Choose doctor you want to visit, location and date.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+
+<!--                <form th:action="@{/bookappointment}" th:object="${appointmentForm}"  method="post">
+
+                    <div class="form-group">
+                        <label>Choose doctor's specialization</label>
+                        <select th:field = "*{specialization}" th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" class="selectpicker form-control">
+                            <option th:each="specialization:${specializationList}" th:value="${specialization.id}" th:text="${specialization.specialization}" />
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Choose date</label>
+                        &lt;!&ndash;                    <div class="input-group date" data-provide="datepicker">&ndash;&gt;
+                        <input type="date" th:field = "*{date}" th:attr="min=${now}" class="form-control">
+                        &lt;!&ndash;                    </div>&ndash;&gt;
+                    </div>
+
+                    <div class="row form-group"></div>
+                    <div class="row form-group"></div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-lg btn-primary btn-block">Check availbility</button>
+                    </div>
+
+                </form>
+
+                <form th:action="@{/choosehour}" th:object="${availableAppointments}"  method="post">
+                    <div th:if="${availableAppointments != null}">
+                        <div th:if="${!availableAppointments.isEmpty()}">
+
+                            <label>Choose hour</label>
+                            <div class="form-group">
+
+                                <tr th:each="app : ${availableAppointments}">
+                                    <td>
+                                        <button type="submit" class="btn btn-lg btn-primary" th:name="id" th:value="${app.getId()}" th:text="${app.getStartTime()}" onClick="return confirm('Do you confirm appointment on this hour?')"></button>
+                                    </td>
+                                </tr>
+                            </div>
+
+                        </div>
+                        <div th:unless="${!availableAppointments.isEmpty()}">
+                            <div class="alert alert-danger">No available appointments for these parameters. Please change the date or location and check again.</div>
+                        </div>
+                    </div>
+                </form>-->
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
