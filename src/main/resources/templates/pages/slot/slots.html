@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{fragments/doctor_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="doctor_content">
+  <div class="container rounded bg-white mt-5 mb-5 p-5">
+    <h1 class="pb-3">This is your slots</h1>
+    <div class="card">
+      <h5 class="card-header">All My Slots</h5>
+      <div class="card-body">
+        <table class="table table-sm table-hover">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>StartTime</th>
+            <th>AppDate</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="slot,iter : ${slots}">
+            <td th:text="${iter.count}"></td>
+            <td th:text="${slot.getStartTime()}"></td>
+            <td th:text="${slot.getAppDate()}"></td>
+            <td th:text="${slot.getStatus()}"></td>
+            <td th:text="${slot.getDoctor().getDoctorUser().getEmail()}"></td>
+            <td>
+              <a th:href="@{'/doctor/slots/delete_slot/' + ${slot.getId()}}"
+                 type="button" class="btn btn-danger"
+                 onclick="return confirm('Are you sure you want to Delete this Slot?');">delete</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <a th:href="@{'/doctor/slots/new'}" class="btn btn-primary">Create New Slot</a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

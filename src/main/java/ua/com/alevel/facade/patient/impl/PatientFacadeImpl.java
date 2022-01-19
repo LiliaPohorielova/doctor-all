@@ -113,11 +113,11 @@ public class PatientFacadeImpl implements PatientFacade {
     @Override
     public Set<DoctorResponseDto> getDoctors(Long id) {
         Set<Doctor> doctors = patientService.getDoctors(id);
-        Set<DoctorResponseDto> list = new HashSet<>();
+        Set<DoctorResponseDto> set = new HashSet<>();
         for (Doctor doctor : doctors) {
             DoctorResponseDto doctorResponseDto = new DoctorResponseDto(doctor);
-            list.add(doctorResponseDto);
+            set.add(doctorResponseDto);
         }
-        return list;
+        return set;
     }
 }

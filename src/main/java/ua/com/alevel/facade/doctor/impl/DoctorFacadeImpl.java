@@ -7,10 +7,12 @@ import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.patient.Patient;
+import ua.com.alevel.persistence.entity.slot.Slot;
 import ua.com.alevel.persistence.entity.user.DoctorUser;
 import ua.com.alevel.service.doctor.DoctorService;
 import ua.com.alevel.service.doctor.DoctorUserService;
 import ua.com.alevel.service.patient.PatientService;
+import ua.com.alevel.service.slot.SlotService;
 import ua.com.alevel.util.WebUtil;
 import ua.com.alevel.web.dto.request.data.PageAndSizeData;
 import ua.com.alevel.web.dto.request.data.SortData;
@@ -18,6 +20,7 @@ import ua.com.alevel.web.dto.request.doctor.DoctorRequestDto;
 import ua.com.alevel.web.dto.response.PageData;
 import ua.com.alevel.web.dto.response.doctor.DoctorResponseDto;
 import ua.com.alevel.web.dto.response.patient.PatientResponseDto;
+import ua.com.alevel.web.dto.response.slot.SlotResponseDto;
 
 import java.util.HashSet;
 import java.util.List;
@@ -27,12 +30,12 @@ import java.util.stream.Collectors;
 @Service
 public class DoctorFacadeImpl implements DoctorFacade {
 
-    private final DoctorUserService doctorUserService;
+    private final SlotService slotService;
     private final DoctorService doctorService;
     private final PatientService patientService;
 
-    public DoctorFacadeImpl(DoctorUserService doctorUserService, DoctorService doctorService, PatientService patientService) {
-        this.doctorUserService = doctorUserService;
+    public DoctorFacadeImpl(SlotService slotService, DoctorService doctorService, PatientService patientService) {
+        this.slotService = slotService;
         this.doctorService = doctorService;
         this.patientService = patientService;
     }
@@ -164,5 +167,23 @@ public class DoctorFacadeImpl implements DoctorFacade {
     public DoctorUser getDoctorUser(Long id) {
         DoctorUser user = doctorService.findById(id).get().getDoctorUser();
         return user;
+    }
+
+    @Override
+    public Set<SlotResponseDto> getSlots(Long id) {
+        Set<Slot> slots = doctorService.getSlots(id);
+        Set<SlotResponseDto> set = new HashSet<>();
+        for (Slot slot : slots) {
+            SlotResponseDto slotResponseDto = new SlotResponseDto(slot);
+            set.add(slotResponseDto);
+        }
+        return set;
+    }
+
+    @Override
+    public void removeSlot(Long doctorId, Long slotId) {
+        Doctor doctor = doctorService.findById(doctorId).get();
+        slotService.delete(slotId);
+        doctorService.update(doctor);
     }
 }

@@ -1,14 +1,13 @@
 package ua.com.alevel.web.controller.doctor;
 
-import org.apache.commons.collections4.MapUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
+import ua.com.alevel.facade.doctor.DoctorFacade;
+import ua.com.alevel.facade.doctor.DoctorRegistrationFacade;
 import ua.com.alevel.facade.slot.SlotFacade;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
+import ua.com.alevel.persistence.entity.slot.Slot;
 import ua.com.alevel.persistence.entity.user.DoctorUser;
 import ua.com.alevel.util.SecurityUtil;
 import ua.com.alevel.web.dto.request.slot.SlotRequestDto;
@@ -16,25 +15,30 @@ import ua.com.alevel.web.dto.response.patient.PatientResponseDto;
 import ua.com.alevel.web.dto.response.slot.SlotResponseDto;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/doctor/slots")
 public class DoctorSlotController {
 
     private final SlotFacade slotFacade;
+    private final DoctorRegistrationFacade doctorUserFacade;
+    private final DoctorFacade doctorFacade;
 
-    public DoctorSlotController(SlotFacade slotFacade) {
+    public DoctorSlotController(SlotFacade slotFacade, DoctorRegistrationFacade doctorUserFacade, DoctorFacade doctorFacade) {
         this.slotFacade = slotFacade;
+        this.doctorUserFacade = doctorUserFacade;
+        this.doctorFacade = doctorFacade;
     }
 
-    @PostMapping("/all")
-    public ModelAndView findAllRedirect(WebRequest request, ModelMap model) {
-        Map<String, String[]> parameterMap = request.getParameterMap();
-        if (MapUtils.isNotEmpty(parameterMap)) {
-            parameterMap.forEach(model::addAttribute);
-        }
-        return new ModelAndView("redirect:/doctor/slots", model);
+    @GetMapping()
+    public String myPatients(Model model) {
+        String user = SecurityUtil.getUsername();
+        DoctorUser doctorUserData = doctorUserFacade.findByEmail(user);
+        Doctor doctor = doctorUserData.getDoctor();
+        Set<SlotResponseDto> slots = doctorFacade.getSlots(doctor.getId());
+        model.addAttribute("slots", slots);
+        return "pages/slot/slots";
     }
 
     @GetMapping("/new")
@@ -45,41 +49,20 @@ public class DoctorSlotController {
 
     @PostMapping("/new")
     public String createNewSlot(@ModelAttribute("slot") SlotRequestDto slotRequestDto) {
+        String user = SecurityUtil.getUsername();
+        DoctorUser doctorUserData = doctorUserFacade.findByEmail(user);
+        Doctor doctor = doctorUserData.getDoctor();
+        slotRequestDto.setDoctor(doctor);
         slotFacade.create(slotRequestDto);
         return "redirect:/doctor/slots";
     }
 
-/*    @GetMapping("/update/{id}")
-    public String redirectToUpdateSlotPage(@PathVariable Long id, Model model) {
-        SlotResponseDto slotResponseDto = slotFacade.findById(id);
-        model.addAttribute("slot", slotResponseDto);
-        return "pages/slot/slot_update";
-    }
-
-    @PostMapping("/update/{id}")
-    public String updateSlot(@ModelAttribute("slot") SlotRequestDto slotRequestDto, @PathVariable Long id) {
-        slotFacade.update(slotRequestDto, id);
-        return "redirect:/doctor/slots";
-    }
-
-    @GetMapping("/details/{id}")
-    public String findById(@PathVariable Long id, Model model) {
+    @GetMapping("/delete_slot/{slotId}")
+    public String deleteById(@PathVariable Long slotId, Model model) {
         String user = SecurityUtil.getUsername();
         DoctorUser doctorUserData = doctorUserFacade.findByEmail(user);
         Doctor doctor = doctorUserData.getDoctor();
-        List<PatientResponseDto> patients = doctorFacade.getPatients(doctor.getId());
-        List<SlotResponseDto> doctors = slotFacade.getDoctors(id);
-        model.addAttribute("slot", slotFacade.findById(id));
-        return "pages/slot/slot_details";
-    }
-
-    @GetMapping("/delete/{id}")
-    public String deleteById(@PathVariable Long id) {
-        List<DoctorResponseDto> doctors = slotFacade.getDoctors(id);
-        for (DoctorResponseDto doctor: doctors) {
-            doctorFacade.removeSlot(doctor.getId(), id);
-        }
-        slotFacade.delete(id);
+        doctorFacade.removeSlot(doctor.getId(), slotId);
         return "redirect:/doctor/slots";
-    }*/
+    }
 }

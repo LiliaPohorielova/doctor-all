@@ -30,47 +30,32 @@
 </head>
 <body>
 <div layout:fragment="doctor_content">
-<div style="margin:100px;float:left;">
-
-    <input id="timepkr" style="width:100px;float:left;" class="form-control" placeholder="HH:MM" />
-    <button type="button" class="btn btn-primary" onclick="showpickers('timepkr',24)" style="width:40px;float:left;"><i class="fa fa-clock-o"></i>
-
-</div>
-<div class="timepicker"></div>  <!--Important to add and keep it seprate to the end-->
-</div>
-<!--    <div class="row">
+    <div class="row">
         <div class="col-12">
             <div class="card mt-2">
                 <div class="card-header">
-                    <h4>New Patient</h4>
+                    <h4>New Slot</h4>
                 </div>
                 <div class="card-body">
                     <form action="#" th:action="@{/doctor/slots/new}" th:object="${slot}"
                           method="post">
 
                         <div class="form-outline form-white mb-4">
-&lt;!&ndash;                            <div style="margin:100px;float:left;">
-
-                                <input id="timepkr" style="width:100px;float:left;" class="form-control" placeholder="HH:MM" />
-                                <button type="button" class="btn btn-primary" onclick="showpickers('timepkr',24)" style="width:40px;float:left;"><i class="fa fa-clock-o"></i>
-
-                            </div>
-                            <div class="timepicker"></div>  &lt;!&ndash;Important to add and keep it seprate to the end&ndash;&gt;&ndash;&gt;
-                            <div class="input-group">
-                                <input id="timepkr" style="width:100px;float:left;" class="form-control" placeholder="HH:MM" />
+                            <label class="form-label" for="timepicker1">Time Of Appointment</label>
+                            <div class="input-group date" id="timepicker1">
+                                <input id="timepkr" th:field="*{startTime}" type="text" class="form-control">
                                 <span class="input-group-append">
                                                     <span class="input-group-text bg-white d-block">
-
-                                                         <i class="fa fa-clock"
-                                                            onclick="showpickers('timepkr',24)">
-                                                    </i>
+                                                     <i class="fa fa-clock" onclick="showpickers('timepkr',24)"></i>
                                                     </span>
                                              </span>
                             </div>
-                            <label class="form-label" for="datepicker1">Time</label>
                         </div>
 
+                        <div class="timepicker"></div>  <!--Important to add and keep it seprate to the end-->
+
                         <div class="form-outline form-white mb-4">
+                            <label class="form-label" for="datepicker1">Date Of Appointment</label>
                             <div class="input-group date" id="datepicker1">
                                 <input type="text" th:field="*{appDate}" class="form-control">
                                 <span class="input-group-append">
@@ -85,53 +70,18 @@
                                                     </span>
                                              </span>
                             </div>
-                            <label class="form-label" for="datepicker1">Date Of Appointment</label>
                         </div>
 
-                        &lt;!&ndash;<div class="form-outline form-white mb-4">
-                            <div class="input-group date" id="timepicker1">
-                                <input type="text" th:field="*{startTime}" class="form-control">
-                                <span class="input-group-append">
-                                                    <span class="input-group-text bg-white d-block">
-                                                     <i class="fa fa-clock"
-                                                        onclick="$(function() {
-                                                                $('#timepicker1').datepicker({
-                                                                    format: 'HH:mm'
-                                                                });
-                                                                });">
-                                                    </i>
-                                                    </span>
-                                             </span>
-                            </div>
-                            <label class="form-label" for="datepicker1">Time</label>
-                        </div>&ndash;&gt;
-
                         <div class="form-outline form-white mb-4">
+                            <label class="form-label" for="status">Status</label>
                             <select class="form-control" id="status" th:field="*{status}">
                                 <option th:each="type : ${T(ua.com.alevel.persistence.type.SlotStatus).values()}"
                                         th:value="${type}"
                                         th:text="${type}">
                                 </option>
                             </select>
-                            <label class="form-label" for="status">status</label>
                         </div>
 
-
-                        &lt;!&ndash;                        <div class="form-group">
-                                                    <label for="firstName">First name</label>
-                                                    <input type="text" class="form-control" id="firstName" aria-describedby="firstName"
-                                                           placeholder="Введите имя" th:field="*{firstname}">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="lastName">Last name</label>
-                                                    <input type="text" class="form-control" id="lastName" aria-describedby="lastName"
-                                                           placeholder="Введите фамилию" th:field="*{lastname}">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="age">Age</label>
-                                                    <input type="number" min="1" class="form-control" id="age" aria-describedby="age"
-                                                           placeholder="Введите возраст" th:field="*{age}">
-                                                </div>&ndash;&gt;
                         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                             <div class="btn-group mr-2" role="group" aria-label="Second group">
                                 <a th:href="@{/doctor/slots}" type="button" class="btn btn-primary">Back</a>
@@ -150,6 +100,7 @@
                 </th:block>
             </div>
         </div>
-    </div>-->
+    </div>
+</div>
 </body>
 </html>

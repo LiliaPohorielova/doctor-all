@@ -4,6 +4,7 @@ import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.patient.Patient;
+import ua.com.alevel.persistence.entity.slot.Slot;
 import ua.com.alevel.service.BaseCrudService;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface DoctorService extends BaseCrudService<Doctor> {
     void removePatient(Long doctorId, Long patientId);
 
     DataTableResponse<Patient> findPatientsByDoctor(Doctor doctor, DataTableRequest dataTableRequest);
+
+    Set<Slot> getSlots(Long id);
 }

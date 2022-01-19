@@ -12,6 +12,7 @@ import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.patient.Patient;
+import ua.com.alevel.persistence.entity.slot.Slot;
 import ua.com.alevel.persistence.repository.doctor.DoctorRepository;
 import ua.com.alevel.persistence.repository.patient.PatientRepository;
 import ua.com.alevel.service.doctor.DoctorService;
@@ -127,5 +128,10 @@ public class DoctorServiceImpl implements DoctorService {
         dataTableResponse.setItems(pageEntity.getContent());
 
         return dataTableResponse;
+    }
+
+    @Override
+    public Set<Slot> getSlots(Long id) {
+        return doctorRepositoryHelper.findById(doctorRepository, id).get().getSlots();
     }
 }

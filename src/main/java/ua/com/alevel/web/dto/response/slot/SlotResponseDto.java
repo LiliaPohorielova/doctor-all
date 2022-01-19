@@ -20,11 +20,16 @@ public class SlotResponseDto extends ResponseDto {
     public SlotResponseDto() { }
 
     public SlotResponseDto(Slot slot) {
-        this.doctor = slot.getDoctor();
-        this.appDate = slot.getAppDate();
-        this.patientAppointment = slot.getPatientAppointment();
-        this.startTime = slot.getStartTime();
-        this.status = slot.getStatus();
+        if (slot != null) {
+            setId(slot.getId());
+            setCreated(slot.getCreated());
+            setUpdated(slot.getUpdated());
+            this.doctor = slot.getDoctor();
+            this.appDate = slot.getAppDate();
+            this.patientAppointment = slot.getPatientAppointment();
+            this.startTime = slot.getStartTime();
+            this.status = slot.getStatus();
+        }
     }
 
     public Doctor getDoctor() {

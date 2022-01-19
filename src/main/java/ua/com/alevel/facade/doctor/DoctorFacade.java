@@ -7,6 +7,7 @@ import ua.com.alevel.web.dto.request.doctor.DoctorRequestDto;
 import ua.com.alevel.web.dto.response.PageData;
 import ua.com.alevel.web.dto.response.doctor.DoctorResponseDto;
 import ua.com.alevel.web.dto.response.patient.PatientResponseDto;
+import ua.com.alevel.web.dto.response.slot.SlotResponseDto;
 
 import java.util.List;
 import java.util.Set;
@@ -24,4 +25,8 @@ public interface DoctorFacade extends BaseFacade<DoctorRequestDto, DoctorRespons
     List<DoctorResponseDto> findAll();
 
     DoctorUser getDoctorUser(Long id);
+
+    Set<SlotResponseDto> getSlots(Long id);
+
+    void removeSlot(Long doctorId, Long slotId);
 }
