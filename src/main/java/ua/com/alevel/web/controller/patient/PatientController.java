@@ -1,25 +1,20 @@
 package ua.com.alevel.web.controller.patient;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.facade.doctor.DoctorFacade;
 import ua.com.alevel.facade.patient.PatientFacade;
 import ua.com.alevel.facade.patient.PatientRegistrationFacade;
-import ua.com.alevel.persistence.entity.doctor.Doctor;
+import ua.com.alevel.persistence.entity.appointment.PatientAppointment;
 import ua.com.alevel.persistence.entity.patient.Patient;
-import ua.com.alevel.persistence.entity.user.DoctorUser;
 import ua.com.alevel.persistence.entity.user.PatientUser;
 import ua.com.alevel.persistence.type.DoctorSpecialization;
 import ua.com.alevel.util.SecurityUtil;
 import ua.com.alevel.web.dto.response.doctor.DoctorResponseDto;
-import ua.com.alevel.web.dto.response.patient.PatientResponseDto;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -93,12 +88,47 @@ public class PatientController {
 
     @GetMapping("/book_appointment")
     public String bookAppointment(Model model) {
-        /*model.addAttribute("appointmentForm", new AppointmentForm());
+        List<DoctorResponseDto> doctors = doctorFacade.findAll();
+        model.addAttribute("doctors", doctors);
+        model.addAttribute("appointmentForm", new PatientAppointment());
         model.addAttribute("specializationList", DoctorSpecialization.values());
         LocalDate now = LocalDate.now();
-        model.addAttribute("now", now);*/
+        model.addAttribute("now", now);
 
         return "pages/appointment/book-appointments";
+    }
+
+    @RequestMapping(value = "/patient/book_appointment/{specializationId}", method = RequestMethod.GET)
+    public String getDoctorsBySpecialization(@PathVariable("specializationId") Long specializationId, Model model) {
+        /*model.addAttribute("insuranceCompanies", insuranceCompanyService
+                .getInsuranceCompaniesByTfoms(new TerritorialFondOms(tfomsId)));*/
+        return "pages/appointment/book-appointments";
+    }
+
+    @RequestMapping(value = "/get_doctors/{specializationId}")
+    @ResponseBody
+    /*public Set getRegions(@RequestParam Long specializationId) {*/
+/*    public Set getRegions(@PathVariable("specializationId") Long specializationId) {
+        Map<Long, Set<String>> doctors = doctorFacade.getDoctorsAndSpec();
+        return doctors.get(specializationId);
+    }*/
+    public List getDoctors(@PathVariable("specializationId") Integer specializationId) {
+        List<String> doctors = doctorFacade.getDoctorsBySpecId(specializationId);
+        return doctors;
+    }
+
+    @RequestMapping(value = "/get_dates/{doctorId}")
+    @ResponseBody
+    public List getDates(@PathVariable("doctorId") String doctorId) {
+        List<String> dates = doctorFacade.getDatesByDoctor(doctorId);
+        return dates;
+    }
+
+    @RequestMapping(value = "/get_times/{doctorId}/{date}")
+    @ResponseBody
+    public List getTimes(@PathVariable("doctorId") String doctorId, @PathVariable("date") String date) {
+        List<String> times = doctorFacade.getTimeByDate(doctorId, date);
+        return times;
     }
 
 /*    @PostMapping("/book_appointment")

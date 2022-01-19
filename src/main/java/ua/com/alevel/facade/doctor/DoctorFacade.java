@@ -10,6 +10,7 @@ import ua.com.alevel.web.dto.response.patient.PatientResponseDto;
 import ua.com.alevel.web.dto.response.slot.SlotResponseDto;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public interface DoctorFacade extends BaseFacade<DoctorRequestDto, DoctorResponseDto> {
@@ -29,4 +30,12 @@ public interface DoctorFacade extends BaseFacade<DoctorRequestDto, DoctorRespons
     Set<SlotResponseDto> getSlots(Long id);
 
     void removeSlot(Long doctorId, Long slotId);
+
+    Map<Long, Set<String>> getDoctorsAndSpec();
+
+    List<String> getDoctorsBySpecId(Integer specializationId);
+
+    List<String> getDatesByDoctor(String doctorId);
+
+    List<String> getTimeByDate(String doctorId, String date);
 }

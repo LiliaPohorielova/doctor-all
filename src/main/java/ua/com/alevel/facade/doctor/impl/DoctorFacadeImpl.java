@@ -9,8 +9,8 @@ import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.entity.slot.Slot;
 import ua.com.alevel.persistence.entity.user.DoctorUser;
+import ua.com.alevel.persistence.type.DoctorSpecialization;
 import ua.com.alevel.service.doctor.DoctorService;
-import ua.com.alevel.service.doctor.DoctorUserService;
 import ua.com.alevel.service.patient.PatientService;
 import ua.com.alevel.service.slot.SlotService;
 import ua.com.alevel.util.WebUtil;
@@ -22,9 +22,7 @@ import ua.com.alevel.web.dto.response.doctor.DoctorResponseDto;
 import ua.com.alevel.web.dto.response.patient.PatientResponseDto;
 import ua.com.alevel.web.dto.response.slot.SlotResponseDto;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -77,14 +75,14 @@ public class DoctorFacadeImpl implements DoctorFacade {
         dataTableRequest.setSort(sortData.getSort());
         dataTableRequest.setOrder(sortData.getOrder());
 
-        DataTableResponse<Patient> patients = doctorService.findPatientsByDoctor(doctorService.findById(id).get(),dataTableRequest);
+        DataTableResponse<Patient> patients = doctorService.findPatientsByDoctor(doctorService.findById(id).get(), dataTableRequest);
 
-        List< PatientResponseDto> list = patients.getItems().
+        List<PatientResponseDto> list = patients.getItems().
                 stream().
-                map( PatientResponseDto::new).
+                map(PatientResponseDto::new).
                 collect(Collectors.toList());
 
-        PageData< PatientResponseDto> pageData = new PageData<>();
+        PageData<PatientResponseDto> pageData = new PageData<>();
         pageData.setItems(list);
         pageData.setCurrentPage(pageAndSizeData.getPage());
         pageData.setPageSize(pageAndSizeData.getSize());
@@ -139,12 +137,12 @@ public class DoctorFacadeImpl implements DoctorFacade {
 
         DataTableResponse<Doctor> all = doctorService.findAll(dataTableRequest);
 
-        List< DoctorResponseDto> list = all.getItems().
+        List<DoctorResponseDto> list = all.getItems().
                 stream().
-                map( DoctorResponseDto::new).
+                map(DoctorResponseDto::new).
                 collect(Collectors.toList());
 
-        PageData< DoctorResponseDto> pageData = new PageData<>();
+        PageData<DoctorResponseDto> pageData = new PageData<>();
         pageData.setItems(list);
         pageData.setCurrentPage(pageAndSizeData.getPage());
         pageData.setPageSize(pageAndSizeData.getSize());
@@ -185,5 +183,67 @@ public class DoctorFacadeImpl implements DoctorFacade {
         Doctor doctor = doctorService.findById(doctorId).get();
         slotService.delete(slotId);
         doctorService.update(doctor);
+    }
+
+    @Override
+    public Map<Long, Set<String>> getDoctorsAndSpec() {
+        Map<Long, Set<String>> doctorsAndSpec = new HashMap<Long, Set<String>>();
+//        Set<String> doc = new HashSet<String>();
+//        doc.add("Doctor");
+//        doc.add("Doctor12");
+//        doctorsAndSpec.put(1L, doc);
+        List<Doctor> all = doctorService.findAll();
+        Set<String> doc = new HashSet<String>();
+        Set<Long> idSet = new HashSet<Long>();
+        for (Doctor doctor : all) {
+            doc.add(doctor.getLastname() + " " + doctor.getFirstname());
+            Long id = Long.valueOf(DoctorSpecialization.valueOf(doctor.getSpecialization().toString()).ordinal());
+            if (!idSet.contains(id)) {
+                idSet.add(id);
+                doctorsAndSpec.put(id, doc);
+            }
+        }
+        return doctorsAndSpec;
+    }
+
+    @Override
+    public List<String> getDoctorsBySpecId(Integer specializationId) {
+        List<Doctor> all = doctorService.findAll();
+        List<String> doc = new ArrayList<>();
+        for (Doctor doctor : all) {
+            if (DoctorSpecialization.valueOf(doctor.getSpecialization().toString()).ordinal() == specializationId) {
+                doc.add(doctor.getId().toString());
+                doc.add(doctor.getLastname() + " " + doctor.getFirstname() + " " + doctor.getMiddleName());
+            }
+        }
+        return doc;
+    }
+
+    @Override
+    public List<String> getDatesByDoctor(String doctorId) {
+        List<Doctor> all = doctorService.findAll();
+        List<String> dates = new ArrayList<>();
+        for (Doctor doctor : all) {
+            if (doctor.getId().toString().equals(doctorId)) {
+                Set<Slot> slots = doctor.getSlots();
+                for (Slot slot : slots)
+                    dates.add(slot.getAppDate().toString());
+                break;
+            }
+        }
+        return dates;
+    }
+
+    @Override
+    public List<String> getTimeByDate(String doctorId, String date) {
+        Optional<Doctor> doctor = doctorService.findById(Long.parseLong(doctorId));
+        List<String> times = new ArrayList<>();
+        Set<Slot> slots = doctor.get().getSlots();
+        for (Slot slot : slots) {
+            if (slot.getAppDate().toString().equals(date)) {
+                times.add(slot.getStartTime().toString());
+            }
+        }
+        return times;
     }
 }
