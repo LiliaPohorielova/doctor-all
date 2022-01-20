@@ -5,20 +5,21 @@ import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.facade.patient.PatientFacade;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
+import ua.com.alevel.persistence.entity.appointment.PatientAppointment;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.entity.user.PatientUser;
+import ua.com.alevel.service.appointment.PatientAppointmentService;
 import ua.com.alevel.service.patient.PatientService;
-import ua.com.alevel.service.patient.PatientUserService;
 import ua.com.alevel.util.WebUtil;
 import ua.com.alevel.web.dto.request.data.PageAndSizeData;
 import ua.com.alevel.web.dto.request.data.SortData;
 import ua.com.alevel.web.dto.request.patient.PatientRequestDto;
 import ua.com.alevel.web.dto.response.PageData;
+import ua.com.alevel.web.dto.response.appointment.AppointmentResponseDto;
 import ua.com.alevel.web.dto.response.doctor.DoctorResponseDto;
 import ua.com.alevel.web.dto.response.patient.PatientResponseDto;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,12 +28,12 @@ import java.util.stream.Collectors;
 @Service
 public class PatientFacadeImpl implements PatientFacade {
 
-    private final PatientUserService patientUserService;
+    private final PatientAppointmentService patientAppointmentService;
     private final PatientService patientService;
 
-    public PatientFacadeImpl(PatientUserService patientUserService, PatientService patientService) {
-        this.patientUserService = patientUserService;
+    public PatientFacadeImpl(PatientService patientService, PatientAppointmentService patientAppointmentService) {
         this.patientService = patientService;
+        this.patientAppointmentService = patientAppointmentService;
     }
 
     @Override
@@ -100,14 +101,12 @@ public class PatientFacadeImpl implements PatientFacade {
     @Override
     public List<PatientResponseDto> findAll() {
         List<Patient> all = patientService.findAll();
-        List<PatientResponseDto> items = all.stream().map(PatientResponseDto::new).collect(Collectors.toList());
-        return items;
+        return all.stream().map(PatientResponseDto::new).collect(Collectors.toList());
     }
 
     @Override
     public PatientUser getPatientUser(Long id) {
-        PatientUser user = patientService.findById(id).get().getPatientUser();
-        return user;
+        return patientService.findById(id).get().getPatientUser();
     }
 
     @Override
@@ -119,5 +118,24 @@ public class PatientFacadeImpl implements PatientFacade {
             set.add(doctorResponseDto);
         }
         return set;
+    }
+
+    @Override
+    public Set<AppointmentResponseDto> getAppointments(Long id) {
+        Set<PatientAppointment> appointments = patientService.getAppointments(id);
+        Set<AppointmentResponseDto> set = new HashSet<>();
+        for (PatientAppointment appointment : appointments) {
+            AppointmentResponseDto patientAppointmentResponseDto = new AppointmentResponseDto(appointment);
+            set.add(patientAppointmentResponseDto);
+        }
+        return set;
+    }
+
+    @Override
+    public void addAppointment(Long appointmentId, Long patientId) {
+        Patient patient = patientService.findById(patientId).get();
+        PatientAppointment patientAppointment = patientAppointmentService.findById(appointmentId).get();
+        patient.addPatientAppointment(patientAppointment);
+        patientService.update(patient);
     }
 }

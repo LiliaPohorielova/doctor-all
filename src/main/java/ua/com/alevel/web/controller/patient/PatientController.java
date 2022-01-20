@@ -7,17 +7,11 @@ import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.facade.doctor.DoctorFacade;
 import ua.com.alevel.facade.patient.PatientFacade;
 import ua.com.alevel.facade.patient.PatientRegistrationFacade;
-import ua.com.alevel.facade.slot.SlotFacade;
-import ua.com.alevel.persistence.entity.appointment.PatientAppointment;
 import ua.com.alevel.persistence.entity.patient.Patient;
-import ua.com.alevel.persistence.entity.slot.Slot;
 import ua.com.alevel.persistence.entity.user.PatientUser;
-import ua.com.alevel.service.slot.SlotService;
 import ua.com.alevel.util.SecurityUtil;
-import ua.com.alevel.web.dto.request.appointment.AppointmentRequestDto;
 import ua.com.alevel.web.dto.response.doctor.DoctorResponseDto;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 

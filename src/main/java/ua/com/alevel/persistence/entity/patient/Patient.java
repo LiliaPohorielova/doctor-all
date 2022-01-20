@@ -51,7 +51,7 @@ public class Patient extends BaseEntity {
     @JoinColumn(name = "patient_user_id", referencedColumnName = "id")
     private PatientUser patientUser;
 
-    @ManyToMany(mappedBy = "patients", cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "patients", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
     private Set<Doctor> doctors;
 
     public Set<PatientAppointment> getPatientAppointments() {
@@ -144,5 +144,10 @@ public class Patient extends BaseEntity {
     @Override
     public int hashCode() {
         return super.hashCode();
+    }
+
+    public void addPatientAppointment(PatientAppointment patientAppointment) {
+        patientAppointments.add(patientAppointment);
+        patientAppointment.setPatient(this);
     }
 }

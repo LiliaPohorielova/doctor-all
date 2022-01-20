@@ -2,6 +2,7 @@ package ua.com.alevel.web.dto.request.appointment;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
+import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.web.dto.request.RequestDto;
 
 import java.time.LocalDate;
@@ -9,6 +10,7 @@ import java.time.LocalTime;
 
 public class AppointmentRequestDto extends RequestDto {
 
+    private Patient patient;
     private Doctor doctor;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
@@ -36,5 +38,13 @@ public class AppointmentRequestDto extends RequestDto {
 
     public void setTime(LocalTime time) {
         this.time = time;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 }

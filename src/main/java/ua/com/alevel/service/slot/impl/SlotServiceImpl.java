@@ -33,15 +33,15 @@ public class SlotServiceImpl implements SlotService {
         this.slotRepositoryHelper = slotRepositoryHelper;
         this.patientAppointmentRepository = patientAppointmentRepository;
     }
-    
+
     public Slot getSlot(Doctor doctor, LocalDate date, LocalTime time) {
         return slotRepository.findByDoctorAndAppDateAndStartTime(doctor, date, time);
     }
 
     public void updateStatus(Long slotId, SlotStatus status) {
         Optional<Slot> appointment = slotRepository.findById(slotId);
-        if(appointment.isPresent()){
-            if(appointment.get().getStatus() != null){
+        if (appointment.isPresent()) {
+            if (appointment.get().getStatus() != null) {
                 appointment.get().setStatus(status);
             }
             slotRepository.save(appointment.get());
@@ -54,15 +54,15 @@ public class SlotServiceImpl implements SlotService {
         PatientAppointment bookedSlot = new PatientAppointment();
         bookedSlot.setSlot(slot.get());
         bookedSlot.setPatient(patient);
-
-        return patientAppointmentRepository.save(bookedSlot);
+        patientAppointmentRepository.save(bookedSlot);
+        return bookedSlot;
     }
 
     //checking for past appointments every 5 minutes since the application starts
     @Scheduled(fixedRate = 300000)
     public void updatePastSlots() {
         List<Slot> appointments = slotRepository.findAll();
-        for (Slot appointment:appointments) {
+        for (Slot appointment : appointments) {
             if (LocalDate.now().isEqual(appointment.getAppDate()) &&
                     LocalTime.now().isAfter(appointment.getStartTime())) {
                 appointment.setStatus(SlotStatus.PAST);
@@ -86,7 +86,9 @@ public class SlotServiceImpl implements SlotService {
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public void delete(Long id) {
-        slotRepositoryHelper.delete(slotRepository, id);
+        Slot slot = slotRepositoryHelper.findById(slotRepository, id).get();
+        if (slot.getStatus() == SlotStatus.FREE) slotRepositoryHelper.delete(slotRepository, id);
+        else slot.setStatus(SlotStatus.CANCELLED);
     }
 
     @Override

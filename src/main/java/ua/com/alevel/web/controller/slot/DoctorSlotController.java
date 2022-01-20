@@ -29,7 +29,7 @@ public class DoctorSlotController {
     }
 
     @GetMapping()
-    public String myPatients(Model model) {
+    public String mySlots(Model model) {
         String user = SecurityUtil.getUsername();
         DoctorUser doctorUserData = doctorUserFacade.findByEmail(user);
         Doctor doctor = doctorUserData.getDoctor();

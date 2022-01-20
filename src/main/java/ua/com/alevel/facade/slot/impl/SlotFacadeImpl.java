@@ -45,6 +45,7 @@ public class SlotFacadeImpl implements SlotFacade {
         slot.setAppDate(slotRequestDto.getAppDate());
         slot.setDoctor(slotRequestDto.getDoctor());
         slot.setStartTime(slotRequestDto.getStartTime());
+        slot.setPatientAppointment(new PatientAppointment());
         slotService.create(slot);
     }
 

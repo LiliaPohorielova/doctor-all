@@ -1,9 +1,8 @@
 package ua.com.alevel.service.patient;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
+import ua.com.alevel.persistence.entity.appointment.PatientAppointment;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.service.BaseCrudService;
@@ -20,4 +19,6 @@ public interface PatientService extends BaseCrudService<Patient> {
     List<Patient> findAll();
 
     Set<Doctor> getDoctors(Long id);
+
+    Set<PatientAppointment> getAppointments(Long id);
 }

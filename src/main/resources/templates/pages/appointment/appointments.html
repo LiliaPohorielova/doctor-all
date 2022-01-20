@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/patient_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient - My Appointments</title>
+</head>
+<body>
+<div layout:fragment="patient_content">
+  <div class="container rounded bg-white mt-5 mb-5 p-5">
+    <h1 class="pb-3">This is your appointments</h1>
+    <div class="card">
+      <h5 class="card-header">All My Appointments</h5>
+      <div class="card-body">
+        <table class="table table-sm table-hover">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>StartTime</th>
+            <th>AppDate</th>
+            <th>Status</th>
+            <th>Specialization</th>
+            <th>Doctor</th>
+            <th>Cancel</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="appointment,iter : ${appointments}">
+            <td th:text="${iter.count}"></td>
+            <td th:text="${appointment.getStartTime()}"></td>
+            <td th:text="${appointment.getAppDate()}"></td>
+            <td th:text="${appointment.getStatus()}"></td>
+            <td th:text="${appointment.getDoctor().getSpecialization()}"></td>
+            <td th:text="${appointment.getDoctor().getLastname() + ' ' +
+            appointment.getDoctor().getFirstname() + ' ' +
+            appointment.getDoctor().getMiddleName()}"></td>
+            <td>
+              <a th:href="@{'/patient/appoinments/delete_appoinment/' + ${appointment.getId()}}"
+                 type="button" class="btn btn-danger"
+                 onclick="return confirm('Are you sure you want to Cancel this Appointment?');">cancel</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <a th:href="@{'/doctor/slots/new'}" class="btn btn-primary">Create New Slot</a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
