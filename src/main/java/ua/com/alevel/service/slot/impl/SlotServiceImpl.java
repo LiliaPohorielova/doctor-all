@@ -18,15 +18,12 @@ import ua.com.alevel.service.slot.SlotService;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class SlotServiceImpl implements SlotService {
 
-    //TODO: FACADES!!!!!!!!!!!!
-    
     private final SlotRepository slotRepository;
     private final CrudRepositoryHelper<Slot, SlotRepository> slotRepositoryHelper;
     private final PatientAppointmentRepository patientAppointmentRepository;
@@ -37,39 +34,31 @@ public class SlotServiceImpl implements SlotService {
         this.patientAppointmentRepository = patientAppointmentRepository;
     }
     
-    public List<Slot> getSlot(Doctor doctor, LocalDate date) {
-        List<Slot> appointmentList = slotRepository.findByDoctorAndAppDate(doctor, date);
-
-        List<Slot> freeSlots = new ArrayList<>();
-        for (Slot appointment: appointmentList) {
-            if (appointment.getStatus().equals(SlotStatus.FREE))
-                freeSlots.add(appointment);
-        }
-        return freeSlots;
+    public Slot getSlot(Doctor doctor, LocalDate date, LocalTime time) {
+        return slotRepository.findByDoctorAndAppDateAndStartTime(doctor, date, time);
     }
-    
-    public Slot updateStatus(Long slotId, SlotStatus status) {
+
+    public void updateStatus(Long slotId, SlotStatus status) {
         Optional<Slot> appointment = slotRepository.findById(slotId);
         if(appointment.isPresent()){
             if(appointment.get().getStatus() != null){
                 appointment.get().setStatus(status);
             }
-            return slotRepository.save(appointment.get());
+            slotRepository.save(appointment.get());
         }
-        return null;
     }
-    
+
     public PatientAppointment bookSlot(Long slotId, Patient patient) {
-        Optional<Slot> appointment = slotRepository.findById(slotId);
+        Optional<Slot> slot = slotRepository.findById(slotId);
         updateStatus(slotId, SlotStatus.BOOKED);
         PatientAppointment bookedSlot = new PatientAppointment();
-        bookedSlot.setSlot(appointment.get());
+        bookedSlot.setSlot(slot.get());
         bookedSlot.setPatient(patient);
 
         return patientAppointmentRepository.save(bookedSlot);
     }
 
-    //chceking for past appointments every 5 minutes since the application starts
+    //checking for past appointments every 5 minutes since the application starts
     @Scheduled(fixedRate = 300000)
     public void updatePastSlots() {
         List<Slot> appointments = slotRepository.findAll();

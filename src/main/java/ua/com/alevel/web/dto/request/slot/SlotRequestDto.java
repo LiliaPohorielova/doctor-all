@@ -14,7 +14,6 @@ public class SlotRequestDto extends RequestDto {
     private LocalDate appDate;
     private LocalTime startTime;
     private SlotStatus status;
-    private PatientAppointment patientAppointment;
 
     public Doctor getDoctor() {
         return doctor;
@@ -46,13 +45,5 @@ public class SlotRequestDto extends RequestDto {
 
     public void setStatus(SlotStatus status) {
         this.status = status;
-    }
-
-    public PatientAppointment getPatientAppointment() {
-        return patientAppointment;
-    }
-
-    public void setPatientAppointment(PatientAppointment patientAppointment) {
-        this.patientAppointment = patientAppointment;
     }
 }

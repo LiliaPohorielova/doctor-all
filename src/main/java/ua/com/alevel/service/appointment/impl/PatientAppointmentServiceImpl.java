@@ -52,7 +52,7 @@ public class PatientAppointmentServiceImpl {
         patientAppointmentRepository.delete(patientAppointment);
     }
 
-    public PatientAppointment findByAppointmentId(Long id) {
+    public PatientAppointment findBySlotId(Long id) {
         return patientAppointmentRepository.findBySlotId(id);
     }
 }

@@ -62,7 +62,7 @@
                 </div>
                 <div class="card-body">
                     <form action="#" th:action="@{/patient/book_appointment}" th:object="${appointmentForm}"
-                          method="post">
+                          method="POST">
                         <div class="form-outline form-white mb-4">
                             <label class="form-label" for="specialization">Specialization</label>
                             <select class="form-control" id="specialization" onclick="getDoctorsBySpecialization()">
@@ -75,21 +75,22 @@
 
                         <div class="form-outline form-white mb-4">
                             <label class="form-label" for="doctorsContent">Doctors</label>
-                            <select class="form-control" id="doctorsContent" onclick="getDatesByDoctor()">
+                            <select class="form-control" id="doctorsContent" onclick="getDatesByDoctor()"
+                                    th:field="*{doctor}">
                             </select>
                         </div>
 
                         <div class="form-outline form-white mb-4">
                             <label class="form-label" for="appDate">Available Date</label>
                             <select class="form-control" id="appDate" onclick="getTimesByDate()"
-                                    th:field="*{slot.appDate}">
+                                    th:field="*{date}">
                             </select>
                         </div>
 
                         <div class="form-outline form-white mb-4">
                             <label class="form-label" for="time">Available Time</label>
                             <select class="form-control" id="time"
-                                    th:field="*{slot.startTime}">
+                                    th:field="*{time}">
                             </select>
                         </div>
 

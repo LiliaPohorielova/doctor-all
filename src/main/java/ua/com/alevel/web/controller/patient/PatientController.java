@@ -7,11 +7,14 @@ import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.facade.doctor.DoctorFacade;
 import ua.com.alevel.facade.patient.PatientFacade;
 import ua.com.alevel.facade.patient.PatientRegistrationFacade;
+import ua.com.alevel.facade.slot.SlotFacade;
 import ua.com.alevel.persistence.entity.appointment.PatientAppointment;
 import ua.com.alevel.persistence.entity.patient.Patient;
+import ua.com.alevel.persistence.entity.slot.Slot;
 import ua.com.alevel.persistence.entity.user.PatientUser;
-import ua.com.alevel.persistence.type.DoctorSpecialization;
+import ua.com.alevel.service.slot.SlotService;
 import ua.com.alevel.util.SecurityUtil;
+import ua.com.alevel.web.dto.request.appointment.AppointmentRequestDto;
 import ua.com.alevel.web.dto.response.doctor.DoctorResponseDto;
 
 import java.time.LocalDate;
@@ -85,80 +88,4 @@ public class PatientController {
         model.addAttribute("doctor", doctorFacade.findById(doctorId));
         return "pages/patient/about_doctor";
     }
-
-    @GetMapping("/book_appointment")
-    public String bookAppointment(Model model) {
-        List<DoctorResponseDto> doctors = doctorFacade.findAll();
-        model.addAttribute("doctors", doctors);
-        model.addAttribute("appointmentForm", new PatientAppointment());
-        model.addAttribute("specializationList", DoctorSpecialization.values());
-        LocalDate now = LocalDate.now();
-        model.addAttribute("now", now);
-
-        return "pages/appointment/book-appointments";
-    }
-
-    @RequestMapping(value = "/patient/book_appointment/{specializationId}", method = RequestMethod.GET)
-    public String getDoctorsBySpecialization(@PathVariable("specializationId") Long specializationId, Model model) {
-        /*model.addAttribute("insuranceCompanies", insuranceCompanyService
-                .getInsuranceCompaniesByTfoms(new TerritorialFondOms(tfomsId)));*/
-        return "pages/appointment/book-appointments";
-    }
-
-    @RequestMapping(value = "/get_doctors/{specializationId}")
-    @ResponseBody
-    /*public Set getRegions(@RequestParam Long specializationId) {*/
-/*    public Set getRegions(@PathVariable("specializationId") Long specializationId) {
-        Map<Long, Set<String>> doctors = doctorFacade.getDoctorsAndSpec();
-        return doctors.get(specializationId);
-    }*/
-    public List getDoctors(@PathVariable("specializationId") Integer specializationId) {
-        List<String> doctors = doctorFacade.getDoctorsBySpecId(specializationId);
-        return doctors;
-    }
-
-    @RequestMapping(value = "/get_dates/{doctorId}")
-    @ResponseBody
-    public List getDates(@PathVariable("doctorId") String doctorId) {
-        List<String> dates = doctorFacade.getDatesByDoctor(doctorId);
-        return dates;
-    }
-
-    @RequestMapping(value = "/get_times/{doctorId}/{date}")
-    @ResponseBody
-    public List getTimes(@PathVariable("doctorId") String doctorId, @PathVariable("date") String date) {
-        List<String> times = doctorFacade.getTimeByDate(doctorId, date);
-        return times;
-    }
-
-/*    @PostMapping("/book_appointment")
-    public String bookAppointment(@ModelAttribute("appointmentForm") AppointmentForm appointmentForm, Model model){
-
-        List<Doctor> doctors = doctorService.findBySpecialization(Integer.parseInt(appointmentForm.getSpecialization()));
-
-        List<Appointment> availableAppointments = new ArrayList<>();
-
-        for (Doctor doctor: doctors) {
-            List<Appointment> searchedAppointments = appointmentService.getAppointment(doctor,workplaceService.findById(Integer.parseInt(appointmentForm.getLocation())), appointmentForm.getDate());
-            if (!searchedAppointments.isEmpty())
-                availableAppointments = searchedAppointments;
-        }
-
-        model.addAttribute("availableAppointments",availableAppointments);
-        model.addAttribute("appointmentForm",appointmentForm);
-        model.addAttribute("specializationList",specializationService.getAll());
-        model.addAttribute("workplaceList",workplaceService.getAll());
-        return "pages/appointment/book-appointments";
-    }
-
-    @PostMapping("/choosehour")
-    public String choosehour(@ModelAttribute("appointmentForm") AppointmentForm appointmentForm, @RequestParam(value = "id") Integer id, Authentication auth, BindingResult bindingResult, Model model){
-        String user = auth.getName();
-        LoginData loginData = loginService.findByEmail(user);
-        Patient patient = loginData.getPatient();
-
-        appointmentService.bookAppointment(id,patient);
-
-        return "redirect:/patient/dashboard";
-    }*/
 }

@@ -34,8 +34,4 @@ public interface DoctorFacade extends BaseFacade<DoctorRequestDto, DoctorRespons
     Map<Long, Set<String>> getDoctorsAndSpec();
 
     List<String> getDoctorsBySpecId(Integer specializationId);
-
-    List<String> getDatesByDoctor(String doctorId);
-
-    List<String> getTimeByDate(String doctorId, String date);
 }

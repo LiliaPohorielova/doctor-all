@@ -10,6 +10,7 @@ import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.entity.slot.Slot;
 import ua.com.alevel.persistence.entity.user.DoctorUser;
 import ua.com.alevel.persistence.type.DoctorSpecialization;
+import ua.com.alevel.persistence.type.SlotStatus;
 import ua.com.alevel.service.doctor.DoctorService;
 import ua.com.alevel.service.patient.PatientService;
 import ua.com.alevel.service.slot.SlotService;
@@ -187,14 +188,10 @@ public class DoctorFacadeImpl implements DoctorFacade {
 
     @Override
     public Map<Long, Set<String>> getDoctorsAndSpec() {
-        Map<Long, Set<String>> doctorsAndSpec = new HashMap<Long, Set<String>>();
-//        Set<String> doc = new HashSet<String>();
-//        doc.add("Doctor");
-//        doc.add("Doctor12");
-//        doctorsAndSpec.put(1L, doc);
+        Map<Long, Set<String>> doctorsAndSpec = new HashMap<>();
         List<Doctor> all = doctorService.findAll();
-        Set<String> doc = new HashSet<String>();
-        Set<Long> idSet = new HashSet<Long>();
+        Set<String> doc = new HashSet<>();
+        Set<Long> idSet = new HashSet<>();
         for (Doctor doctor : all) {
             doc.add(doctor.getLastname() + " " + doctor.getFirstname());
             Long id = Long.valueOf(DoctorSpecialization.valueOf(doctor.getSpecialization().toString()).ordinal());
@@ -217,33 +214,5 @@ public class DoctorFacadeImpl implements DoctorFacade {
             }
         }
         return doc;
-    }
-
-    @Override
-    public List<String> getDatesByDoctor(String doctorId) {
-        List<Doctor> all = doctorService.findAll();
-        List<String> dates = new ArrayList<>();
-        for (Doctor doctor : all) {
-            if (doctor.getId().toString().equals(doctorId)) {
-                Set<Slot> slots = doctor.getSlots();
-                for (Slot slot : slots)
-                    dates.add(slot.getAppDate().toString());
-                break;
-            }
-        }
-        return dates;
-    }
-
-    @Override
-    public List<String> getTimeByDate(String doctorId, String date) {
-        Optional<Doctor> doctor = doctorService.findById(Long.parseLong(doctorId));
-        List<String> times = new ArrayList<>();
-        Set<Slot> slots = doctor.get().getSlots();
-        for (Slot slot : slots) {
-            if (slot.getAppDate().toString().equals(date)) {
-                times.add(slot.getStartTime().toString());
-            }
-        }
-        return times;
     }
 }

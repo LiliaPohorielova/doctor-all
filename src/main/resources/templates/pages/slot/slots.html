@@ -22,7 +22,7 @@
             <th>StartTime</th>
             <th>AppDate</th>
             <th>Status</th>
-            <th>Email</th>
+            <th>Patient</th>
             <th>Delete</th>
           </tr>
           </thead>
@@ -32,7 +32,7 @@
             <td th:text="${slot.getStartTime()}"></td>
             <td th:text="${slot.getAppDate()}"></td>
             <td th:text="${slot.getStatus()}"></td>
-            <td th:text="${slot.getDoctor().getDoctorUser().getEmail()}"></td>
+            <td th:text="${slot.getPatientAppointment()} ? ${slot.getPatientAppointment().getPatient().getPatientUser().getEmail()} : 'NO PATIENT'"></td>
             <td>
               <a th:href="@{'/doctor/slots/delete_slot/' + ${slot.getId()}}"
                  type="button" class="btn btn-danger"

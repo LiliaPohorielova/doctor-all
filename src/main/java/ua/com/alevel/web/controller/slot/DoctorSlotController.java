@@ -1,4 +1,4 @@
-package ua.com.alevel.web.controller.doctor;
+package ua.com.alevel.web.controller.slot;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,14 +7,11 @@ import ua.com.alevel.facade.doctor.DoctorFacade;
 import ua.com.alevel.facade.doctor.DoctorRegistrationFacade;
 import ua.com.alevel.facade.slot.SlotFacade;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
-import ua.com.alevel.persistence.entity.slot.Slot;
 import ua.com.alevel.persistence.entity.user.DoctorUser;
 import ua.com.alevel.util.SecurityUtil;
 import ua.com.alevel.web.dto.request.slot.SlotRequestDto;
-import ua.com.alevel.web.dto.response.patient.PatientResponseDto;
 import ua.com.alevel.web.dto.response.slot.SlotResponseDto;
 
-import java.util.List;
 import java.util.Set;
 
 @Controller
