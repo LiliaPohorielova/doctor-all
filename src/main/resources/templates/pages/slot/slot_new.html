@@ -28,7 +28,7 @@
                         <div class="form-outline form-white mb-4">
                             <label class="form-label" for="timepicker1">Time Of Appointment</label>
                             <div class="input-group date" id="timepicker1">
-                                <input id="timepkr" th:field="*{startTime}" type="text" class="form-control" readonly>
+                                <input id="timepkr" th:field="*{startTime}" type="text" class="form-control" onclick="showpickers('timepkr',24)" readonly>
                                 <span class="input-group-append">
                                                     <span class="input-group-text bg-white d-block">
                                                      <i class="fa fa-clock" onclick="showpickers('timepkr',24)"></i>
@@ -48,7 +48,9 @@
                                                      <i class="fa fa-calendar"
                                                         onclick="$(function() {
                                                                 $('#datepicker1').datepicker({
-                                                                        format: 'dd/mm/yyyy'
+                                                                        format: 'dd/mm/yyyy',
+                                                                        startDate: new Date(),
+                                                                        todayBtn: 'linked'
                                                                     });
                                                                 });">
                                                     </i>
