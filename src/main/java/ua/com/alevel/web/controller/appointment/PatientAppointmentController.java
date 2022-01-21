@@ -13,6 +13,7 @@ import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.entity.slot.Slot;
 import ua.com.alevel.persistence.entity.user.DoctorUser;
 import ua.com.alevel.persistence.entity.user.PatientUser;
+import ua.com.alevel.persistence.type.SlotStatus;
 import ua.com.alevel.util.SecurityUtil;
 import ua.com.alevel.web.dto.request.appointment.AppointmentRequestDto;
 import ua.com.alevel.web.dto.response.appointment.AppointmentResponseDto;
@@ -47,8 +48,12 @@ public class PatientAppointmentController {
         Patient patient = patientUserData.getPatient();
         Set<AppointmentResponseDto> appointments = patientFacade.getAppointments(patient.getId());
         //List<Slot> appointmentListPast = appointmentFacade.findPastByPatient(patient.getId());
-        List<Slot> appointmentsBooked = appointmentFacade.findBookedByPatient(patient.getId());
-        model.addAttribute("appointments", appointmentsBooked);
+        List<Slot> appointmentsBooked = appointmentFacade.findBookedByPatient(patient.getId(), SlotStatus.BOOKED);
+        List<Slot> appointmentsPast = appointmentFacade.findBookedByPatient(patient.getId(), SlotStatus.PAST);
+        List<Slot> appointmentsCancelled = appointmentFacade.findBookedByPatient(patient.getId(), SlotStatus.CANCELLED);
+        model.addAttribute("appointmentsBooked", appointmentsBooked);
+        model.addAttribute("appointmentsPast", appointmentsPast);
+        model.addAttribute("appointmentsCancelled", appointmentsCancelled);
         return "pages/appointment/appointments";
     }
 
@@ -79,7 +84,7 @@ public class PatientAppointmentController {
     }
 
     @PostMapping("/book_appointment")
-    public String bookAppointment(@ModelAttribute("appointmentForm") AppointmentRequestDto appointmentForm, Model model){
+    public String bookAppointment(@ModelAttribute("appointmentForm") AppointmentRequestDto appointmentForm, Model model) {
         String user = SecurityUtil.getUsername();
         PatientUser patientUserData = patientUserFacade.findByEmail(user);
         Patient patient = patientUserData.getPatient();

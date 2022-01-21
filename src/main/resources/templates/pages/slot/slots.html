@@ -11,36 +11,160 @@
 <div layout:fragment="doctor_content">
   <div class="container rounded bg-white mt-5 mb-5 p-5">
     <h1 class="pb-3">This is your slots</h1>
-    <div class="card">
-      <h5 class="card-header">All My Slots</h5>
-      <div class="card-body">
-        <table class="table table-sm table-hover">
-          <thead>
-          <tr>
-            <th>#</th>
-            <th>StartTime</th>
-            <th>AppDate</th>
-            <th>Status</th>
-            <th>Patient</th>
-            <th>Delete</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr th:each="slot,iter : ${slots}">
-            <td th:text="${iter.count}"></td>
-            <td th:text="${slot.getStartTime()}"></td>
-            <td th:text="${slot.getAppDate()}"></td>
-            <td th:text="${slot.getStatus()}"></td>
-            <td th:text="${slot.getPatientAppointment()} ? ${slot.getPatientAppointment().getPatient().getPatientUser().getEmail()} : 'NO PATIENT'"></td>
-            <td>
-              <a th:href="@{'/doctor/slots/delete_slot/' + ${slot.getId()}}"
-                 type="button" class="btn btn-danger"
-                 onclick="return confirm('Are you sure you want to Delete this Slot?');">delete</a>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-        <a th:href="@{'/doctor/slots/new'}" class="btn btn-primary">Create New Slot</a>
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Free</a>
+        <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Booked</a>
+        <a class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Past</a>
+        <a class="nav-link" id="nav-cancel-tab" data-bs-toggle="tab" href="#nav-cancel" role="tab" aria-controls="nav-cancel" aria-selected="false">Cancelled</a>
+      </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div class="card">
+          <h5 class="card-header">All Free Slots</h5>
+          <div class="card-body">
+            <table class="table table-sm table-hover">
+              <thead>
+              <tr>
+                <th>#</th>
+                <th>StartTime</th>
+                <th>AppDate</th>
+                <th>Status</th>
+                <th>Patient</th>
+                <th>Delete</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="slot,iter : ${freeSlots}">
+                <td th:text="${iter.count}"></td>
+                <td th:text="${slot.getStartTime()}"></td>
+                <td th:text="${slot.getAppDate()}"></td>
+                <td th:text="${slot.getStatus()}"></td>
+                <td>
+                  <a th:href="@{'/doctor/slots/add_patient/' + ${slot.getId()}}"
+                     type="button" class="btn btn-primary"
+                     onclick="return confirm('Are you sure you want to Add patient to this Slot?');">add patient</a>
+                </td>
+                <td>
+                  <a th:href="@{'/doctor/slots/delete_slot/' + ${slot.getId()}}"
+                     type="button" class="btn btn-danger"
+                     onclick="return confirm('Are you sure you want to Delete this Slot?');">delete</a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <a th:href="@{'/doctor/slots/new'}" class="btn btn-primary">Create New Slot</a>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <div class="card">
+          <h5 class="card-header">All Booked Slots</h5>
+          <div class="card-body">
+            <table class="table table-sm table-hover">
+              <thead>
+              <tr>
+                <th>#</th>
+                <th>StartTime</th>
+                <th>AppDate</th>
+                <th>Status</th>
+                <th>Patient</th>
+                <th>Check</th>
+                <th>Delete</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="slot,iter : ${bookSlots}">
+                <td th:text="${iter.count}"></td>
+                <td th:text="${slot.getStartTime()}"></td>
+                <td th:text="${slot.getAppDate()}"></td>
+                <td th:text="${slot.getStatus()}"></td>
+                <td th:text="${slot.getPatientAppointment()} ? ${slot.getPatientAppointment().getPatient().getPatientUser().getEmail()} : 'NO PATIENT'"></td>
+                <td>
+                  <a th:href="@{'/doctor/slots/check_slot/' + ${slot.getId()}}"
+                     type="button" class="btn btn-success"
+                     onclick="return confirm('Are you sure you want to Check this Slot As Past?');">check</a>
+                </td>
+                <td>
+                  <a th:href="@{'/doctor/slots/delete_slot/' + ${slot.getId()}}"
+                     type="button" class="btn btn-danger"
+                     onclick="return confirm('Are you sure you want to Cancel this Slot?');">cancel</a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <a th:href="@{'/doctor/slots/new'}" class="btn btn-primary">Create New Slot</a>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+        <div class="card">
+          <h5 class="card-header">All Past Slots</h5>
+          <div class="card-body">
+            <table class="table table-sm table-hover">
+              <thead>
+              <tr>
+                <th>#</th>
+                <th>StartTime</th>
+                <th>AppDate</th>
+                <th>Status</th>
+                <th>Patient</th>
+                <th>Delete</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="slot,iter : ${pastSlots}">
+                <td th:text="${iter.count}"></td>
+                <td th:text="${slot.getStartTime()}"></td>
+                <td th:text="${slot.getAppDate()}"></td>
+                <td th:text="${slot.getStatus()}"></td>
+                <td th:text="${slot.getPatientAppointment()} ? ${slot.getPatientAppointment().getPatient().getPatientUser().getEmail()} : 'NO PATIENT'"></td>
+                <td>
+                  <a th:href="@{'/doctor/slots/delete_slot/' + ${slot.getId()}}"
+                     type="button" class="btn btn-danger"
+                     onclick="return confirm('Are you sure you want to Delete this Slot?');">delete</a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <a th:href="@{'/doctor/slots/new'}" class="btn btn-primary">Create New Slot</a>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="nav-cancel" role="tabpanel" aria-labelledby="nav-contact-tab">
+        <div class="card">
+          <h5 class="card-header">All Cancelled Slots</h5>
+          <div class="card-body">
+            <table class="table table-sm table-hover">
+              <thead>
+              <tr>
+                <th>#</th>
+                <th>StartTime</th>
+                <th>AppDate</th>
+                <th>Status</th>
+                <th>Patient</th>
+                <th>Delete</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="slot,iter : ${cancelledSlots}">
+                <td th:text="${iter.count}"></td>
+                <td th:text="${slot.getStartTime()}"></td>
+                <td th:text="${slot.getAppDate()}"></td>
+                <td th:text="${slot.getStatus()}"></td>
+                <td th:text="${slot.getPatientAppointment()} ? ${slot.getPatientAppointment().getPatient().getPatientUser().getEmail()} : 'NO PATIENT'"></td>
+                <td>
+                  <a th:href="@{'/doctor/slots/delete_slot/' + ${slot.getId()}}"
+                     type="button" class="btn btn-danger"
+                     onclick="return confirm('Are you sure you want to Delete this Slot?');">delete</a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <a th:href="@{'/doctor/slots/new'}" class="btn btn-primary">Create New Slot</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

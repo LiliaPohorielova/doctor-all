@@ -28,7 +28,7 @@
                         <div class="form-outline form-white mb-4">
                             <label class="form-label" for="timepicker1">Time Of Appointment</label>
                             <div class="input-group date" id="timepicker1">
-                                <input id="timepkr" th:field="*{startTime}" type="text" class="form-control">
+                                <input id="timepkr" th:field="*{startTime}" type="text" class="form-control" readonly>
                                 <span class="input-group-append">
                                                     <span class="input-group-text bg-white d-block">
                                                      <i class="fa fa-clock" onclick="showpickers('timepkr',24)"></i>
@@ -42,7 +42,7 @@
                         <div class="form-outline form-white mb-4">
                             <label class="form-label" for="datepicker1">Date Of Appointment</label>
                             <div class="input-group date" id="datepicker1">
-                                <input type="text" th:field="*{appDate}" class="form-control">
+                                <input type="text" th:field="*{appDate}" class="form-control" readonly>
                                 <span class="input-group-append">
                                                     <span class="input-group-text bg-white d-block">
                                                      <i class="fa fa-calendar"

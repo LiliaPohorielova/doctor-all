@@ -17,7 +17,6 @@ import ua.com.alevel.web.dto.request.data.SortData;
 import ua.com.alevel.web.dto.response.PageData;
 import ua.com.alevel.web.dto.response.appointment.AppointmentResponseDto;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -96,7 +95,7 @@ public class AppointmentFacadeImpl implements AppointmentFacade {
     }
 
     @Override
-    public List<Slot> findBookedByPatient(Long id) {
-        return appointmentService.findBookedByPatient(id);
+    public List<Slot> findBookedByPatient(Long id, SlotStatus slotStatus) {
+        return appointmentService.findBookedByPatient(id,slotStatus);
     }
 }

@@ -52,16 +52,8 @@ public class PatientAppointmentServiceImpl implements PatientAppointmentService 
         return patientAppointmentRepositoryHelper.findById(patientAppointmentRepository, id);
     }
 
-    public List<Slot> findBookedByPatient(Long id) {
-        List<PatientAppointment> patientAppointments = patientAppointmentRepository.findByPatientId(id);
-        List<Slot> appointments = new ArrayList<>();
-        for (PatientAppointment booked : patientAppointments)
-            appointments.add(booked.getSlot());
-        return appointments;
-    }
-
-    public List<Slot> findPastByPatient(Long id) {
-        List<PatientAppointment> patientAppointments = patientAppointmentRepository.findByPatientId(id);
+    public List<Slot> findBookedByPatient(Long id, SlotStatus slotStatus) {
+        List<PatientAppointment> patientAppointments = patientAppointmentRepository.findByPatientIdAndSlotStatus(id, slotStatus);
         List<Slot> appointments = new ArrayList<>();
         for (PatientAppointment booked : patientAppointments)
             appointments.add(booked.getSlot());

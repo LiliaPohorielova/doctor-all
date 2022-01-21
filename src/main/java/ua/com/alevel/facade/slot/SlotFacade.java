@@ -5,6 +5,7 @@ import ua.com.alevel.persistence.entity.appointment.PatientAppointment;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.entity.slot.Slot;
+import ua.com.alevel.persistence.type.SlotStatus;
 import ua.com.alevel.web.dto.request.slot.SlotRequestDto;
 import ua.com.alevel.web.dto.response.slot.SlotResponseDto;
 
@@ -13,6 +14,8 @@ import java.time.LocalTime;
 import java.util.List;
 
 public interface SlotFacade extends BaseFacade<SlotRequestDto, SlotResponseDto> {
+
+    void updateStatus(Long slotId, SlotStatus slotStatus);
 
     List<SlotResponseDto> findAll();
 
@@ -23,4 +26,6 @@ public interface SlotFacade extends BaseFacade<SlotRequestDto, SlotResponseDto> 
     Slot getSlot(Doctor doctor, LocalDate date, LocalTime time);
 
     PatientAppointment bookSlot(Long slotId, Patient patient);
+
+    List<Slot> findSlotByDoctor(SlotStatus slotStatus, Long doctorId);
 }

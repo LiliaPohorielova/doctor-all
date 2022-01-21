@@ -9,42 +9,118 @@
 </head>
 <body>
 <div layout:fragment="patient_content">
+
   <div class="container rounded bg-white mt-5 mb-5 p-5">
-    <h1 class="pb-3">This is your appointments</h1>
-    <div class="card">
-      <h5 class="card-header">All My Appointments</h5>
-      <div class="card-body">
-        <table class="table table-sm table-hover">
-          <thead>
-          <tr>
-            <th>#</th>
-            <th>StartTime</th>
-            <th>AppDate</th>
-            <th>Status</th>
-            <th>Specialization</th>
-            <th>Doctor</th>
-            <th>Cancel</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr th:each="appointment,iter : ${appointments}">
-            <td th:text="${iter.count}"></td>
-            <td th:text="${appointment.getStartTime()}"></td>
-            <td th:text="${appointment.getAppDate()}"></td>
-            <td th:text="${appointment.getStatus()}"></td>
-            <td th:text="${appointment.getDoctor().getSpecialization()}"></td>
-            <td th:text="${appointment.getDoctor().getLastname() + ' ' +
+    <h1 class="pb-3">This is your slots</h1>
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-link active" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Booked</a>
+        <a class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Past</a>
+        <a class="nav-link" id="nav-cancel-tab" data-bs-toggle="tab" href="#nav-cancel" role="tab" aria-controls="nav-cancel" aria-selected="false">Cancelled</a>
+      </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <div class="card">
+          <h5 class="card-header">All Booked Appointments</h5>
+          <div class="card-body">
+            <table class="table table-sm table-hover">
+              <thead>
+              <tr>
+                <th>#</th>
+                <th>StartTime</th>
+                <th>AppDate</th>
+                <th>Status</th>
+                <th>Specialization</th>
+                <th>Doctor</th>
+                <th>Cancel</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="appointment,iter : ${appointmentsBooked}">
+                <td th:text="${iter.count}"></td>
+                <td th:text="${appointment.getStartTime()}"></td>
+                <td th:text="${appointment.getAppDate()}"></td>
+                <td th:text="${appointment.getStatus()}"></td>
+                <td th:text="${appointment.getDoctor().getSpecialization()}"></td>
+                <td th:text="${appointment.getDoctor().getLastname() + ' ' +
             appointment.getDoctor().getFirstname() + ' ' +
             appointment.getDoctor().getMiddleName()}"></td>
-            <td>
-              <a th:href="@{'/patient/appoinments/delete_appoinment/' + ${appointment.getId()}}"
-                 type="button" class="btn btn-danger"
-                 onclick="return confirm('Are you sure you want to Cancel this Appointment?');">cancel</a>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-        <a th:href="@{'/doctor/slots/new'}" class="btn btn-primary">Create New Slot</a>
+                <td>
+                  <a th:href="@{'/patient/appoinments/delete_appoinment/' + ${appointment.getId()}}"
+                     type="button" class="btn btn-danger"
+                     onclick="return confirm('Are you sure you want to Cancel this Appointment?');">cancel</a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <a class="btn btn-primary" th:href="@{'/patient/book_appointment'}">Create New Appointment</a>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+        <div class="card">
+          <h5 class="card-header">All Past Appointments</h5>
+          <div class="card-body">
+            <table class="table table-sm table-hover">
+              <thead>
+              <tr>
+                <th>#</th>
+                <th>StartTime</th>
+                <th>AppDate</th>
+                <th>Status</th>
+                <th>Specialization</th>
+                <th>Doctor</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="appointment,iter : ${appointmentsPast}">
+                <td th:text="${iter.count}"></td>
+                <td th:text="${appointment.getStartTime()}"></td>
+                <td th:text="${appointment.getAppDate()}"></td>
+                <td th:text="${appointment.getStatus()}"></td>
+                <td th:text="${appointment.getDoctor().getSpecialization()}"></td>
+                <td th:text="${appointment.getDoctor().getLastname() + ' ' +
+            appointment.getDoctor().getFirstname() + ' ' +
+            appointment.getDoctor().getMiddleName()}"></td>
+              </tr>
+              </tbody>
+            </table>
+            <a class="btn btn-primary" th:href="@{'/patient/book_appointment'}">Create New Appointment</a>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="nav-cancel" role="tabpanel" aria-labelledby="nav-contact-tab">
+        <div class="card">
+          <h5 class="card-header">All Cancelled Appointments</h5>
+          <div class="card-body">
+            <table class="table table-sm table-hover">
+              <thead>
+              <tr>
+                <th>#</th>
+                <th>StartTime</th>
+                <th>AppDate</th>
+                <th>Status</th>
+                <th>Specialization</th>
+                <th>Doctor</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="appointment,iter : ${appointmentsCancelled}">
+                <td th:text="${iter.count}"></td>
+                <td th:text="${appointment.getStartTime()}"></td>
+                <td th:text="${appointment.getAppDate()}"></td>
+                <td th:text="${appointment.getStatus()}"></td>
+                <td th:text="${appointment.getDoctor().getSpecialization()}"></td>
+                <td th:text="${appointment.getDoctor().getLastname() + ' ' +
+            appointment.getDoctor().getFirstname() + ' ' +
+            appointment.getDoctor().getMiddleName()}"></td>
+              </tr>
+              </tbody>
+            </table>
+            <a class="btn btn-primary" th:href="@{'/patient/book_appointment'}">Create New Appointment</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -7,12 +7,13 @@ import ua.com.alevel.facade.doctor.DoctorFacade;
 import ua.com.alevel.facade.doctor.DoctorRegistrationFacade;
 import ua.com.alevel.facade.slot.SlotFacade;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
+import ua.com.alevel.persistence.entity.slot.Slot;
 import ua.com.alevel.persistence.entity.user.DoctorUser;
+import ua.com.alevel.persistence.type.SlotStatus;
 import ua.com.alevel.util.SecurityUtil;
 import ua.com.alevel.web.dto.request.slot.SlotRequestDto;
-import ua.com.alevel.web.dto.response.slot.SlotResponseDto;
 
-import java.util.Set;
+import java.util.List;
 
 @Controller
 @RequestMapping("/doctor/slots")
@@ -33,8 +34,15 @@ public class DoctorSlotController {
         String user = SecurityUtil.getUsername();
         DoctorUser doctorUserData = doctorUserFacade.findByEmail(user);
         Doctor doctor = doctorUserData.getDoctor();
-        Set<SlotResponseDto> slots = doctorFacade.getSlots(doctor.getId());
-        model.addAttribute("slots", slots);
+        //Set<SlotResponseDto> slots = doctorFacade.getSlots(doctor.getId());
+        List<Slot> freeSlots = slotFacade.findSlotByDoctor(SlotStatus.FREE,doctor.getId());
+        List<Slot> bookSlots = slotFacade.findSlotByDoctor(SlotStatus.BOOKED,doctor.getId());
+        List<Slot> pastSlots = slotFacade.findSlotByDoctor(SlotStatus.PAST,doctor.getId());
+        List<Slot> cancelledSlots = slotFacade.findSlotByDoctor(SlotStatus.CANCELLED,doctor.getId());
+        model.addAttribute("freeSlots", freeSlots);
+        model.addAttribute("bookSlots", bookSlots);
+        model.addAttribute("pastSlots", pastSlots);
+        model.addAttribute("cancelledSlots", cancelledSlots);
         return "pages/slot/slots";
     }
 
@@ -60,6 +68,15 @@ public class DoctorSlotController {
         DoctorUser doctorUserData = doctorUserFacade.findByEmail(user);
         Doctor doctor = doctorUserData.getDoctor();
         doctorFacade.removeSlot(doctor.getId(), slotId);
+        return "redirect:/doctor/slots";
+    }
+
+    @GetMapping("/check_slot/{slotId}")
+    public String deleteById(@PathVariable Long slotId) {
+        String user = SecurityUtil.getUsername();
+        DoctorUser doctorUserData = doctorUserFacade.findByEmail(user);
+        Doctor doctor = doctorUserData.getDoctor();
+        slotFacade.updateStatus(slotId, SlotStatus.PAST);
         return "redirect:/doctor/slots";
     }
 }

@@ -60,6 +60,13 @@ public class SlotFacadeImpl implements SlotFacade {
     }
 
     @Override
+    public void updateStatus(Long slotId, SlotStatus slotStatus) {
+        Slot slot = slotService.findById(slotId).get();
+        slot.setStatus(slotStatus);
+        slotService.update(slot);
+    }
+
+    @Override
     public void delete(Long id) {
         slotService.delete(id);
     }
@@ -144,5 +151,10 @@ public class SlotFacadeImpl implements SlotFacade {
     @Override
     public PatientAppointment bookSlot(Long slotId, Patient patient) {
         return slotService.bookSlot(slotId, patient);
+    }
+
+    @Override
+    public List<Slot> findSlotByDoctor(SlotStatus slotStatus, Long doctorId) {
+        return slotService.findSlotByDoctor(slotStatus, doctorId);
     }
 }

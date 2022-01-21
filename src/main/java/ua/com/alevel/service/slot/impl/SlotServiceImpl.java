@@ -58,6 +58,16 @@ public class SlotServiceImpl implements SlotService {
         return bookedSlot;
     }
 
+    public PatientAppointment checkSlot(Long slotId, Patient patient) {
+        Optional<Slot> slot = slotRepository.findById(slotId);
+        updateStatus(slotId, SlotStatus.BOOKED);
+        PatientAppointment bookedSlot = new PatientAppointment();
+        bookedSlot.setSlot(slot.get());
+        bookedSlot.setPatient(patient);
+        patientAppointmentRepository.save(bookedSlot);
+        return bookedSlot;
+    }
+
     //checking for past appointments every 5 minutes since the application starts
     @Scheduled(fixedRate = 300000)
     public void updatePastSlots() {
@@ -106,5 +116,10 @@ public class SlotServiceImpl implements SlotService {
     @Override
     public List<Slot> findAll() {
         return slotRepository.findAll();
+    }
+
+    @Override
+    public List<Slot> findSlotByDoctor(SlotStatus slotStatus, Long doctorId) {
+        return slotRepository.findByStatusAndDoctorId(slotStatus, doctorId);
     }
 }
