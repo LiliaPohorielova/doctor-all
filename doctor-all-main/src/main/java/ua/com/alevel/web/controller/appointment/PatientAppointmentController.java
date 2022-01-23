@@ -8,13 +8,16 @@ import ua.com.alevel.facade.doctor.DoctorFacade;
 import ua.com.alevel.facade.patient.PatientFacade;
 import ua.com.alevel.facade.patient.PatientRegistrationFacade;
 import ua.com.alevel.facade.slot.SlotFacade;
+import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.entity.slot.Slot;
+import ua.com.alevel.persistence.entity.user.DoctorUser;
 import ua.com.alevel.persistence.entity.user.PatientUser;
 import ua.com.alevel.persistence.type.SlotStatus;
 import ua.com.alevel.util.SecurityUtil;
 import ua.com.alevel.web.dto.request.appointment.AppointmentRequestDto;
 import ua.com.alevel.web.dto.response.appointment.AppointmentResponseDto;
+import ua.com.alevel.web.dto.response.slot.SlotResponseDto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -86,9 +89,15 @@ public class PatientAppointmentController {
         PatientUser patientUserData = patientUserFacade.findByEmail(user);
         Patient patient = patientUserData.getPatient();
         appointmentForm.setPatient(patient);
-        //appointmentFacade.create(appointmentForm);
         Slot slot = slotFacade.getSlot(appointmentForm.getDoctor(), appointmentForm.getDate(), appointmentForm.getTime());
         patientFacade.addAppointment(slotFacade.bookSlot(slot.getId(), patient).getId(), patient.getId());
+        return "redirect:/patient/appointments";
+    }
+
+    @GetMapping("/appointments/delete_appointment/{appointmentId}")
+    public String deleteById(@PathVariable Long appointmentId, Model model) {
+        SlotResponseDto slot = slotFacade.findById(appointmentId);
+        doctorFacade.removeSlot(slot.getDoctor().getId(), appointmentId);
         return "redirect:/patient/appointments";
     }
 }

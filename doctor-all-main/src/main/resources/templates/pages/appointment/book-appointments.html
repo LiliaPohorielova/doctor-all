@@ -8,19 +8,14 @@
     <title>Patient - Book An Appointment</title>
 
     <script>
-        //MAYBE CAN BE ABLE TO WORK
-        /*function loadDoctors() {
-            console.log('Привет от JavaScript!');
-            var url = "/patient/book_appointment";
-            if ($('#specialization').val() !== '') {
-                url = url + '/' + $('#specialization').val();
-            }
-            $("#doctorsContent").load(url);
-        }*/
         function getDoctorsBySpecialization() {
+            $("#doctorsContent").empty();
+            $("#appDate").empty();
+            $("#time").empty();
+            $('#but_book').attr('disabled', 'disabled');
+            $("#doctorsContent").append("<option selected disabled hidden>---</option>");
             var specialization = $("#specialization").val();
             $.get("/patient/get_doctors/" + specialization, function (data) {
-                $("#doctorsContent").empty();
                 data.forEach(function (item, i) {
                     if (i % 2 === 0) {
                         var option = "<option value = " + data[i] + ">" + data[++i] + "</option>";
@@ -30,26 +25,38 @@
             });
         };
         function getDatesByDoctor() {
+            $("#appDate").empty();
+            $("#time").empty();
             var doctor = $("#doctorsContent").val();
+            $("#appDate").append("<option selected disabled hidden>---</option>");
             $.get("/patient/get_dates/" + doctor, function (data) {
-                $("#appDate").empty();
                 data.forEach(function (item, i) {
                     var option = "<option value = " + item + ">" + item + "</option>";
                     $("#appDate").append(option);
                 });
             });
+            $('#but_book').attr('disabled', 'disabled');
         };
         function getTimesByDate() {
+            $("#time").empty();
             var doctor = $("#doctorsContent").val();
             var date = $("#appDate").val();
+            $("#time").append("<option selected disabled hidden>---</option>");
             $.get("/patient/get_times/" + doctor + "/" + date, function (data) {
-                $("#time").empty();
                 data.forEach(function (item, i) {
                     var option = "<option value = " + item + ">" + item + "</option>";
                     $("#time").append(option);
+                    console.log("<option value = " + item + ">" + item + "</option>");
                 });
             });
         };
+        function timeOnChange() {
+            if ($("#time").val() !== "---") {
+                $("#but_book").prop('disabled', false);
+            } else {
+                $('#but_book').attr('disabled','disabled');
+            }
+        }
     </script>
 </head>
 <body>
@@ -65,7 +72,8 @@
                           method="POST">
                         <div class="form-outline form-white mb-4">
                             <label class="form-label" for="specialization">Specialization</label>
-                            <select class="form-control" id="specialization" onclick="getDoctorsBySpecialization()">
+                            <select class="form-control" id="specialization" onchange="getDoctorsBySpecialization()">
+                                <option selected disabled hidden style="color:gray">---</option>
                                 <option th:each="type : ${T(ua.com.alevel.persistence.type.DoctorSpecialization).values()}"
                                         th:value="${T(ua.com.alevel.persistence.type.DoctorSpecialization).valueOf(type).ordinal()}"
                                         th:text="${type}">
@@ -75,41 +83,35 @@
 
                         <div class="form-outline form-white mb-4">
                             <label class="form-label" for="doctorsContent">Doctors</label>
-                            <select class="form-control" id="doctorsContent" onclick="getDatesByDoctor()"
+                            <select class="form-control" id="doctorsContent" onchange="getDatesByDoctor()"
                                     th:field="*{doctor}">
                             </select>
                         </div>
 
                         <div class="form-outline form-white mb-4">
                             <label class="form-label" for="appDate">Available Date</label>
-                            <select class="form-control" id="appDate" onclick="getTimesByDate()"
+                            <select class="form-control" id="appDate" onchange="getTimesByDate()"
                                     th:field="*{date}">
                             </select>
                         </div>
 
                         <div class="form-outline form-white mb-4">
                             <label class="form-label" for="time">Available Time</label>
-                            <select class="form-control" id="time"
+                            <select class="form-control" id="time" onchange="timeOnChange()"
                                     th:field="*{time}">
                             </select>
                         </div>
 
                         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                            <div class="btn-group mr-2" role="group" aria-label="Second group">
-                                <a th:href="@{/patient/my_appointments}" type="button" class="btn btn-primary">Back</a>
+                            <div class="btn-group me-2" role="group" aria-label="Second group">
+                                <a th:href="@{/patient/appointments}" type="button" class="btn btn-primary">Back</a>
                             </div>
-                            <div class="btn-group mr-2" role="group" aria-label="Third group">
-                                <button type="submit" class="btn btn-primary">Book</button>
+                            <div class="btn-group me-2" role="group" aria-label="Third group">
+                                <button type="submit" class="btn btn-primary" id="but_book" disabled="disabled">Book</button>
                             </div>
                         </div>
                     </form>
                 </div>
-
-
-                <div class="timepicker"></div>
-                <th:block layout:fragment="scripts">
-                    <script type="text/javascript" th:src="@{/js/tpicker.js}"></script>
-                </th:block>
             </div>
         </div>
     </div>
