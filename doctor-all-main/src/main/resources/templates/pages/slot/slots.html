@@ -42,7 +42,7 @@
                 <td th:text="${slot.getAppDate()}"></td>
                 <td th:text="${slot.getStatus()}"></td>
                 <td>
-                  <a th:href="@{'/doctor/slots/add_patient/' + ${slot.getId()}}"
+                  <a th:href="@{'/doctor/slots/all_patients/' + ${slot.getId()}}"
                      type="button" class="btn btn-primary"
                      onclick="return confirm('Are you sure you want to Add patient to this Slot?');">add patient</a>
                 </td>

@@ -4,7 +4,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import ua.com.alevel.exception.EntityExistException;
 import ua.com.alevel.persistence.crud.CrudRepositoryHelper;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
@@ -14,6 +13,7 @@ import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.entity.slot.Slot;
 import ua.com.alevel.persistence.repository.doctor.SlotRepository;
 import ua.com.alevel.persistence.repository.patient.PatientAppointmentRepository;
+import ua.com.alevel.persistence.repository.patient.PatientRepository;
 import ua.com.alevel.persistence.type.SlotStatus;
 import ua.com.alevel.service.slot.SlotService;
 
@@ -28,11 +28,16 @@ public class SlotServiceImpl implements SlotService {
     private final SlotRepository slotRepository;
     private final CrudRepositoryHelper<Slot, SlotRepository> slotRepositoryHelper;
     private final PatientAppointmentRepository patientAppointmentRepository;
+    private final PatientRepository patientRepository;
 
-    public SlotServiceImpl(SlotRepository slotRepository, CrudRepositoryHelper<Slot, SlotRepository> slotRepositoryHelper, PatientAppointmentRepository patientAppointmentRepository) {
+    public SlotServiceImpl(SlotRepository slotRepository,
+                           CrudRepositoryHelper<Slot, SlotRepository> slotRepositoryHelper,
+                           PatientAppointmentRepository patientAppointmentRepository,
+                           PatientRepository patientRepository) {
         this.slotRepository = slotRepository;
         this.slotRepositoryHelper = slotRepositoryHelper;
         this.patientAppointmentRepository = patientAppointmentRepository;
+        this.patientRepository = patientRepository;
     }
 
     public Slot getSlot(Doctor doctor, LocalDate date, LocalTime time) {
@@ -49,12 +54,13 @@ public class SlotServiceImpl implements SlotService {
         }
     }
 
-    public PatientAppointment bookSlot(Long slotId, Patient patient) {
+    public PatientAppointment bookSlot(Long slotId, Long patientId) {
         Optional<Slot> slot = slotRepository.findById(slotId);
+        Optional<Patient> patient = patientRepository.findById(patientId);
         updateStatus(slotId, SlotStatus.BOOKED);
         PatientAppointment bookedSlot = new PatientAppointment();
         bookedSlot.setSlot(slot.get());
-        bookedSlot.setPatient(patient);
+        bookedSlot.setPatient(patient.get());
         patientAppointmentRepository.save(bookedSlot);
         return bookedSlot;
     }
@@ -98,8 +104,14 @@ public class SlotServiceImpl implements SlotService {
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public void delete(Long id) {
         Slot slot = slotRepositoryHelper.findById(slotRepository, id).get();
-        if (slot.getStatus() == SlotStatus.FREE) slotRepositoryHelper.delete(slotRepository, id);
+        if (slot.getStatus() == SlotStatus.FREE)
+            slotRepositoryHelper.delete(slotRepository, id);
+        else if (slot.getStatus() == SlotStatus.CANCELLED) {
+            patientAppointmentRepository.delete(slot.getPatientAppointment());
+            slotRepositoryHelper.delete(slotRepository, id);
+        }
         else slot.setStatus(SlotStatus.CANCELLED);
+
     }
 
     @Override

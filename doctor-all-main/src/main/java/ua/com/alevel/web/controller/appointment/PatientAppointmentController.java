@@ -73,7 +73,7 @@ public class PatientAppointmentController {
 
     @RequestMapping(value = "/get_dates/{doctorId}")
     @ResponseBody
-    public List<String> getDates(@PathVariable("doctorId") String doctorId) {
+    public Set<String> getDates(@PathVariable("doctorId") String doctorId) {
         return slotFacade.getDatesByDoctor(doctorId);
     }
 
@@ -90,7 +90,7 @@ public class PatientAppointmentController {
         Patient patient = patientUserData.getPatient();
         appointmentForm.setPatient(patient);
         Slot slot = slotFacade.getSlot(appointmentForm.getDoctor(), appointmentForm.getDate(), appointmentForm.getTime());
-        patientFacade.addAppointment(slotFacade.bookSlot(slot.getId(), patient).getId(), patient.getId());
+        patientFacade.addAppointment(slotFacade.bookSlot(slot.getId(), patient.getId()).getId(), patient.getId());
         return "redirect:/patient/appointments";
     }
 

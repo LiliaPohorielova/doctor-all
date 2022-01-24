@@ -21,15 +21,12 @@ import ua.com.alevel.web.dto.response.slot.SlotResponseDto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class SlotFacadeImpl implements SlotFacade {
-    
+
     private final SlotService slotService;
     private final DoctorService doctorService;
 
@@ -89,12 +86,12 @@ public class SlotFacadeImpl implements SlotFacade {
 
         DataTableResponse<Slot> all = slotService.findAll(dataTableRequest);
 
-        List< SlotResponseDto> list = all.getItems().
+        List<SlotResponseDto> list = all.getItems().
                 stream().
-                map( SlotResponseDto::new).
+                map(SlotResponseDto::new).
                 collect(Collectors.toList());
 
-        PageData< SlotResponseDto> pageData = new PageData<>();
+        PageData<SlotResponseDto> pageData = new PageData<>();
         pageData.setItems(list);
         pageData.setCurrentPage(pageAndSizeData.getPage());
         pageData.setPageSize(pageAndSizeData.getSize());
@@ -114,9 +111,9 @@ public class SlotFacadeImpl implements SlotFacade {
     }
 
     @Override
-    public List<String> getDatesByDoctor(String doctorId) {
+    public Set<String> getDatesByDoctor(String doctorId) {
         List<Doctor> all = doctorService.findAll();
-        List<String> dates = new ArrayList<>();
+        HashSet<String> dates = new HashSet<String>();
         for (Doctor doctor : all) {
             if (doctor.getId().toString().equals(doctorId)) {
                 Set<Slot> slots = doctor.getSlots();
@@ -149,8 +146,8 @@ public class SlotFacadeImpl implements SlotFacade {
     }
 
     @Override
-    public PatientAppointment bookSlot(Long slotId, Patient patient) {
-        return slotService.bookSlot(slotId, patient);
+    public PatientAppointment bookSlot(Long slotId, Long patientId) {
+        return slotService.bookSlot(slotId, patientId);
     }
 
     @Override

@@ -17,7 +17,7 @@ public interface SlotService extends BaseCrudService<Slot> {
 
     Slot getSlot(Doctor doctor, LocalDate date, LocalTime time);
 
-    PatientAppointment bookSlot(Long slotId, Patient patient);
+    PatientAppointment bookSlot(Long slotId, Long patientId);
 
     List<Slot> findSlotByDoctor(SlotStatus slotStatus, Long doctorId);
 }

@@ -12,6 +12,7 @@ import ua.com.alevel.web.dto.response.slot.SlotResponseDto;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Set;
 
 public interface SlotFacade extends BaseFacade<SlotRequestDto, SlotResponseDto> {
 
@@ -19,13 +20,13 @@ public interface SlotFacade extends BaseFacade<SlotRequestDto, SlotResponseDto> 
 
     List<SlotResponseDto> findAll();
 
-    List<String> getDatesByDoctor(String doctorId);
+    Set<String> getDatesByDoctor(String doctorId);
 
     List<String> getTimeByDate(String doctorId, String date);
 
     Slot getSlot(Doctor doctor, LocalDate date, LocalTime time);
 
-    PatientAppointment bookSlot(Long slotId, Patient patient);
+    PatientAppointment bookSlot(Long slotId, Long patientId);
 
     List<Slot> findSlotByDoctor(SlotStatus slotStatus, Long doctorId);
 }

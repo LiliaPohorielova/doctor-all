@@ -2,12 +2,10 @@ package ua.com.alevel.web.controller.slot;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import ua.com.alevel.exception.EntityExistException;
 import ua.com.alevel.facade.doctor.DoctorFacade;
 import ua.com.alevel.facade.doctor.DoctorRegistrationFacade;
+import ua.com.alevel.facade.patient.PatientFacade;
 import ua.com.alevel.facade.slot.SlotFacade;
 import ua.com.alevel.facade.slot.SlotValidationFacade;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
@@ -17,6 +15,7 @@ import ua.com.alevel.persistence.type.SlotStatus;
 import ua.com.alevel.util.SecurityUtil;
 import ua.com.alevel.web.dto.request.slot.SlotRequestDto;
 import ua.com.alevel.web.controller.AbstractController;
+import ua.com.alevel.web.dto.response.patient.PatientResponseDto;
 
 import java.util.List;
 
@@ -28,12 +27,14 @@ public class DoctorSlotController extends AbstractController {
     private final DoctorRegistrationFacade doctorUserFacade;
     private final DoctorFacade doctorFacade;
     private final SlotValidationFacade slotValidationFacade;
+    private final PatientFacade patientFacade;
 
-    public DoctorSlotController(SlotFacade slotFacade, DoctorRegistrationFacade doctorUserFacade, DoctorFacade doctorFacade, SlotValidationFacade slotValidationFacade) {
+    public DoctorSlotController(SlotFacade slotFacade, DoctorRegistrationFacade doctorUserFacade, DoctorFacade doctorFacade, SlotValidationFacade slotValidationFacade, PatientFacade patientFacade) {
         this.slotFacade = slotFacade;
         this.doctorUserFacade = doctorUserFacade;
         this.doctorFacade = doctorFacade;
         this.slotValidationFacade = slotValidationFacade;
+        this.patientFacade = patientFacade;
     }
 
     @GetMapping()
@@ -42,10 +43,10 @@ public class DoctorSlotController extends AbstractController {
         DoctorUser doctorUserData = doctorUserFacade.findByEmail(user);
         Doctor doctor = doctorUserData.getDoctor();
         //Set<SlotResponseDto> slots = doctorFacade.getSlots(doctor.getId());
-        List<Slot> freeSlots = slotFacade.findSlotByDoctor(SlotStatus.FREE,doctor.getId());
-        List<Slot> bookSlots = slotFacade.findSlotByDoctor(SlotStatus.BOOKED,doctor.getId());
-        List<Slot> pastSlots = slotFacade.findSlotByDoctor(SlotStatus.PAST,doctor.getId());
-        List<Slot> cancelledSlots = slotFacade.findSlotByDoctor(SlotStatus.CANCELLED,doctor.getId());
+        List<Slot> freeSlots = slotFacade.findSlotByDoctor(SlotStatus.FREE, doctor.getId());
+        List<Slot> bookSlots = slotFacade.findSlotByDoctor(SlotStatus.BOOKED, doctor.getId());
+        List<Slot> pastSlots = slotFacade.findSlotByDoctor(SlotStatus.PAST, doctor.getId());
+        List<Slot> cancelledSlots = slotFacade.findSlotByDoctor(SlotStatus.CANCELLED, doctor.getId());
         model.addAttribute("freeSlots", freeSlots);
         model.addAttribute("bookSlots", bookSlots);
         model.addAttribute("pastSlots", pastSlots);
@@ -54,12 +55,8 @@ public class DoctorSlotController extends AbstractController {
     }
 
     @GetMapping("/new")
-    public String redirectToNewSlotPage(Model model, String error) {
-/*        showMessage(model, false);
-        if (error != null) {
-            showError(model, "Such slot is already exist!!! Choose another time or date!");
-        } else*/
-            model.addAttribute("slot", new SlotRequestDto());
+    public String redirectToNewSlotPage(Model model) {
+        model.addAttribute("slot", new SlotRequestDto());
         return "pages/slot/slot_new";
     }
 
@@ -72,7 +69,7 @@ public class DoctorSlotController extends AbstractController {
         String err = slotValidationFacade.validateSlot(slotRequestDto);
         if (!err.isEmpty()) {
             showError(model, "Such slot is already exist!!! Choose another time or date!");
-            return "pages/slot/slot_new";
+            return "redirect:/doctor/slots";
         }
         slotFacade.create(slotRequestDto);
         return "redirect:/doctor/slots";
@@ -88,8 +85,27 @@ public class DoctorSlotController extends AbstractController {
     }
 
     @GetMapping("/check_slot/{slotId}")
-    public String deleteById(@PathVariable Long slotId) {
+    public String checkAsPast(@PathVariable Long slotId, Model model) {
+        String err = slotValidationFacade.validatePastSlot(slotId);
+        if (!err.isEmpty()) {
+            showError(model, "You can't mark this visit as past. The past hasn't arrived yet :)");
+            return "pages/slot/slots";
+        }
         slotFacade.updateStatus(slotId, SlotStatus.PAST);
+        return "redirect:/doctor/slots";
+    }
+
+    @GetMapping("/all_patients/{slotId}")
+    public String redirectToAddPatientPage(@PathVariable Long slotId, Model model) {
+        List<PatientResponseDto> patients = patientFacade.findAll();
+        model.addAttribute("patients", patients);
+        model.addAttribute("slotId", slotId);
+        return "pages/slot/slot_patient_add";
+    }
+
+    @GetMapping("/add_patient/{slotId}/{patientId}")
+    public String addPatient(@PathVariable Long slotId, @PathVariable Long patientId) {
+        patientFacade.addAppointment(slotFacade.bookSlot(slotId, patientId).getId(), patientId);
         return "redirect:/doctor/slots";
     }
 }
