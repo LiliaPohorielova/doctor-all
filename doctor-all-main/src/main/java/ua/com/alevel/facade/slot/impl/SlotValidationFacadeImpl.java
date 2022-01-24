@@ -1,5 +1,6 @@
 package ua.com.alevel.facade.slot.impl;
 
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Service;
 import ua.com.alevel.facade.slot.SlotValidationFacade;
 import ua.com.alevel.persistence.entity.slot.Slot;
@@ -8,8 +9,6 @@ import ua.com.alevel.persistence.type.SlotStatus;
 import ua.com.alevel.web.dto.request.slot.SlotRequestDto;
 
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 
 @Service
 public class SlotValidationFacadeImpl implements SlotValidationFacade {
@@ -22,9 +21,13 @@ public class SlotValidationFacadeImpl implements SlotValidationFacade {
 
     public String validateSlot(SlotRequestDto slotRequestDto) {
         String message = "";
-        Slot slot = slotRepository.findByDoctorAndAppDateAndStartTime(slotRequestDto.getDoctor(), slotRequestDto.getAppDate(), slotRequestDto.getStartTime());
-        if (slot != null && slot.getStatus() != SlotStatus.CANCELLED)
+        try {
+            Slot slot = slotRepository.findByDoctorAndAppDateAndStartTime(slotRequestDto.getDoctor(), slotRequestDto.getAppDate(), slotRequestDto.getStartTime());
+            if (slot != null && slot.getStatus() != SlotStatus.CANCELLED)
+                message = "Such slot is already exist!!! Choose another time or date!";
+        } catch (IncorrectResultSizeDataAccessException e) {
             message = "Such slot is already exist!!! Choose another time or date!";
+        }
         return message;
     }
 

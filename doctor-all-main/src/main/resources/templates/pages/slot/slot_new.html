@@ -15,35 +15,38 @@
 </head>
 <body>
 <div layout:fragment="doctor_content">
-    <div class="row">
-        <div class="col-12">
-            <div class="card mt-2">
-                <div class="card-header">
-                    <h4>New Slot</h4>
-                </div>
-                <div class="card-body">
-                    <form action="#" th:action="@{/doctor/slots/new}" th:object="${slot}"
-                          method="post">
+    <div class="container rounded bg-white mt-5 mb-5 p-5" style="width: 30%">
+        <h1 class="pb-3">Create new slot</h1>
+        <div class="row">
+            <div class="col-12">
+                <div class="card mt-2">
+                    <div class="card-header">
+                        <h4>New Slot</h4>
+                    </div>
+                    <div class="card-body">
+                        <form action="#" th:action="@{/doctor/slots/new}" th:object="${slot}"
+                              method="post">
 
-                        <div class="form-outline form-white mb-4">
-                            <label class="form-label" for="timepicker1">Time Of Appointment</label>
-                            <div class="input-group date" id="timepicker1">
-                                <input id="timepkr" th:field="*{startTime}" type="text" class="form-control" onclick="showpickers('timepkr',24)" readonly>
-                                <span class="input-group-append">
+                            <div class="form-outline form-white mb-4">
+                                <label class="form-label" for="timepicker1">Time Of Appointment</label>
+                                <div class="input-group date" id="timepicker1">
+                                    <input id="timepkr" th:field="*{startTime}" type="text" class="form-control"
+                                           onclick="showpickers('timepkr',24)" readonly>
+                                    <span class="input-group-append">
                                                     <span class="input-group-text bg-white d-block">
                                                      <i class="fa fa-clock" onclick="showpickers('timepkr',24)"></i>
                                                     </span>
                                              </span>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="timepicker"></div>  <!--Important to add and keep it seprate to the end-->
+                            <div class="timepicker"></div>  <!--Important to add and keep it seprate to the end-->
 
-                        <div class="form-outline form-white mb-4">
-                            <label class="form-label" for="datepicker1">Date Of Appointment</label>
-                            <div class="input-group date" id="datepicker1">
-                                <input type="text" th:field="*{appDate}" class="form-control" readonly>
-                                <span class="input-group-append">
+                            <div class="form-outline form-white mb-4">
+                                <label class="form-label" for="datepicker1">Date Of Appointment</label>
+                                <div class="input-group date" id="datepicker1">
+                                    <input type="text" th:field="*{appDate}" class="form-control" readonly>
+                                    <span class="input-group-append">
                                                     <span class="input-group-text bg-white d-block">
                                                      <i class="fa fa-calendar"
                                                         onclick="$(function() {
@@ -56,35 +59,32 @@
                                                     </i>
                                                     </span>
                                              </span>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-outline form-white mb-4">
-                            <label class="form-label" for="status">Status</label>
-                            <select class="form-control" id="status" th:field="*{status}">
-                                <option th:each="type : ${T(ua.com.alevel.persistence.type.SlotStatus).values()}"
-                                        th:value="${type}"
-                                        th:text="${type}">
-                                </option>
-                            </select>
-                        </div>
+                            <div class="form-outline form-white mb-4">
+                                <label class="form-label" for="status">Status</label>
+                                <input id="status" class="form-control" type="text"
+                                       value="FREE" readonly>
+                            </div>
 
-                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                            <div class="btn-group mr-2" role="group" aria-label="Second group">
-                                <a th:href="@{/doctor/slots}" type="button" class="btn btn-primary">Back</a>
+                            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                <div class="btn-group me-2" role="group" aria-label="Second group">
+                                    <a th:href="@{/doctor/slots}" type="button" class="btn btn-primary">Back</a>
+                                </div>
+                                <div class="btn-group me-2" role="group" aria-label="Third group">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
                             </div>
-                            <div class="btn-group mr-2" role="group" aria-label="Third group">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+
+
+                    <div class="timepicker"></div>
+                    <th:block layout:fragment="scripts">
+                        <script type="text/javascript" th:src="@{/js/tpicker.js}"></script>
+                    </th:block>
                 </div>
-
-
-                <div class="timepicker"></div>
-                <th:block layout:fragment="scripts">
-                    <script type="text/javascript" th:src="@{/js/tpicker.js}"></script>
-                </th:block>
             </div>
         </div>
     </div>
