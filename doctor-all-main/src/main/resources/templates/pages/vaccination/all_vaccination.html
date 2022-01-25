@@ -64,6 +64,11 @@ z-index: 100;
     z-index: 2;
 }
 
+a:hover {
+    color: white!important;
+    background-color: white;
+}
+
 
 </style>
 <body>
@@ -129,18 +134,13 @@ z-index: 100;
 </nav>
 <!-- NavBar End -->
 
+<!-- Banner Start -->
 <section class="banner">
     <h1 class="head">COVID-19 Vaccination</h1>
 </section>
-<!--<div class="header_header">
-<div class="header_box">
-           <h1>COVID-19</h1>
-            <p>This is available kind of vaccination in our hospital</p>
-</div>
-</div>-->
+<!-- Banner End -->
 
-
-<!-- Welcome Start -->
+<!-- Vaccinations Start -->
 <div class="container-fluid" style="background-color: white; padding-top: 3%; padding-bottom: 3%;">
     <div class="row welcome text-center">
         <div class="col-12">
@@ -149,37 +149,18 @@ z-index: 100;
         <hr style="height:2px;width:30%;margin-left:35%;color:#0000ff;background-color:#0000ff; margin-bottom: 3%;">
 
     <div class="card-group">
-    <div class="card ho">
-        <img src="https://khoda.gov.ua/image/catalog/Anton/1205vaktsinats%D1%96ya.jpg" class="card-img-top" alt="...">
+    <div class="card ho" th:each="vac,iter : ${vaccinations}">
+        <img th:src="${vac.getImageUrl()}" class="card-img-top" alt="...">
         <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-                content. This content is a little bit longer.</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-        </div>
-    </div>
-    <div class="card ho">
-        <img src="https://media.slovoidilo.ua/media/publications/14/135463/135463-1_large.jpg" class="card-img-top"
-             alt="...">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-        </div>
-    </div>
-    <div class="card ho">
-        <img src="https://gdb.voanews.com/3E8439CB-9EF0-48FF-90B2-A50E5CEE7760_w1080_h608.jpg" class="card-img-top"
-             alt="...">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-                content. This card has even longer content than the first to show that equal height action.</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            <h2 class="card-title" th:text="${vac.getName()}"></h2>
+            <p class="card-text" style="text-align: left; margin: 20px"> According to manufacturers (<span th:text="${vac.getManufacturer()}"></span>) ongoing large-scale clinical trials show that this type of vaccine can help control the pandemic.</p>
+            <a class="btn btn-primary" style="margin-top: 20px; font-size: 20px" href="#" role="button">Get vaccinated <i class="fas fa-syringe" style="color: white!important;"></i></a>
         </div>
     </div>
 </div>
     </div>
 </div>
+<!-- Vaccinations End -->
 
 <!-- Footer Start -->
 <footer class="text-center text-lg-start text-muted" style="background-color: #1F1F1F">
