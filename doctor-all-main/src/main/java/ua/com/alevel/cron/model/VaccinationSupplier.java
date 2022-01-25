@@ -3,7 +3,6 @@ package ua.com.alevel.cron.model;
 public class VaccinationSupplier {
 
     private Long id;
-    private Long vaccinationId;
     private String name;
     private Integer quantity;
     private String imageUrl;
@@ -16,14 +15,6 @@ public class VaccinationSupplier {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getVaccinationId() {
-        return vaccinationId;
-    }
-
-    public void setVaccinationId(Long vaccinationId) {
-        this.vaccinationId = vaccinationId;
     }
 
     public String getName() {

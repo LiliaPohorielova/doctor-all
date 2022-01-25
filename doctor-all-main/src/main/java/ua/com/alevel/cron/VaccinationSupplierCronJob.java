@@ -35,9 +35,10 @@ public class VaccinationSupplierCronJob {
         if (response.getStatusCodeValue() == 200) {
             VaccinationSupplier[] vaccinationSuppliers = response.getBody();
             for (VaccinationSupplier vaccinationSupplier : vaccinationSuppliers) {
-                Optional<Vaccination> vaccinationOptional = vaccinationRepository.findById(vaccinationSupplier.getVaccinationId());
+                Optional<Vaccination> vaccinationOptional = vaccinationRepository.findById(vaccinationSupplier.getId());
                 if (vaccinationOptional.isPresent()) {
                     Vaccination vaccination = vaccinationOptional.get();
+                    vaccination.setVaccinationId(vaccinationSupplier.getId());
                     vaccination.setName(vaccinationSupplier.getName());
                     vaccination.setQuantity(vaccinationSupplier.getQuantity());
                     vaccination.setImageUrl(vaccinationSupplier.getImageUrl());

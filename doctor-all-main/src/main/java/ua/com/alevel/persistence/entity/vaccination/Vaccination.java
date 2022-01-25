@@ -11,6 +11,7 @@ import java.util.Objects;
 @Table(name = "vaccinations")
 public class Vaccination extends BaseEntity {
 
+    private Long vaccinationId;
     private String name;
     private Integer quantity;
 
@@ -64,6 +65,14 @@ public class Vaccination extends BaseEntity {
 
     public void setMethodOfAdministration(String methodOfAdministration) {
         this.methodOfAdministration = methodOfAdministration;
+    }
+
+    public Long getVaccinationId() {
+        return vaccinationId;
+    }
+
+    public void setVaccinationId(Long vaccinationId) {
+        this.vaccinationId = vaccinationId;
     }
 
     @Override

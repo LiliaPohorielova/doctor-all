@@ -10,8 +10,6 @@ public class Vaccination {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long vaccinationId;
-
     private String name;
 
     @Column(name = "image_url")
@@ -30,14 +28,6 @@ public class Vaccination {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getVaccinationId() {
-        return vaccinationId;
-    }
-
-    public void setVaccinationId(Long vaccinationId) {
-        this.vaccinationId = vaccinationId;
     }
 
     public String getName() {
