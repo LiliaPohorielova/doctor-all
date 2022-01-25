@@ -1,29 +1,24 @@
-package ua.com.alevel.cron.model;
+package ua.com.alevel.web.dto.response.vaccination;
 
-public class VaccinationSupplier {
+import ua.com.alevel.persistence.entity.vaccination.Vaccination;
+import ua.com.alevel.web.dto.response.ResponseDto;
 
-    private Long id;
-    private Long vaccinationId;
+import javax.persistence.Column;
+
+public class VaccinationResponseDto extends ResponseDto {
+
     private String name;
     private Integer quantity;
     private String imageUrl;
     private String manufacturer;
     private String methodOfAdministration;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getVaccinationId() {
-        return vaccinationId;
-    }
-
-    public void setVaccinationId(Long vaccinationId) {
-        this.vaccinationId = vaccinationId;
+    public VaccinationResponseDto(Vaccination vaccination) {
+        setId(vaccination.getId());
+        setCreated(vaccination.getCreated());
+        setUpdated(vaccination.getUpdated());
+        this.name = vaccination.getName();
+        this.quantity = vaccination.getQuantity();
     }
 
     public String getName() {

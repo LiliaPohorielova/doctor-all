@@ -1,18 +1,18 @@
-package ua.com.alevel.entity;
+package ua.com.alevel.persistence.entity.vaccination;
 
-import javax.persistence.*;
+import ua.com.alevel.persistence.entity.BaseEntity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name = "vaccinations")
-public class Vaccination {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private Long vaccinationId;
+public class Vaccination extends BaseEntity {
 
     private String name;
+    private Integer quantity;
 
     @Column(name = "image_url")
     private String imageUrl;
@@ -22,22 +22,8 @@ public class Vaccination {
     @Column(name = "method_of_administration")
     private String methodOfAdministration;
 
-    private Integer quantity;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getVaccinationId() {
-        return vaccinationId;
-    }
-
-    public void setVaccinationId(Long vaccinationId) {
-        this.vaccinationId = vaccinationId;
+    public Vaccination() {
+        super();
     }
 
     public String getName() {
@@ -78,5 +64,19 @@ public class Vaccination {
 
     public void setMethodOfAdministration(String methodOfAdministration) {
         this.methodOfAdministration = methodOfAdministration;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Vaccination that = (Vaccination) o;
+        return Objects.equals(name, that.name) && Objects.equals(quantity, that.quantity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), name, quantity);
     }
 }

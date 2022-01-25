@@ -8,10 +8,12 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import ua.com.alevel.persistence.entity.vaccination.Vaccination;
 import ua.com.alevel.persistence.repository.doctor.DoctorRepository;
 import ua.com.alevel.persistence.repository.user.AdminUserRepository;
 import ua.com.alevel.persistence.repository.user.DoctorUserRepository;
 import ua.com.alevel.persistence.repository.user.PatientUserRepository;
+import ua.com.alevel.persistence.repository.vaccination.VaccinationRepository;
 
 @SpringBootApplication(exclude = {
         DataSourceAutoConfiguration.class,
@@ -24,16 +26,18 @@ public class ClinicApplication {
     private final DoctorUserRepository doctorUserRepository;
     private final DoctorRepository doctorRepository;
     private final PatientUserRepository patientUserRepository;
+    private final VaccinationRepository vaccinationRepository;
 
     public ClinicApplication(BCryptPasswordEncoder encoder,
                              AdminUserRepository adminUserRepository,
                              DoctorUserRepository doctorUserRepository,
-                             DoctorRepository doctorRepository, PatientUserRepository patientUserRepository) {
+                             DoctorRepository doctorRepository, PatientUserRepository patientUserRepository, VaccinationRepository vaccinationRepository) {
         this.encoder = encoder;
         this.adminUserRepository = adminUserRepository;
         this.doctorUserRepository = doctorUserRepository;
         this.doctorRepository = doctorRepository;
         this.patientUserRepository = patientUserRepository;
+        this.vaccinationRepository = vaccinationRepository;
     }
 
     public static void main(String[] args) {
@@ -42,6 +46,14 @@ public class ClinicApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void listen() {
+/*        Vaccination astrazeneca = new Vaccination();
+        vaccinationRepository.save(astrazeneca);
+
+        Vaccination pfizer = new Vaccination();
+        vaccinationRepository.save(pfizer);
+
+        Vaccination coronaVac = new Vaccination();
+        vaccinationRepository.save(coronaVac);*/
 /*        List<Doctor> doctors = doctorRepository.findAll();
         for (Doctor doctor:
              doctors) {

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8">
+    <title>Covid-19 - Vaccination</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+          integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../../../../../css/app.css" th:href="@{/css/app.css}">
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../../../../../css/footer_style.css" th:href="@{/css/footer_style.css}" >
+</head>
+<style>
+/*        background-image: linear-gradient(to right, #5db2ff 0%, #65b4f9 24%, rgba(124, 185, 233, 0) 96%, rgba(125, 185, 232, 0) 100%), url(
+        "images/vac.png");*/
+.banner:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+/*    background-image: linear-gradient(120deg, #33aaff 25%, #ffffff 55%);*/
+    background-image: linear-gradient(to right, #5db2ff 0%, #65b4f9 24%, rgba(124, 185, 233, 0) 96%, rgba(125, 185, 232, 0) 100%);
+    opacity: .7;
+}
+
+.banner > * {
+z-index: 100;
+}
+
+.banner {
+    position:relative;
+    min-height: 70vh;
+    background-image: url(/../../../images/banner2.png);
+    background-repeat: no-repeat;
+    display: flex;
+
+    background-size       : cover;
+    background-position-x : 50%;
+    background-position-y : 50%;}
+
+
+.head {
+    margin-top: 4.5em;
+    margin-left: 2em;
+    color: white;
+    font-family: "Poppins", sans-serif;
+    font-size: 50px;
+}
+
+.ho:hover {
+    text-shadow: none!important;
+    box-sizing: border-box!important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    -webkit-transform: scale(1.1) !important;
+    -ms-transform: scale(1.1) !important;
+    z-index: 2;
+}
+
+
+</style>
+<body>
+
+<!-- NavBar Start -->
+<nav class="navbar navbar-expand-xl navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand abs" href="#">
+            <i class="fas fa-heartbeat"></i>
+            DoctorAll
+        </a>
+        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-item nav-link a1" onclick="showHideMenu();" th:href="@{/open/dashboard}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link a2" th:href="@{/open/department}">Department</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link a3" th:href="@{/open/doctors}">Doctors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link a3" th:href="@{/open/blog}">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link a3" th:href="@{/open/about}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link a3" th:href="@{/open/contact}">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link a3" th:href="@{/vaccinations/all}">Vaccination</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Register As
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" th:href="@{/patient/registration}">Patient</a></li>
+                        <hr class="dropdown-divider">
+                        <li><a class="dropdown-item" th:href="@{/doctor/registration}">Doctor</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="navbar-nav w-100 justify-content-end">
+                <li class="nav-item">
+                    <a class="btn btn-outline-primary a5" th:href="@{/login}">Make an appointment</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-outline-primary a5" th:href="@{/login}">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- NavBar End -->
+
+<section class="banner">
+    <h1 class="head">COVID-19 Vaccination</h1>
+</section>
+<!--<div class="header_header">
+<div class="header_box">
+           <h1>COVID-19</h1>
+            <p>This is available kind of vaccination in our hospital</p>
+</div>
+</div>-->
+
+
+<!-- Welcome Start -->
+<div class="container-fluid" style="background-color: white; padding-top: 3%; padding-bottom: 3%;">
+    <div class="row welcome text-center">
+        <div class="col-12">
+            <h2 class="display-4" style="margin-bottom: 3%;">Available vaccination</h2>
+        </div>
+        <hr style="height:2px;width:30%;margin-left:35%;color:#0000ff;background-color:#0000ff; margin-bottom: 3%;">
+
+    <div class="card-group">
+    <div class="card ho">
+        <img src="https://khoda.gov.ua/image/catalog/Anton/1205vaktsinats%D1%96ya.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
+                content. This content is a little bit longer.</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+    </div>
+    <div class="card ho">
+        <img src="https://media.slovoidilo.ua/media/publications/14/135463/135463-1_large.jpg" class="card-img-top"
+             alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+    </div>
+    <div class="card ho">
+        <img src="https://gdb.voanews.com/3E8439CB-9EF0-48FF-90B2-A50E5CEE7760_w1080_h608.jpg" class="card-img-top"
+             alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
+                content. This card has even longer content than the first to show that equal height action.</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+
+<!-- Footer Start -->
+<footer class="text-center text-lg-start text-muted" style="background-color: #1F1F1F">
+    <!-- Section: Social media -->
+    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"
+             style="border-bottom: #1F1F1F!important;">
+        <div class="me-5 d-none d-lg-block"></div>
+        <div></div>
+    </section>
+    <!-- Section: Social media -->
+
+    <!-- Section: Links  -->
+    <section class="">
+        <div class="container text-center text-md-start mt-5">
+            <!-- Grid row -->
+            <div class="row mt-3">
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                    <!-- Content -->
+                    <h6 class="text-uppercase fw-bold mb-4" style="color: #F8F9FB">
+                        <i class="fas fa-heartbeat"></i>
+                        DoctorAll
+                    </h6>
+                    <p style="color: rgba(248,249,251,0.69); text-align:left">
+                        The clinic will help you find your health.
+                        Thanks to the skill of our doctors,
+                        the quality of service is always at its best.
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4" style="color: #F8F9FB">
+                        Departments
+                    </h6>
+                    <p style="color: rgba(248,249,251,0.69)">
+                        <a href="#" class="text-decoration-none text-decoration-none text-reset">Dental</a>
+                    </p>
+                    <p style="color: rgba(248,249,251,0.69)">
+                        <a href="#" class="text-decoration-none text-reset">Cardiology</a>
+                    </p>
+                    <p style="color: rgba(248,249,251,0.69)">
+                        <a href="#" class="text-decoration-none text-reset">Psychology</a>
+                    </p>
+                    <p style="color: rgba(248,249,251,0.69)">
+                        <a href="#" class="text-decoration-none text-reset">Orthopedics</a>
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4" style="color: #F8F9FB">
+                        Useful links
+                    </h6>
+                    <p style="color: rgba(248,249,251,0.69)">
+                        <a href="#" class="text-decoration-none text-reset">Pricing</a>
+                    </p>
+                    <p style="color: rgba(248,249,251,0.69)">
+                        <a href="#" class="text-decoration-none text-reset">About us</a>
+                    </p>
+                    <p style="color: rgba(248,249,251,0.69)">
+                        <a href="#" class="text-decoration-none text-reset">Contact us</a>
+                    </p>
+                    <p style="color: rgba(248,249,251,0.69)">
+                        <a href="#" class="text-decoration-none text-reset">Help</a>
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4" style="color: #F8F9FB">
+                        Contact
+                    </h6>
+                    <p style="color: rgba(248,249,251,0.69)"><i class="fas fa-home me-3"></i> Khreshchatyk St., 24, Kyiv
+                    </p>
+                    <p style="color: rgba(248,249,251,0.69)">
+                        <i class="fas fa-envelope me-3"></i>
+                        doctorAll@company.com
+                    </p>
+                    <p style="color: rgba(248,249,251,0.69)"><i class="fas fa-phone me-3"></i> +38 (098) 123-45-67</p>
+                    <p style="color: rgba(248,249,251,0.69)"><i class="fas fa-print me-3"></i> +38 (098) 123-45-67</p>
+                </div>
+                <!-- Grid column -->
+            </div>
+            <!-- Grid row -->
+        </div>
+    </section>
+    <!-- Section: Links  -->
+
+    <!-- Section: Empty -->
+    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"
+             style="border-bottom: #1F1F1F!important;">
+        <div class="me-5 d-none d-lg-block"></div>
+        <div></div>
+    </section>
+    <!-- Section: Empty -->
+
+    <!-- Copyright -->
+    <div class="text-center p-4" style="background-color: black;">
+        <p style="color: rgba(248,249,251,0.69)">
+            Copyright ©
+            <script>document.write(new Date().getFullYear());</script>
+            Final Project | Made with
+            <i class="far fa-heart" style="color: blue!important;"></i>
+            by Lilya Pohorielova
+        </p>
+    </div>
+    <!-- Copyright -->
+</footer>
+<!-- Footer End -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
+</body>
+</html>
