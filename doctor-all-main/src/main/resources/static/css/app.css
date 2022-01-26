@@ -18,6 +18,10 @@ i {
     padding: 0 10px;
 }
 
+.btn-outline-primary:hover {
+    color: white!important;
+}
+
 .a5 {
     border-radius: 10px;
 }/*

@@ -33,8 +33,30 @@
         letter-spacing: 3px;
     }
 
+    .btn-primary:hover, .btn-outline-primary:hover {
+        color: white!important;
+    }
+
     .a5:hover {
         color: white!important;
+    }
+
+    .card-text {
+        font-size: 16px;
+        line-height: 28px;
+        color: #727272;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .inner {
+        overflow: hidden;
+    }
+    .inner img {
+        transition: all 0.7s ease;
+    }
+    .inner:hover img {
+        transform: scale(1.2);
     }
 </style>
 </head>
@@ -70,7 +92,7 @@
                     <a class="nav-item nav-link a3" th:href="@{/open/about}">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-item nav-link a3" th:href="@{/open/contact}">Contact</a>
+                    <a class="nav-item nav-link a3" th:href="@{/contact}">Contact</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-item nav-link a3" th:href="@{/vaccinations/all}">Vaccination</a>
@@ -92,6 +114,7 @@
                 <li class="nav-item">
                     <a class="btn btn-outline-primary a5" th:href="@{/login}">Make an appointment</a>
                 </li>
+                <hr class="hhh" style="color: transparent; padding: 0.1em; margin: 0">
                 <li class="nav-item">
                     <a class="btn btn-outline-primary a5" th:href="@{/login}">Login</a>
                 </li>
@@ -144,10 +167,11 @@
 <div class="container-fluid padding" style="background-color: white; padding-top: 3%; padding-bottom: 3%;">
     <div class="row welcome text-center">
         <div class="col-12">
-            <h1 class="display-4">Welcome to DoctorAll</h1>
+            <h2 class="display-4" style="margin-bottom: 3%;">Welcome to DoctorAll</h2>
         </div>
-        <hr style="height:2px;width:30%;margin-left:35%;color:#0000ff;background-color:#0000ff">
-
+        <hr style="height:2px;width:30%;margin-left:35%;color:#0000ff;background-color:#0000ff; margin-bottom: 3%;">
+    </div>
+    <div class="row text-center">
         <div class="col-lg-6" data-aos="zoom-in" style="padding-top: 1%">
             <img src="https://metrolinamed.com/wp-content/uploads/2020/11/doctor_consultation.jpg"
                  class="img-fluid" alt="">
@@ -190,6 +214,117 @@
 </section>
 <!-- Fixed Background End -->
 
+<!-- Departments Start -->
+<div class="container-fluid" style="background-color: #f3f9fe; padding-top: 3%; padding-bottom: 3%;">
+    <div class="row welcome text-center">
+        <div class="col-12">
+            <h2 class="display-4" style="margin-bottom: 3%;">Departments</h2>
+        </div>
+        <hr style="height:2px;width:30%;margin-left:35%;color:#0000ff;background-color:#0000ff; margin-bottom: 3%;">
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-4" style="margin-left: 3%; margin-right: 3%">
+        <div class="col">
+            <div class="card h-100 shadow">
+                <div class="inner">
+                    <img src="/images/dental.png" class="card-img-top" alt="...">
+                </div>
+                <div class="card-body" style="margin-left: 3%; margin-right: 3%">
+                    <h2 class="card-title">Card title</h2>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <a class="btn btn-primary" style="margin-top: 20px; font-size: 20px" href="#" role="button">Learn more</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow">
+                <div class="inner">
+                    <img src="/images/dental.png" class="card-img-top" alt="...">
+                </div>
+                <div class="card-body" style="margin-left: 3%; margin-right: 3%">
+                    <h2 class="card-title">Card title</h2>
+                    <p class="card-text">This is a short card.</p>
+                    <a class="btn btn-primary" style="margin-top: 20px; font-size: 20px" href="#" role="button">Learn more</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow">
+                <div class="inner">
+                    <img src="/images/dental.png" class="card-img-top" alt="...">
+                </div>
+                <div class="card-body" style="margin-left: 3%; margin-right: 3%">
+                    <h2 class="card-title">Card title</h2>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+                    <a class="btn btn-primary" style="margin-top: 20px; font-size: 20px" href="#" role="button">Learn more</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Departments End -->
+
+<!-- Contacts Start -->
+<div class="container-fluid" style="background-color: #f3f9fe; padding-top: 3%; padding-bottom: 3%;">
+    <div class="row welcome text-center">
+        <div class="col-12">
+            <h2 class="display-4" style="margin-bottom: 3%;">Contact Us</h2>
+        </div>
+        <hr style="height:2px;width:30%;margin-left:35%;color:#0000ff;background-color:#0000ff; margin-bottom: 3%;">
+    </div>
+    <section id="contact" class="contact section-bg justify-content-center">
+    <div class="container justify-content-center">
+        <div class="row" style="margin-left: 10%">
+            <div class="col-lg-5 mt-0 d-flex align-items-stretch aos-init aos-animate">
+                <div class="info">
+                    <div class="address" style="margin-top: 0!important;">
+                        <i class="bi bi-geo-alt"></i>
+                        <h4>Location:</h4>
+                        <p>Khreshchatyk St., 24, Kyiv</p>
+                    </div>
+                    <div class="email">
+                        <i class="bi bi-envelope"></i>
+                        <h4>Email:</h4>
+                        <p>doctor.all.project@gmail.com</p>
+                    </div>
+
+                    <div class="phone">
+                        <i class="bi bi-phone"></i>
+                        <h4>Call:</h4>
+                        <p>+38 (098) 123-45-67</p>
+                    </div>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2540.574758565446!2d30.520134315731372!3d50.449020979475264!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4ce51271776ad%3A0x42376a6bcdcb82f4!2z0YPQuy4g0JrRgNC10YnQsNGC0LjQuiwgMjQsINCa0LjQtdCyLCAwMjAwMA!5e0!3m2!1sru!2sua!4v1643206865316!5m2!1sru!2sua" frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen=""></iframe>
+                </div>
+
+            </div>
+            <div class="col-lg-7 mt-3 mt-lg-3 d-flex align-items-stretch aos-init aos-animate">
+                <form action="#" th:action="@{/contact}" th:object="${contact}"
+                      method="post">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="name">Your Name</label>
+                            <input th:field="*{name}" type="text" name="name" class="form-control" id="name" required="">
+                        </div>
+                        <div class="form-group col-md-6 mt-3 mt-md-0">
+                            <label for="name">Your Email</label>
+                            <input th:field="*{mail}" type="email" class="form-control" name="email" id="email" required="">
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="name">Subject</label>
+                        <input th:field="*{subject}" type="text" class="form-control" name="subject" id="subject" required="">
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="name">Message</label>
+                        <textarea th:field="*{text}" class="form-control" name="message" rows="10" required=""></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<!-- Contacts End -->
 
 <!-- Footer Start -->
 <footer class="text-center text-lg-start text-muted" style="background-color: #1F1F1F">
@@ -273,7 +408,7 @@
                     </p>
                     <p style="color: rgba(248,249,251,0.69)">
                         <i class="fas fa-envelope me-3"></i>
-                        doctorAll@company.com
+                        doctor.all.project@gmail.com
                     </p>
                     <p style="color: rgba(248,249,251,0.69)"><i class="fas fa-phone me-3"></i> +38 (098) 123-45-67</p>
                     <p style="color: rgba(248,249,251,0.69)"><i class="fas fa-print me-3"></i> +38 (098) 123-45-67</p>
