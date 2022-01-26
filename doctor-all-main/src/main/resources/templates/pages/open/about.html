@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DoctorAll - Welcome</title>
+    <meta charset="utf-8">
+    <title>About</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
           integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -16,29 +14,67 @@
           href="../../../../../css/app.css" th:href="@{/css/app.css}">
     <link rel="stylesheet" type="text/css" media="all"
           href="../../../../../css/footer_style.css" th:href="@{/css/footer_style.css}" >
+</head>
 <style>
-    .parallax {
-        background: url("https://wallpaperaccess.com/full/1282794.jpg") no-repeat fixed 100%;
-        text-align: center;
+    .banner:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(to right, #5db2ff 0%, #65b4f9 24%, rgba(124, 185, 233, 0) 96%, rgba(125, 185, 232, 0) 100%);
+        opacity: .7;
     }
-    .parallax-inner {
-        padding-top: 30%;
-        padding-bottom: 30%;
+
+    .banner > * {
+        z-index: 100;
     }
-    .paral {
-        text-align: center;
-        font-size: 500%;
-        color: #ffffff;
-        text-shadow: 2px 2px 4px #000000;
-        letter-spacing: 3px;
+
+    .banner {
+        position:relative;
+        min-height: 70vh;
+        background-image: url(/../../../images/hospital.jpg);
+        background-repeat: no-repeat;
+        display: flex;
+
+        background-size       : cover;
+        background-position-x : 50%;
+        background-position-y : 50%;}
+
+
+    .head {
+        margin-top: 4em;
+        margin-left: 2em;
+        color: white;
+        font-family: "Poppins", sans-serif;
+        font-size: 50px;
+    }
+
+    .ho:hover {
+        text-shadow: none!important;
+        box-sizing: border-box!important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        -webkit-transform: scale(1.1) !important;
+        -ms-transform: scale(1.1) !important;
+        z-index: 2;
     }
 
     .btn-primary:hover, .btn-outline-primary:hover {
         color: white!important;
     }
 
-    .a5:hover {
-        color: white!important;
+    @media (max-width:700px) {
+        .banner {
+            min-height: 50vh;
+        }
+        .head {
+            width: 300px;
+            margin-top: 2em;
+            margin-left: 1em;
+            font-size: 50px;
+        }
     }
 
     .card-text {
@@ -51,6 +87,7 @@
 
     .inner {
         overflow: hidden;
+        height: 300px;
     }
     .inner img {
         transition: all 0.7s ease;
@@ -58,12 +95,12 @@
     .inner:hover img {
         transform: scale(1.2);
     }
+
 </style>
-</head>
 <body>
 
 <!-- NavBar Start -->
-<nav class="navbar fixed-top navbar-expand-xl navbar-light bg-light shadow">
+<nav class="navbar navbar-expand-xl navbar-light bg-light shadow">
     <div class="container-fluid">
         <a class="navbar-brand abs" href="#">
             <i class="fas fa-heartbeat"></i>
@@ -114,7 +151,7 @@
                 <li class="nav-item">
                     <a class="btn btn-outline-primary a5" th:href="@{/login}">Make an appointment</a>
                 </li>
-                <hr class="hhh" style="color: transparent; padding: 0.1em; margin: 0">
+                <hr style="color: transparent; padding: 0.1em; margin: 0">
                 <li class="nav-item">
                     <a class="btn btn-outline-primary a5" th:href="@{/login}">Login</a>
                 </li>
@@ -124,183 +161,32 @@
 </nav>
 <!-- NavBar End -->
 
-<!-- Carousel Start -->
-<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="padding-top: 50px">
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="/images/ban1.jpg" class="w-100" alt="..."/>
-            <div class="carousel-caption">
-                <h1 class="display-2">Health Care</h1>
-                <h3>For All Family</h3>
-                <h5>The most valuable thing is your health!</h5>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <img src="/images/ban2.jpg" class="w-100" alt="..."/>
-        </div>
-        <div class="carousel-item">
-            <img src="/images/ban3.png" class="w-100" alt="..."/>
-        </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
-<!-- Carousel End -->
-
-<!-- Welcome Start -->
-<div class="container-fluid padding" style="background-color: #f3f9fe; padding-top: 3%; padding-bottom: 3%;">
-    <div class="row welcome text-center">
-        <div class="col-12">
-            <h2 class="display-4" style="margin-bottom: 3%;">Welcome to DoctorAll</h2>
-        </div>
-        <hr style="height:2px;width:30%;margin-left:35%;color:#0000ff;background-color:#0000ff; margin-bottom: 3%;">
-    </div>
-    <div class="row text-center">
-        <div class="col-lg-6" data-aos="zoom-in" style="padding-top: 1%">
-            <img src="https://metrolinamed.com/wp-content/uploads/2020/11/doctor_consultation.jpg"
-                 class="img-fluid" alt="">
-        </div>
-        <div class="col-lg-6 d-flex flex-column justify-contents-center" data-aos="fade-left" style="padding-top: 1%">
-            <div class="content pt-4 pt-lg-0">
-                <h3>Learn more about us</h3>
-                <p class="fst-italic">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                    labore et dolore
-                    magna aliqua.
-                </p>
-                <ul>
-                    <li style="list-style-type: none;"><i class="far fa-check-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat.
-                    </li>
-                    <li style="list-style-type: none;"><i class="far fa-check-circle"></i> Duis aute irure dolor in reprehenderit in voluptate
-                        velit.
-                    </li>
-                    <li style="list-style-type: none;"><i class="far fa-check-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperd
-                    </li>
-                </ul>
-                <p>
-                    Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate tera noden carma palorp mades tera.
-                </p>
-                <a class="btn btn-outline-primary a5" href="#">Learn more</a>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Welcome End -->
-
-<!-- Fixed Background Start -->
-<section class="parallax">
-    <div class="parallax-inner">
-        <h1 class="paral">Our Hospital</h1>
-    </div>
+<!-- Banner Start -->
+<section class="banner">
+    <h1 class="head">Hospital DoctorAll</h1>
 </section>
-<!-- Fixed Background End -->
+<!-- Banner End -->
 
-<!-- Departments Start -->
+<!-- About Start -->
 <div class="container-fluid" style="background-color: #f3f9fe; padding-top: 3%; padding-bottom: 3%;">
     <div class="row welcome text-center">
         <div class="col-12">
-            <h2 class="display-4" style="margin-bottom: 3%;">Departments</h2>
+            <h2 class="display-4" style="margin-bottom: 3%;">About Us</h2>
         </div>
         <hr style="height:2px;width:30%;margin-left:35%;color:#0000ff;background-color:#0000ff; margin-bottom: 3%;">
     </div>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-4" style="margin-left: 3%; margin-right: 3%">
-        <div class="col" th:each="department,iter : ${departments}">
-            <div class="card h-100 shadow">
-                <div class="inner">
-                    <img th:src="${department.getDepartmentImage()}" class="card-img-top" alt="...">
-                </div>
-                <div class="card-body" style="margin-left: 3%; margin-right: 3%">
-                    <h2 class="card-title" th:text="${department.getDepartmentName()}">Card title</h2>
-                    <p class="card-text" th:text="${department.getDescription()}"></p>
-                    <a class="btn btn-primary" style="margin-top: 20px; font-size: 20px" href="#" role="button">Learn more</a>
-                </div>
-            </div>
-        </div>
+    <div class="col-12">
+        <p>Вавилонским столпотворением, по библейскому преданию, называется неудавшаяся
+            попытка царя Нимрода построить в Вавилоне столп высотой до неба. Бог,
+            разгневавшись на людей за их безрассудное желание, решил покарать
+            строителей: он смешал их язык так, что они перестали понимать друг друга,
+            вынуждены были прекратить стройку и мало-помалу рассеялись по свету. Отсюда,
+            как объясняли древние, и пошло различие языков.</p>
+        <p>В обычном понятии вавилонское столпотворение означает беспорядок, неразбериху
+            при большом скоплении народа.</p>
     </div>
 </div>
-<!-- Departments End -->
-
-<!-- Contacts Start -->
-<div class="container-fluid" style="background-color: #f3f9fe; padding-top: 3%; padding-bottom: 3%;">
-    <div class="row welcome text-center">
-        <div class="col-12">
-            <h2 class="display-4" style="margin-bottom: 3%;">Contact Us</h2>
-        </div>
-        <hr style="height:2px;width:30%;margin-left:35%;color:#0000ff;background-color:#0000ff; margin-bottom: 3%;">
-    </div>
-    <section id="contact" class="contact section-bg justify-content-center">
-    <div class="container justify-content-center">
-        <div class="row" style="margin-left: 10%">
-            <div class="col-lg-5 mt-0 d-flex align-items-stretch aos-init aos-animate">
-                <div class="info">
-                    <div class="address" style="margin-top: 0!important;">
-                        <i class="bi bi-geo-alt"></i>
-                        <h4>Location:</h4>
-                        <p>Khreshchatyk St., 24, Kyiv</p>
-                    </div>
-                    <div class="email">
-                        <i class="bi bi-envelope"></i>
-                        <h4>Email:</h4>
-                        <p>doctor.all.project@gmail.com</p>
-                    </div>
-
-                    <div class="phone">
-                        <i class="bi bi-phone"></i>
-                        <h4>Call:</h4>
-                        <p>+38 (098) 123-45-67</p>
-                    </div>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2540.574758565446!2d30.520134315731372!3d50.449020979475264!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4ce51271776ad%3A0x42376a6bcdcb82f4!2z0YPQuy4g0JrRgNC10YnQsNGC0LjQuiwgMjQsINCa0LjQtdCyLCAwMjAwMA!5e0!3m2!1sru!2sua!4v1643206865316!5m2!1sru!2sua" frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen=""></iframe>
-                </div>
-
-            </div>
-            <div class="col-lg-7 mt-3 mt-lg-3 d-flex align-items-stretch aos-init aos-animate">
-                <form action="#" th:action="@{/contact}" th:object="${contact}"
-                      method="post">
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="name">Your Name</label>
-                            <input th:field="*{name}" type="text" name="name" class="form-control" id="name" required="">
-                        </div>
-                        <div class="form-group col-md-6 mt-3 mt-md-0">
-                            <label for="name">Your Email</label>
-                            <input th:field="*{mail}" type="email" class="form-control" name="email" id="email" required="">
-                        </div>
-                    </div>
-                    <div class="form-group mt-3">
-                        <label for="name">Subject</label>
-                        <input th:field="*{subject}" type="text" class="form-control" name="subject" id="subject" required="">
-                    </div>
-                    <div class="form-group mt-3">
-                        <label for="name">Message</label>
-                        <textarea th:field="*{text}" class="form-control" name="message" rows="10" required=""></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-2">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
-</div>
-<!-- Contacts End -->
+<!-- About End -->
 
 <!-- Footer Start -->
 <footer class="text-center text-lg-start text-muted" style="background-color: #1F1F1F">
@@ -418,11 +304,9 @@
 </footer>
 <!-- Footer End -->
 
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
         crossorigin="anonymous"></script>
-
 </body>
 </html>

@@ -10,13 +10,13 @@ insert into doc_departments values (6, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(),
 
 insert into doctors values (1, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Mykyta', 'Kuznetsov', 'Victorovich', 'DENTIST', 5);
 insert into doctors values (2, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Ivan', 'Sidorov', 'Aleksandrovich', 'DENTIST', 5);
-insert into doctors values (3, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Sofia', 'Petrova', 'Vyacheslavovna', 'PEDIATRICIAN', 6);
+insert into doctors values (3, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Sofia', 'Petrova', 'Vyacheslavovna', 'THERAPIST', 6);
 insert into doctors values (4, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Petr', 'Ivanov', 'Vasilyevich', 'SURGEON', 5);
 insert into doctors values (5, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Dmitrii', 'Petrenko', 'Victorovich', 'SURGEON', 4);
-insert into doctors values (6, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Eugeni', 'Kunaev', 'Vasilyevich', 'PEDIATRICIAN', 6);
+insert into doctors values (6, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Eugeni', 'Kunaev', 'Vasilyevich', 'THERAPIST', 6);
 insert into doctors values (7, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Elina', 'Shatska', 'Mikhaylovna', 'PHYSICIAN', 3);
 insert into doctors values (8, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Stanicslav', 'Bovchaluk', 'Yaroslavovich', 'PHYSICIAN', 3);
-insert into doctors values (9, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Mykyta', 'Dinovich', 'Vladimirovich', 'PEDIATRICIAN', 6);
+insert into doctors values (9, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Mykyta', 'Dinovich', 'Vladimirovich', 'THERAPIST', 6);
 insert into doctors values (10, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Arsen', 'Makashvilli', 'Timurovich', 'CARDIOLOGIST', 1);
 insert into doctors values (11, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Dmitrii', 'Prakiv', 'Stepanovich', 'SURGEON', 2);
 insert into doctors values (12, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Ivan', 'Divakov', 'Petrovich', 'SURGEON', 1);

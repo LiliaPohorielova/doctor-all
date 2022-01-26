@@ -21,7 +21,6 @@ public class VaccinationController {
 
     @GetMapping("/all")
     public String redirectToAllVaccinationsPage(Model model) {
-        List<Vaccination> vaccination = vaccinationRepository.findAll();
         model.addAttribute("vaccinations", vaccinationRepository.findAll());
         return "pages/vaccination/all_vaccination";
     }
