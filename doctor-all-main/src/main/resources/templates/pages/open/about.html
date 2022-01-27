@@ -84,9 +84,9 @@
         transform: scale(1.2);
     }
 
-    p {
+    .ab {
         font-size: 25px;
-        text-indent: 20px;
+        text-indent: 40px;
     }
 
 </style>
@@ -161,20 +161,28 @@
 <!-- Banner End -->
 
 <!-- About Start -->
-<div class="container-fluid" style="background-color: #f3f9fe; padding-top: 3%; padding-bottom: 3%;">
+<div class="container-fluid padding" style="background-color: #f3f9fe; padding-top: 3%; padding-bottom: 3%;">
     <div class="row welcome text-center">
         <div class="col-12">
             <h2 class="display-4" style="margin-bottom: 3%;">About Us</h2>
         </div>
         <hr style="height:2px;width:30%;margin-left:35%;color:#0000ff;background-color:#0000ff; margin-bottom: 3%;">
     </div>
-    <div class="container">
-        <div class="jumbotron">
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-            <p>To see our departments, just click.</p>
-            <p>
-                <a class="btn btn-lg btn-primary" th:href="@{/open/department}" role="button">View departments »</a>
-            </p>
+    <div class="row text-center">
+        <div class="col-lg-6" data-aos="zoom-in" style="padding-top: 1%">
+            <img src="https://wallpapercave.com/wp/wp8003023.png"
+                 class="img-fluid" alt="">
+        </div>
+        <div class="col-lg-6 d-flex flex-column justify-contents-center" data-aos="fade-left" style="padding-top: 1%">
+            <div class="content pt-4 pt-lg-0">
+                <h3 style="font-weight: bold">DoctorAll</h3>
+                <p class="ab" style="text-align: left">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                <p class="ab" style="text-align: left">To see our departments, just click.</p>
+                <p class="ab" style="text-align: left">
+                    <a class="btn btn-lg btn-primary" th:href="@{/open/department}" role="button">View departments »</a>
+                </p>
+                <p>
+            </div>
         </div>
     </div>
 </div>

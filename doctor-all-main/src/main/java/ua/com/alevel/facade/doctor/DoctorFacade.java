@@ -25,6 +25,8 @@ public interface DoctorFacade extends BaseFacade<DoctorRequestDto, DoctorRespons
 
     List<DoctorResponseDto> findAll();
 
+    List<DoctorResponseDto> findFirst();
+
     DoctorUser getDoctorUser(Long id);
 
     Set<SlotResponseDto> getSlots(Long id);

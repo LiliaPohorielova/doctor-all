@@ -12,6 +12,7 @@ public class DoctorResponseDto extends ResponseDto {
     private String middleName;
     private DoctorSpecialization specialization;
     private DoctorUser doctorUser;
+    private String imgUrl;
 
     public DoctorResponseDto() { }
 
@@ -25,6 +26,7 @@ public class DoctorResponseDto extends ResponseDto {
             this.middleName = doctor.getMiddleName();
             this.specialization = doctor.getSpecialization();
             this.doctorUser = doctor.getDoctorUser();
+            this.imgUrl = doctor.getImageUrl();
         }
     }
 
@@ -66,6 +68,14 @@ public class DoctorResponseDto extends ResponseDto {
 
     public void setDoctorUser(DoctorUser doctorUser) {
         this.doctorUser = doctorUser;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     @Override

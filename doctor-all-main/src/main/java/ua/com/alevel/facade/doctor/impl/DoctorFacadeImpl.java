@@ -162,6 +162,16 @@ public class DoctorFacadeImpl implements DoctorFacade {
     }
 
     @Override
+    public List<DoctorResponseDto> findFirst() {
+        List<DoctorResponseDto> dtos = new ArrayList<>();
+        dtos.add(findById(4L));
+        dtos.add(findById(5L));
+        dtos.add(findById(6L));
+        dtos.add(findById(7L));
+        return dtos;
+    }
+
+    @Override
     public DoctorUser getDoctorUser(Long id) {
         DoctorUser user = doctorService.findById(id).get().getDoctorUser();
         return user;
