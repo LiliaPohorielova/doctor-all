@@ -69,13 +69,13 @@ public class AdminController extends AbstractController {
         List<AbstractController.HeaderData> headerDataList = getHeaderDataList(columnTitles, response);
 
         model.addAttribute("headerDataList", headerDataList);
-        model.addAttribute("createUrl", "/admin/departments/{id}/all");
+        model.addAttribute("createUrl", "/admin/departments/all/" + id);
         model.addAttribute("pageData", response);
         model.addAttribute("cardHeader", departmentFacade.findById(id).getDepartmentName());
         return "pages/admin/departments/departments";
     }
 
-    @PostMapping("/departments/{id}/all")
+    @PostMapping("/departments/all/{id}")
     public ModelAndView findAllDepartmentsRedirect(@PathVariable Long id, WebRequest request, ModelMap model) {
         Map<String, String[]> parameterMap = request.getParameterMap();
         if (MapUtils.isNotEmpty(parameterMap)) {
