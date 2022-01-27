@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{fragments/admin_layout}">
+<head>
+    <meta charset="utf-8">
+    <title>Admin - All Departments</title>
+</head>
+<body>
+<div layout:fragment="admin_content">
+    <!-- Departments Start -->
+    <div class="container-fluid" style="background-color: #f3f9fe; padding-top: 3%; padding-bottom: 3%;">
+        <div class="row welcome text-center">
+            <div class="col-12">
+                <h2 class="display-4" style="margin-bottom: 3%;">Departments</h2>
+            </div>
+            <hr style="height:2px;width:30%;margin-left:35%;color:#0000ff;background-color:#0000ff; margin-bottom: 3%;">
+        </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-4"
+             style="margin-left: 3%; margin-right: 3%">
+            <div class="col" th:each="department,iter : ${departments}">
+                <div class="card h-100 shadow">
+                    <div class="inner">
+                        <img th:src="${department.getDepartmentImage()}" class="card-img-top" alt="...">
+                    </div>
+                    <div class="card-body" style="margin-left: 3%; margin-right: 3%">
+                        <h2 class="card-title" th:text="${department.getDepartmentName()}">Card title</h2>
+                        <p class="card-text" th:text="${department.getDescription()}"></p>
+                        <a class="btn btn-primary" style="margin-top: 20px; font-size: 20px" th:href="@{'/admin/departments/' + ${department.getId()}}" role="button">Learn
+                            more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Departments End -->
+</div>
+</body>
+</html>

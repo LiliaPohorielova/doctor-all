@@ -10,6 +10,7 @@ import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.entity.slot.Slot;
 import ua.com.alevel.persistence.entity.user.DoctorUser;
 import ua.com.alevel.persistence.type.DoctorSpecialization;
+import ua.com.alevel.service.department.DepartmentService;
 import ua.com.alevel.service.doctor.DoctorService;
 import ua.com.alevel.service.patient.PatientService;
 import ua.com.alevel.service.slot.SlotService;
@@ -31,11 +32,13 @@ public class DoctorFacadeImpl implements DoctorFacade {
     private final SlotService slotService;
     private final DoctorService doctorService;
     private final PatientService patientService;
+    private final DepartmentService departmentService;
 
-    public DoctorFacadeImpl(SlotService slotService, DoctorService doctorService, PatientService patientService) {
+    public DoctorFacadeImpl(SlotService slotService, DoctorService doctorService, PatientService patientService, DepartmentService departmentService) {
         this.slotService = slotService;
         this.doctorService = doctorService;
         this.patientService = patientService;
+        this.departmentService = departmentService;
     }
 
     @Override
@@ -89,6 +92,35 @@ public class DoctorFacadeImpl implements DoctorFacade {
         pageData.setOrder(sortData.getOrder());
         pageData.setSort(sortData.getSort());
         pageData.setItemsSize(patients.getItemsSize());
+        pageData.initPaginationState(pageData.getCurrentPage());
+
+        return pageData;
+    }
+
+    @Override
+    public PageData<DoctorResponseDto> getDoctorsByDepartment(Long id, WebRequest request) {
+        PageAndSizeData pageAndSizeData = WebUtil.generatePageAndSizeData(request);
+        SortData sortData = WebUtil.generateSortData(request);
+        DataTableRequest dataTableRequest = new DataTableRequest();
+        dataTableRequest.setSize(pageAndSizeData.getSize());
+        dataTableRequest.setPage(pageAndSizeData.getPage());
+        dataTableRequest.setSort(sortData.getSort());
+        dataTableRequest.setOrder(sortData.getOrder());
+
+        DataTableResponse<Doctor> doctors = doctorService.findDoctorsByDepartment(departmentService.findById(id).get(),dataTableRequest);
+
+        List<DoctorResponseDto> list = doctors.getItems().
+                stream().
+                map(DoctorResponseDto::new).
+                collect(Collectors.toList());
+
+        PageData<DoctorResponseDto> pageData = new PageData<>();
+        pageData.setItems(list);
+        pageData.setCurrentPage(pageAndSizeData.getPage());
+        pageData.setPageSize(pageAndSizeData.getSize());
+        pageData.setOrder(sortData.getOrder());
+        pageData.setSort(sortData.getSort());
+        pageData.setItemsSize(doctors.getItemsSize());
         pageData.initPaginationState(pageData.getCurrentPage());
 
         return pageData;

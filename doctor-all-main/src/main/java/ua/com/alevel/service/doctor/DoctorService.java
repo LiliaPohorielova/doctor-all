@@ -28,5 +28,7 @@ public interface DoctorService extends BaseCrudService<Doctor> {
 
     DataTableResponse<Patient> findPatientsByDoctor(Doctor doctor, DataTableRequest dataTableRequest);
 
+    DataTableResponse<Doctor> findDoctorsByDepartment(DoctorsDepartment department, DataTableRequest dataTableRequest);
+
     Set<Slot> getSlots(Long id);
 }

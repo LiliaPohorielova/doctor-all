@@ -146,12 +146,6 @@ public class AdminDoctorController extends AbstractController {
         return "redirect:/admin/doctors";
     }
 
-/*    @GetMapping()
-    public String redirectToAddDoctorPage(Model model, WebRequest request) {
-        List<DoctorResponseDto> doctors = doctorFacade.findAll();
-        model.addAttribute("doctors", doctors);
-        return "pages/admin/doctors_just_all";
-    }*/
 
     private List<HeaderData> getHeaderDataList(HeaderName[] columnTitles, PageData<DoctorResponseDto> response) {
         List<HeaderData> headerDataList = new ArrayList<>();

@@ -17,7 +17,6 @@ import ua.com.alevel.persistence.entity.slot.Slot;
 import ua.com.alevel.persistence.repository.department.DepartmentRepository;
 import ua.com.alevel.persistence.repository.doctor.DoctorRepository;
 import ua.com.alevel.persistence.repository.patient.PatientRepository;
-import ua.com.alevel.persistence.type.DoctorSpecialization;
 import ua.com.alevel.service.doctor.DoctorService;
 
 import java.util.List;
@@ -124,6 +123,37 @@ public class DoctorServiceImpl implements DoctorService {
         Page<Patient> pageEntity = doctorRepository.getPatientsById(doctor.getId(), request);
 
         DataTableResponse<Patient> dataTableResponse = new DataTableResponse<>();
+        dataTableResponse.setSort(sortParam);
+        dataTableResponse.setOrder(orderParam);
+        dataTableResponse.setPageSize(size);
+        dataTableResponse.setCurrentPage(page);
+        dataTableResponse.setItemsSize(pageEntity.getTotalElements());
+        dataTableResponse.setTotalPageSize(pageEntity.getTotalPages());
+        dataTableResponse.setItems(pageEntity.getContent());
+
+        return dataTableResponse;
+    }
+
+    @Override
+    public DataTableResponse<Doctor> findDoctorsByDepartment(DoctorsDepartment department, DataTableRequest dataTableRequest) {
+        int page = dataTableRequest.getPage() - 1;
+        int size = dataTableRequest.getSize();
+        String sortParam = dataTableRequest.getSort();
+        String orderParam = dataTableRequest.getOrder();
+
+        Sort sort = orderParam.equals("desc")
+                ? Sort.by(sortParam).descending()
+                : Sort.by(sortParam).ascending();
+
+        if (MapUtils.isNotEmpty(dataTableRequest.getRequestParamMap())) {
+            System.out.println("dataTableRequest = " + dataTableRequest.getRequestParamMap());
+        }
+
+        PageRequest request = PageRequest.of(page, size, sort);
+
+        Page<Doctor> pageEntity = doctorRepository.getDoctorsByDepartmentId(department.getId(), request);
+
+        DataTableResponse<Doctor> dataTableResponse = new DataTableResponse<>();
         dataTableResponse.setSort(sortParam);
         dataTableResponse.setOrder(orderParam);
         dataTableResponse.setPageSize(size);

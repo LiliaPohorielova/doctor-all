@@ -17,6 +17,8 @@ public interface DoctorFacade extends BaseFacade<DoctorRequestDto, DoctorRespons
 
     Set<PatientResponseDto> getPatients(Long id);
 
+    PageData<DoctorResponseDto> getDoctorsByDepartment(Long id, WebRequest request);
+
     PageData<PatientResponseDto> getPatientsTable(Long id, WebRequest request);
 
     void addPatient(Long doctorId, Long patientId);
