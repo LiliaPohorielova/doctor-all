@@ -39,6 +39,15 @@
         transform: scale(1.2);
     }
 
+    .blue {
+        background-color: white;
+        border-radius: 10px;
+    }
+
+    .blue:hover {
+        color: blue;
+    }
+
 </style>
 <body>
 
@@ -104,30 +113,33 @@
 </nav>
 <!-- NavBar End -->
 
-<!-- Departments Start -->
-<div class="container-fluid" style="background-color: #f3f9fe; padding-top: 3%; padding-bottom: 3%;">
+<!-- Doctors Start -->
+<div class="container-fluid" style="background-color: #5db2ff; padding-top: 3%; padding-bottom: 3%;">
     <div class="row welcome text-center">
         <div class="col-12">
-            <h2 class="display-4" style="margin-bottom: 3%;">Departments</h2>
+            <h2 class="display-4" style="margin-bottom: 3%; color: white">Doctors</h2>
         </div>
         <hr style="height:2px;width:30%;margin-left:35%;color:#0000ff;background-color:#0000ff; margin-bottom: 3%;">
     </div>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-4" style="margin-left: 3%; margin-right: 3%">
-        <div class="col" th:each="department,iter : ${departments}">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4" style="margin-left: 3%; margin-right: 3%">
+        <div class="col" th:each="doctor,iter : ${doctors}">
             <div class="card h-100 shadow">
                 <div class="inner">
-                    <img th:src="${department.getDepartmentImage()}" class="card-img-top" alt="...">
+                    <img th:src="${doctor.getImgUrl()}" class="card-img-top" alt="...">
                 </div>
                 <div class="card-body" style="margin-left: 3%; margin-right: 3%">
-                    <h2 class="card-title" th:text="${department.getDepartmentName()}">Card title</h2>
-                    <p class="card-text" th:text="${department.getDescription()}"></p>
-                    <a class="btn btn-primary" style="margin-top: 20px; font-size: 20px" th:href="@{/login}" role="button">Learn more</a>
+                    <h2 class="card-title" th:text="${doctor.getLastname()} + ' ' + ${doctor.getFirstname()}">Card
+                        title</h2>
+                    <p class="card-text" th:text="${doctor.getSpecialization().toString()}"></p>
                 </div>
             </div>
         </div>
     </div>
+    <div class="text-center mt-5">
+        <a class="btn btn-outline-primary blue" th:href="@{/login}" role="button">More Doctors</a>
+    </div>
 </div>
-<!-- Departments End -->
+<!-- Doctors End -->
 
 <!-- Footer Start -->
 <footer class="text-center text-lg-start text-muted" style="background-color: #1F1F1F">

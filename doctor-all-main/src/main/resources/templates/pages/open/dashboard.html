@@ -248,8 +248,7 @@
                 <div class="card-body" style="margin-left: 3%; margin-right: 3%">
                     <h2 class="card-title" th:text="${department.getDepartmentName()}">Card title</h2>
                     <p class="card-text" th:text="${department.getDescription()}"></p>
-                    <a class="btn btn-primary" style="margin-top: 20px; font-size: 20px" href="#" role="button">Learn
-                        more</a>
+                    <a class="btn btn-primary" style="margin-top: 20px; font-size: 20px" th:href="@{/login}" role="button">Learn more</a>
                 </div>
             </div>
         </div>
