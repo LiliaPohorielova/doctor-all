@@ -19,7 +19,7 @@ public class VaccinationSupplierCronJob {
         this.vaccinationRepository = vaccinationRepository;
     }
 
-    @Scheduled(fixedDelay = 1000 * 60)
+    @Scheduled(fixedDelay = 1000 * 60 * 10)
     public void synchronizationWithVaccinationSupplier() {
         System.out.println("VaccinationSupplierCronJob.synchronizationWithVaccinationSupplier");
         RestTemplate restTemplate = new RestTemplate();

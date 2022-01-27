@@ -95,7 +95,7 @@
 <!-- NavBar Start -->
 <nav class="navbar navbar-expand-xl navbar-light bg-light shadow">
     <div class="container-fluid">
-        <a class="navbar-brand abs" href="#">
+        <a class="navbar-brand abs" th:href="@{/open/dashboard}">
             <i class="fas fa-heartbeat"></i>
             DoctorAll
         </a>
@@ -110,7 +110,7 @@
                     <a class="nav-item nav-link a1" onclick="showHideMenu();" th:href="@{/open/dashboard}">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-item nav-link a2" th:href="@{/open/department}">Department</a>
+                    <a class="nav-item nav-link a2" th:href="@{/open/department}">Departments</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-item nav-link a3" th:href="@{/open/doctors}">Doctors</a>
