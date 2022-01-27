@@ -54,6 +54,12 @@
                                                                                           th:value="${T(ua.com.alevel.persistence.type.DoctorSpecialization).valueOf(doctor.getSpecialization())}" readonly>
                         </div>
                     </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12"><label class="labels">Department</label><input type="text"
+                                                                                                  class="form-control"
+                                                                                                  th:value="${doctor.getDepartment().getDepartmentName()}" readonly>
+                        </div>
+                    </div>
                     <div class="mt-5 text-center">
                         <button class="btn btn-primary profile-button" type="button">Edit Profile</button>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"

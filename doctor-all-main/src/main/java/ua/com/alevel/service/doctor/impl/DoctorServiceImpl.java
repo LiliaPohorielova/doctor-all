@@ -10,11 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.alevel.persistence.crud.CrudRepositoryHelper;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
+import ua.com.alevel.persistence.entity.department.DoctorsDepartment;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.entity.slot.Slot;
+import ua.com.alevel.persistence.repository.department.DepartmentRepository;
 import ua.com.alevel.persistence.repository.doctor.DoctorRepository;
 import ua.com.alevel.persistence.repository.patient.PatientRepository;
+import ua.com.alevel.persistence.type.DoctorSpecialization;
 import ua.com.alevel.service.doctor.DoctorService;
 
 import java.util.List;
@@ -24,13 +27,15 @@ import java.util.Set;
 @Service
 public class DoctorServiceImpl implements DoctorService {
 
-    private DoctorRepository doctorRepository;
+    private final DoctorRepository doctorRepository;
+    private final DepartmentRepository departmentRepository;
     private final CrudRepositoryHelper<Doctor, DoctorRepository> doctorRepositoryHelper;
     private final CrudRepositoryHelper<Patient, PatientRepository> patientRepositoryHelper;
     private final PatientRepository patientRepository;
 
-    public DoctorServiceImpl(DoctorRepository doctorRepository, CrudRepositoryHelper<Doctor, DoctorRepository> doctorRepositoryHelper, CrudRepositoryHelper<Patient, PatientRepository> patientRepositoryHelper, PatientRepository patientRepository) {
+    public DoctorServiceImpl(DoctorRepository doctorRepository, DepartmentRepository departmentRepository, CrudRepositoryHelper<Doctor, DoctorRepository> doctorRepositoryHelper, CrudRepositoryHelper<Patient, PatientRepository> patientRepositoryHelper, PatientRepository patientRepository) {
         this.doctorRepository = doctorRepository;
+        this.departmentRepository = departmentRepository;
         this.doctorRepositoryHelper = doctorRepositoryHelper;
         this.patientRepositoryHelper = patientRepositoryHelper;
         this.patientRepository = patientRepository;

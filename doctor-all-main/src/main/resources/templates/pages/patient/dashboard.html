@@ -30,27 +30,27 @@
                         <h4 class="text-right">Account Information</h4>
                     </div>
                     <div class="row mt-2">
-                        <div class="col-md-12"><label class="labels">Firstname</label><input type="text"
-                                                                                            class="form-control"
-                                                                                            th:value="${patient.getFirstname()}" readonly>
+                        <div class="col-md-12">
+                            <label class="labels">Firstname</label>
+                            <input type="text" class="form-control" th:value="${patient.getFirstname()}" readonly>
                         </div>
                     </div>
                     <div class="row mt-2">
-                        <div class="col-md-12"><label class="labels">Lastname</label><input type="text"
-                                                                                           class="form-control"
-                                                                                           th:value="${patient.getLastname()}" readonly>
+                        <div class="col-md-12">
+                            <label class="labels">Lastname</label>
+                            <input type="text"class="form-control" th:value="${patient.getLastname()}" readonly>
                         </div>
                     </div>
                     <div class="row mt-2">
-                        <div class="col-md-12"><label class="labels">Gender</label><input type="text"
-                                                                                          class="form-control"
-                                                                                          th:value="${T(ua.com.alevel.persistence.type.Gender).valueOf(patient.getGender())}" readonly>
+                        <div class="col-md-12">
+                            <label class="labels">Gender</label>
+                            <input type="text" class="form-control" th:value="${T(ua.com.alevel.persistence.type.Gender).valueOf(patient.getGender())}" readonly>
                         </div>
                     </div>
                     <div class="row mt-2">
-                        <div class="col-md-12"><label class="labels">Phone Number</label><input type="text"
-                                                                                                class="form-control"
-                                                                                                th:value="${patient.getPhoneNumber()}" readonly>
+                        <div class="col-md-12">
+                            <label class="labels">Phone Number</label>
+                            <input type="text" class="form-control" th:value="${patient.getPhoneNumber()}" readonly>
                         </div>
                     </div>
                     <div class="row mt-2">

@@ -30,7 +30,6 @@ public class OpenController {
             System.out.println("OpenController: New httpSession");
         }
         model.addAttribute("contact", new ContactRequestDto());
-        model.addAttribute("departments", departmentRepository.findAll());
         model.addAttribute("doctors", doctorFacade.findFirst());
         if (request.isUserInRole("ROLE_ADMIN")) {
             return "redirect:/admin/dashboard";

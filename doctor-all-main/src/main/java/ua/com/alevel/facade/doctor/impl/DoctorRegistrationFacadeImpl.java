@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ua.com.alevel.facade.doctor.DoctorRegistrationFacade;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.user.DoctorUser;
+import ua.com.alevel.service.department.DepartmentService;
 import ua.com.alevel.service.doctor.DoctorService;
 import ua.com.alevel.service.doctor.DoctorUserService;
 import ua.com.alevel.web.dto.request.doctor.DoctorRequestDto;
@@ -13,10 +14,12 @@ public class DoctorRegistrationFacadeImpl implements DoctorRegistrationFacade {
 
     private final DoctorUserService doctorUserService;
     private final DoctorService doctorService;
+    private final DepartmentService departmentService;
 
-    public DoctorRegistrationFacadeImpl(DoctorUserService doctorUserService, DoctorService doctorService) {
+    public DoctorRegistrationFacadeImpl(DoctorUserService doctorUserService, DoctorService doctorService, DepartmentService departmentService) {
         this.doctorUserService = doctorUserService;
         this.doctorService = doctorService;
+        this.departmentService = departmentService;
     }
 
     @Override
@@ -31,6 +34,7 @@ public class DoctorRegistrationFacadeImpl implements DoctorRegistrationFacade {
         doctor.setLastname(dto.getLastname());
         doctor.setMiddleName(dto.getMiddleName());
         doctor.setSpecialization(dto.getSpecialization());
+        doctor.setDepartment(departmentService.findDepartmentBySpecialization(dto.getSpecialization()));
         doctor.setDoctorUser(doctorUser);
 
         doctorService.saveDoctor(doctor);

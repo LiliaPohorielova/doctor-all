@@ -35,7 +35,7 @@ public class Doctor extends BaseEntity {
     @JoinColumn(name = "doctor_user_id", referencedColumnName = "id")
     private DoctorUser doctorUser;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private DoctorsDepartment department;
 
     @OneToMany(mappedBy = "doctor",

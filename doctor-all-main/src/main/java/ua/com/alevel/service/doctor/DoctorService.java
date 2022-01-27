@@ -2,9 +2,11 @@ package ua.com.alevel.service.doctor;
 
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
+import ua.com.alevel.persistence.entity.department.DoctorsDepartment;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.entity.slot.Slot;
+import ua.com.alevel.persistence.type.DoctorSpecialization;
 import ua.com.alevel.service.BaseCrudService;
 
 import java.util.List;

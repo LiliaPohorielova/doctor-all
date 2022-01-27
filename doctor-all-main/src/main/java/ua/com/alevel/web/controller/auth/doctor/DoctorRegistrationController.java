@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ua.com.alevel.config.security.SecurityService;
 import ua.com.alevel.facade.auth.AuthValidatorFacade;
+import ua.com.alevel.facade.department.DepartmentFacade;
 import ua.com.alevel.facade.doctor.impl.DoctorRegistrationFacadeImpl;
 import ua.com.alevel.persistence.type.RoleType;
 import ua.com.alevel.util.SecurityUtil;
@@ -20,14 +21,17 @@ public class DoctorRegistrationController extends AbstractController {
     private final DoctorRegistrationFacadeImpl registrationFacade;
     private final AuthValidatorFacade authValidatorFacade;
     private final SecurityService securityService;
+    private final DepartmentFacade departmentFacade;
 
     public DoctorRegistrationController(
             DoctorRegistrationFacadeImpl registrationFacade,
             AuthValidatorFacade authValidatorFacade,
-            SecurityService securityService) {
+            SecurityService securityService,
+            DepartmentFacade departmentFacade) {
         this.securityService = securityService;
         this.registrationFacade = registrationFacade;
         this.authValidatorFacade = authValidatorFacade;
+        this.departmentFacade = departmentFacade;
     }
     @GetMapping("/doctor/registration")
     public String registration(Model model) {
@@ -35,6 +39,7 @@ public class DoctorRegistrationController extends AbstractController {
             return redirectProcess(model);
         }
         model.addAttribute("authForm", new DoctorRequestDto());
+        model.addAttribute("departments", departmentFacade.findAll());
         return "/pages/doctor/registration";
     }
 
