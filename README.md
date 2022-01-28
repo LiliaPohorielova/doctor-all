@@ -14,10 +14,10 @@ Appointment management system using Hospital as an example. Web application incl
 
 ### Main Technologies used:
 
-* #### Spring Boot
-* #### View: Thymeleaf (HTML), CSS, Bootstrap, JS
-* #### Database management system: MySQL 
-* #### 2 Modules: Main, Supplier
+*  Spring Boot
+*  View: Thymeleaf (HTML), CSS, Bootstrap, JS
+*  Database management system: MySQL 
+*  2 Modules: Main, Supplier
 
 ### Get Started:
 1. Run Vaccination Supplier (data from supplier.sql)
