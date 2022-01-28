@@ -1,11 +1,12 @@
 package ua.com.alevel.persistence.entity.vaccination;
 
 import ua.com.alevel.persistence.entity.BaseEntity;
+import ua.com.alevel.persistence.entity.doctor.Doctor;
+import ua.com.alevel.persistence.entity.patient.Patient;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "vaccinations")
@@ -22,6 +23,9 @@ public class Vaccination extends BaseEntity {
 
     @Column(name = "method_of_administration")
     private String methodOfAdministration;
+
+    @ManyToMany(mappedBy = "patientVaccinations", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Patient> patients;
 
     public Vaccination() {
         super();
@@ -73,6 +77,14 @@ public class Vaccination extends BaseEntity {
 
     public void setVaccinationId(Long vaccinationId) {
         this.vaccinationId = vaccinationId;
+    }
+
+    public Set<Patient> getPatients() {
+        return patients;
+    }
+
+    public void setPatients(Set<Patient> patients) {
+        this.patients = patients;
     }
 
     @Override

@@ -5,6 +5,7 @@ import ua.com.alevel.persistence.entity.BaseEntity;
 import ua.com.alevel.persistence.entity.appointment.PatientAppointment;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.user.PatientUser;
+import ua.com.alevel.persistence.entity.vaccination.Vaccination;
 import ua.com.alevel.persistence.type.Gender;
 
 import javax.persistence.*;
@@ -44,6 +45,13 @@ public class Patient extends BaseEntity {
             fetch = FetchType.LAZY
     )
     private Set<PatientAppointment> patientAppointments;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "patients_vaccinations",
+            joinColumns = @JoinColumn(name = "patient_id"),
+            inverseJoinColumns = @JoinColumn(name = "vaccination_id"))
+    private Set<Vaccination> patientVaccinations;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_user_id", referencedColumnName = "id")
@@ -132,6 +140,14 @@ public class Patient extends BaseEntity {
 
     public void setPatientUser(PatientUser patientUser) {
         this.patientUser = patientUser;
+    }
+
+    public Set<Vaccination> getPatientVaccinations() {
+        return patientVaccinations;
+    }
+
+    public void setPatientVaccinations(Set<Vaccination> patientVaccinations) {
+        this.patientVaccinations = patientVaccinations;
     }
 
     @Override

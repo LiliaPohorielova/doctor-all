@@ -166,7 +166,7 @@ z-index: 100;
         <div class="card-body">
             <h2 class="card-title" th:text="${vac.getName()}"></h2>
             <p class="card-text" style="text-align: left; margin: 20px"> According to manufacturers (<span th:text="${vac.getManufacturer()}"></span>) ongoing large-scale clinical trials show that this type of vaccine can help control the pandemic.</p>
-            <a class="btn btn-primary" style="margin-top: 20px; font-size: 20px" href="#" role="button">Get vaccinated <i class="fas fa-syringe" style="color: white!important;"></i></a>
+            <a class="btn btn-primary" style="margin-top: 20px; font-size: 20px" th:href="@{/login}" role="button">Get vaccinated <i class="fas fa-syringe" style="color: white!important;"></i></a>
         </div>
     </div>
 </div>
