@@ -9,6 +9,7 @@ import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.appointment.PatientAppointment;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.patient.Patient;
+import ua.com.alevel.persistence.entity.vaccination.Vaccination;
 import ua.com.alevel.persistence.repository.patient.PatientRepository;
 import ua.com.alevel.service.patient.PatientService;
 
@@ -74,5 +75,10 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Set<PatientAppointment> getAppointments(Long id) {
         return patientRepositoryHelper.findById(patientRepository, id).get().getPatientAppointments();
+    }
+
+    @Override
+    public Set<Vaccination> getVaccinations(Long id) {
+        return patientRepositoryHelper.findById(patientRepository, id).get().getPatientVaccinations();
     }
 }

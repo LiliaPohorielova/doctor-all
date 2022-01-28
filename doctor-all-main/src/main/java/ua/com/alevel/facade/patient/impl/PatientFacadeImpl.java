@@ -8,9 +8,12 @@ import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.appointment.PatientAppointment;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.patient.Patient;
+import ua.com.alevel.persistence.entity.slot.Slot;
 import ua.com.alevel.persistence.entity.user.PatientUser;
+import ua.com.alevel.persistence.entity.vaccination.Vaccination;
 import ua.com.alevel.service.appointment.PatientAppointmentService;
 import ua.com.alevel.service.patient.PatientService;
+import ua.com.alevel.service.vaccination.VaccinationService;
 import ua.com.alevel.util.WebUtil;
 import ua.com.alevel.web.dto.request.data.PageAndSizeData;
 import ua.com.alevel.web.dto.request.data.SortData;
@@ -19,6 +22,8 @@ import ua.com.alevel.web.dto.response.PageData;
 import ua.com.alevel.web.dto.response.appointment.AppointmentResponseDto;
 import ua.com.alevel.web.dto.response.doctor.DoctorResponseDto;
 import ua.com.alevel.web.dto.response.patient.PatientResponseDto;
+import ua.com.alevel.web.dto.response.slot.SlotResponseDto;
+import ua.com.alevel.web.dto.response.vaccination.VaccinationResponseDto;
 
 import java.util.HashSet;
 import java.util.List;
@@ -30,10 +35,12 @@ public class PatientFacadeImpl implements PatientFacade {
 
     private final PatientAppointmentService patientAppointmentService;
     private final PatientService patientService;
+    private final VaccinationService vaccinationService;
 
-    public PatientFacadeImpl(PatientService patientService, PatientAppointmentService patientAppointmentService) {
+    public PatientFacadeImpl(PatientService patientService, PatientAppointmentService patientAppointmentService, VaccinationService vaccinationService) {
         this.patientService = patientService;
         this.patientAppointmentService = patientAppointmentService;
+        this.vaccinationService = vaccinationService;
     }
 
     @Override
@@ -137,5 +144,24 @@ public class PatientFacadeImpl implements PatientFacade {
         PatientAppointment patientAppointment = patientAppointmentService.findById(appointmentId).get();
         patient.addPatientAppointment(patientAppointment);
         patientService.update(patient);
+    }
+
+    @Override
+    public void addVaccination(Long vaccinationId, Long patientId) {
+        Vaccination vaccination = vaccinationService.findById(vaccinationId).get();
+        Patient patient = patientService.findById(patientId).get();
+        patient.addVaccination(vaccination);
+        patientService.update(patient);
+    }
+
+    @Override
+    public Set<VaccinationResponseDto> getVaccinations(Long id) {
+        Set<Vaccination> vaccinations = patientService.getVaccinations(id);
+        Set<VaccinationResponseDto> set = new HashSet<>();
+        for (Vaccination vaccination : vaccinations) {
+            VaccinationResponseDto vaccinationResponseDto = new VaccinationResponseDto(vaccination);
+            set.add(vaccinationResponseDto);
+        }
+        return set;
     }
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{fragments/patient_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient - Add Vaccination</title>
+</head>
+<body>
+<div layout:fragment="patient_content">
+    <!-- Vaccinations Start -->
+    <div class="container-fluid" style="background-color: white; padding-top: 3%; padding-bottom: 3%;">
+        <div class="row welcome text-center">
+            <div class="col-12">
+                <h2 class="display-4" style="margin-bottom: 3%;">Available vaccination</h2>
+            </div>
+            <hr style="height:2px;width:30%;margin-left:35%;color:#0000ff;background-color:#0000ff; margin-bottom: 3%;">
+
+            <div class="card-group">
+                <div class="card ho" th:each="vac,iter : ${vaccinations}">
+                    <img th:src="${vac.getImageUrl()}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h2 class="card-title" th:text="${vac.getName()}"></h2>
+                        <p class="card-text" style="text-align: left; margin: 20px"> According to manufacturers (<span th:text="${vac.getManufacturer()}"></span>) ongoing large-scale clinical trials show that this type of vaccine can help control the pandemic.</p>
+                        <a class="btn btn-primary" style="margin-top: 20px; font-size: 20px" th:href="'/patient/add_vaccination/' + ${vac.getId()}" role="button">Get vaccinated <i class="fas fa-syringe" style="color: white!important;"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Vaccinations End -->
+</div>
+</body>
+</html>

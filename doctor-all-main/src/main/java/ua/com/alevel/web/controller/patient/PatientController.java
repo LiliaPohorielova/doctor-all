@@ -7,10 +7,12 @@ import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.facade.doctor.DoctorFacade;
 import ua.com.alevel.facade.patient.PatientFacade;
 import ua.com.alevel.facade.patient.PatientRegistrationFacade;
+import ua.com.alevel.facade.vaccination.VaccinationFacade;
 import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.entity.user.PatientUser;
 import ua.com.alevel.util.SecurityUtil;
 import ua.com.alevel.web.dto.response.doctor.DoctorResponseDto;
+import ua.com.alevel.web.dto.response.vaccination.VaccinationResponseDto;
 
 import java.util.List;
 import java.util.Set;
@@ -22,11 +24,13 @@ public class PatientController {
     private final PatientRegistrationFacade patientUserFacade;
     private final DoctorFacade doctorFacade;
     private final PatientFacade patientFacade;
+    private final VaccinationFacade vaccinationFacade;
 
-    public PatientController(PatientRegistrationFacade patientUserFacade, DoctorFacade doctorFacade, PatientFacade patientFacade) {
+    public PatientController(PatientRegistrationFacade patientUserFacade, DoctorFacade doctorFacade, PatientFacade patientFacade, VaccinationFacade vaccinationFacade) {
         this.patientUserFacade = patientUserFacade;
         this.doctorFacade = doctorFacade;
         this.patientFacade = patientFacade;
+        this.vaccinationFacade = vaccinationFacade;
     }
 
     @GetMapping("/dashboard")
@@ -64,6 +68,34 @@ public class PatientController {
         Set<DoctorResponseDto> doctors = patientFacade.getDoctors(patient.getId());
         model.addAttribute("doctors", doctors);
         return "pages/patient/my_doctors";
+    }
+
+    @GetMapping("/my_vaccinations")
+    public String myVaccinations(WebRequest webRequest, Model model) {
+        String user = SecurityUtil.getUsername();
+        PatientUser patientUserData = patientUserFacade.findByEmail(user);
+        Patient patient = patientUserData.getPatient();
+        Set<VaccinationResponseDto> vaccinations = patientFacade.getVaccinations(patient.getId());
+        model.addAttribute("vaccinations", vaccinations);
+        return "pages/patient/my_vaccinations";
+    }
+
+    @GetMapping("/all_vaccinations")
+    public String redirectToAddVaccinationPage(Model model) {
+        List<VaccinationResponseDto> vaccinations = vaccinationFacade.findAll();
+        model.addAttribute("vaccinations", vaccinations);
+        return "pages/patient/patient_vaccination_add";
+    }
+
+    @GetMapping("/add_vaccination/{vaccinationId}")
+    public String addVaccination(@PathVariable Long vaccinationId, Model model) {
+        String user = SecurityUtil.getUsername();
+        PatientUser patientUserData = patientUserFacade.findByEmail(user);
+        Patient patient = patientUserData.getPatient();
+        patientFacade.addVaccination(vaccinationId, patient.getId());
+        Set<VaccinationResponseDto> vaccinations = patientFacade.getVaccinations(patient.getId());
+        model.addAttribute("vaccinations", vaccinations);
+        return "pages/patient/my_vaccinations";
     }
 
     @GetMapping("/delete_doctor/{doctorId}")

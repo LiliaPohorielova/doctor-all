@@ -164,4 +164,9 @@ public class Patient extends BaseEntity {
         patientAppointments.add(patientAppointment);
         patientAppointment.setPatient(this);
     }
+
+    public void addVaccination(Vaccination vaccination) {
+        patientVaccinations.add(vaccination);
+        vaccination.getPatients().add(this);
+    }
 }

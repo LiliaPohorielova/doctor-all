@@ -1,27 +1,22 @@
-package ua.com.alevel.web.dto.response.vaccination;
+package ua.com.alevel.web.dto.request.vaccination;
 
-import ua.com.alevel.persistence.entity.vaccination.Vaccination;
-import ua.com.alevel.web.dto.response.ResponseDto;
+import ua.com.alevel.web.dto.request.RequestDto;
 
-import javax.persistence.Column;
+public class VaccinationRequestDto extends RequestDto {
 
-public class VaccinationResponseDto extends ResponseDto {
-
+    private Long vaccinationId;
     private String name;
     private Integer quantity;
     private String imageUrl;
     private String manufacturer;
     private String methodOfAdministration;
 
-    public VaccinationResponseDto(Vaccination vaccination) {
-        setId(vaccination.getId());
-        setCreated(vaccination.getCreated());
-        setUpdated(vaccination.getUpdated());
-        this.name = vaccination.getName();
-        this.quantity = vaccination.getQuantity();
-        this.imageUrl = vaccination.getImageUrl();
-        this.manufacturer = vaccination.getManufacturer();
-        this.methodOfAdministration = vaccination.getMethodOfAdministration();
+    public Long getVaccinationId() {
+        return vaccinationId;
+    }
+
+    public void setVaccinationId(Long vaccinationId) {
+        this.vaccinationId = vaccinationId;
     }
 
     public String getName() {
