@@ -20,5 +20,5 @@ public interface DoctorRepository extends BaseRepository<Doctor> {
     @Query("select d from Doctor d INNER JOIN d.department dt WHERE dt.id  = ?1")
     Page<Doctor> getDoctorsByDepartmentId(Long id, Pageable pageable);
 
-    List<Doctor> findByDoctorNameContaining(String doctorName);
+    List<Doctor> findByLastnameContaining(String doctorName);
 }

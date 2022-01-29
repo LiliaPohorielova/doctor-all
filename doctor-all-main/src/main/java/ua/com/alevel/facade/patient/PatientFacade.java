@@ -27,6 +27,4 @@ public interface PatientFacade extends BaseFacade<PatientRequestDto, PatientResp
     void addVaccination(Long vaccinationId, Long patientId);
 
     Set<VaccinationResponseDto> getVaccinations(Long id);
-
-    List<DoctorResponseDto> search(WebRequest webRequest);
 }

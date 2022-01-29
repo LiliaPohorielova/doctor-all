@@ -91,7 +91,7 @@ public class PatientServiceImpl implements PatientService {
     public List<Doctor> search(Map<String, Object> queryMap) {
         if (queryMap.get(WebUtil.DOCTOR_SEARCH_PARAM) != null) {
             String doctorName = (String) queryMap.get(WebUtil.DOCTOR_SEARCH_PARAM);
-            return doctorRepository.findByDoctorNameContaining(doctorName);
+            return doctorRepository.findByLastnameContaining(doctorName);
         }
         return doctorRepository.findAll();
     }

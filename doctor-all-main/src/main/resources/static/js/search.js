@@ -1,7 +1,8 @@
 $(document).ready(function () {
     $('#doctorNamed').autocomplete({
             source: function (request, response) {
-                $.get("http://localhost:8080/doctor/suggestions?", {q: request.term}, function (data, status) {
+                $.get("http://localhost:8080/doctors/suggestions?", {q: request.term}, function (data, status) {
+                    console.log("get(\"http://localhost:8080/doctors/suggestions?\"");
                     $("#results").html("");
                     if (status === 'success') {
                         response(data);
@@ -11,10 +12,10 @@ $(document).ready(function () {
         }
     );
 
-    $("#btnBookSearch").click(function () {
+    $("#btnDoctorSearch").click(function () {
         const inputText = $("#doctorNamed").val();
         if (inputText.length === 0) {
-            alert("Enter product name or description");
+            alert("Warning! Enter doctor name, please!");
         } else {
             let doctorSearch = document.getElementById('doctorSearch');
             if (doctorSearch) {

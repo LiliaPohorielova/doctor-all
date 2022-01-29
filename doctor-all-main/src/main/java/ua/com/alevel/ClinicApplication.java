@@ -51,7 +51,8 @@ public class ClinicApplication {
     }
 
     @PreDestroy
-    public void deleteIndex() {
+    public void deleteIndex()
+    {
         elasticsearchOperations.indexOps(DoctorIndex.class).delete();
     }
 

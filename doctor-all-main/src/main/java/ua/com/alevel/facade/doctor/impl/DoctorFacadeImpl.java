@@ -256,4 +256,19 @@ public class DoctorFacadeImpl implements DoctorFacade {
         }
         return doc;
     }
+
+
+
+    @Override
+    public List<DoctorResponseDto> search(WebRequest webRequest) {
+        Map<String, Object> queryMap = new HashMap<>();
+        if (webRequest.getParameterMap().get(WebUtil.DOCTOR_SEARCH_PARAM) != null) {
+            String[] params = webRequest.getParameterMap().get(WebUtil.DOCTOR_SEARCH_PARAM);
+            String doctorName = params[0];
+            queryMap.put(WebUtil.DOCTOR_SEARCH_PARAM, doctorName);
+        }
+        List<Doctor> doctors = patientService.search(queryMap);
+        List<DoctorResponseDto> doctorPLPDtos = doctors.stream().map(DoctorResponseDto::new).toList();
+        return doctorPLPDtos;
+    }
 }

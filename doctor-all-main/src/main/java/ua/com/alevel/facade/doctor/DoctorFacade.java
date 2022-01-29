@@ -38,4 +38,6 @@ public interface DoctorFacade extends BaseFacade<DoctorRequestDto, DoctorRespons
     Map<Long, Set<String>> getDoctorsAndSpec();
 
     List<String> getDoctorsBySpecId(Integer specializationId);
+
+    List<DoctorResponseDto> search(WebRequest webRequest);
 }

@@ -42,14 +42,12 @@ public class DoctorController extends AbstractController {
                 new HeaderName("delete", null, null)
         };
     }
-    
-    private final SearchDoctorFacade searchDoctorFacade;
+
     private final DoctorRegistrationFacade doctorUserFacade;
     private final DoctorFacade doctorFacade;
     private final PatientFacade patientFacade;
 
-    public DoctorController(SearchDoctorFacade searchDoctorFacade, DoctorRegistrationFacade doctorUserFacade, DoctorFacade doctorFacade, PatientFacade patientFacade) {
-        this.searchDoctorFacade = searchDoctorFacade;
+    public DoctorController(DoctorRegistrationFacade doctorUserFacade, DoctorFacade doctorFacade, PatientFacade patientFacade) {
         this.doctorUserFacade = doctorUserFacade;
         this.doctorFacade = doctorFacade;
         this.patientFacade = patientFacade;
@@ -133,20 +131,6 @@ public class DoctorController extends AbstractController {
     public String detailsByDoctorId(@PathVariable Long patientId, Model model) {
         model.addAttribute("patient", patientFacade.findById(patientId));
         return "pages/doctor/about_patient";
-    }
-
-    @PostMapping("/search")
-    private String allDoctorsSearch(
-            RedirectAttributes redirectAttributes, @RequestParam String doctorSearch) {
-        redirectAttributes.addAttribute("doctorSearch", doctorSearch);
-        return "redirect:/patient/all_doctors";
-    }
-
-    @GetMapping("/suggestions")
-    @ResponseBody
-    public List<String> fetchSuggestions(@RequestParam(value = "q", required = false) String query) {
-        System.out.println("OpenBookController.fetchSuggestions: " + query);
-        return searchDoctorFacade.fetchSuggestions(query);
     }
 
     private List<HeaderData> getHeaderDataList(HeaderName[] columnTitles, PageData<PatientResponseDto> response) {
