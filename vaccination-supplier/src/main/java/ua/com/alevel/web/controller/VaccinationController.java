@@ -1,10 +1,12 @@
-package ua.com.alevel.controller;
+package ua.com.alevel.web.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.com.alevel.entity.Vaccination;
+import ua.com.alevel.facade.VaccinationFacade;
 import ua.com.alevel.repository.VaccinationRepository;
+import ua.com.alevel.web.dto.VaccinationResponseDto;
 
 import java.util.List;
 
@@ -12,13 +14,13 @@ import java.util.List;
 @RequestMapping("/api/vaccinations")
 public class VaccinationController {
 
-    private final VaccinationRepository vaccinationRepository;
+    private final VaccinationFacade vaccinationFacade;
 
-    public VaccinationController(VaccinationRepository vaccinationRepository) {
-        this.vaccinationRepository = vaccinationRepository;
+    public VaccinationController(VaccinationFacade vaccinationFacade) {
+        this.vaccinationFacade = vaccinationFacade;
     }
     @GetMapping
-    public List<Vaccination> findAll() {
-        return (List<Vaccination>) vaccinationRepository.findAll();
+    public List<VaccinationResponseDto> findAll() {
+        return vaccinationFacade.findAll();
     }
 }
