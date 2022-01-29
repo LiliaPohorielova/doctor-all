@@ -10,20 +10,25 @@ import ua.com.alevel.persistence.entity.appointment.PatientAppointment;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.entity.vaccination.Vaccination;
+import ua.com.alevel.persistence.repository.doctor.DoctorRepository;
 import ua.com.alevel.persistence.repository.patient.PatientRepository;
 import ua.com.alevel.service.patient.PatientService;
+import ua.com.alevel.util.WebUtil;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
 @Service
 public class PatientServiceImpl implements PatientService {
 
+    private final DoctorRepository doctorRepository;
     private final PatientRepository patientRepository;
     private final CrudRepositoryHelper<Patient, PatientRepository> patientRepositoryHelper;
 
-    public PatientServiceImpl(PatientRepository patientRepository, CrudRepositoryHelper<Patient, PatientRepository> patientRepositoryHelper) {
+    public PatientServiceImpl(DoctorRepository doctorRepository, PatientRepository patientRepository, CrudRepositoryHelper<Patient, PatientRepository> patientRepositoryHelper) {
+        this.doctorRepository = doctorRepository;
         this.patientRepository = patientRepository;
         this.patientRepositoryHelper = patientRepositoryHelper;
     }
@@ -80,5 +85,14 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Set<Vaccination> getVaccinations(Long id) {
         return patientRepositoryHelper.findById(patientRepository, id).get().getPatientVaccinations();
+    }
+
+    @Override
+    public List<Doctor> search(Map<String, Object> queryMap) {
+        if (queryMap.get(WebUtil.DOCTOR_SEARCH_PARAM) != null) {
+            String doctorName = (String) queryMap.get(WebUtil.DOCTOR_SEARCH_PARAM);
+            return doctorRepository.findByDoctorNameContaining(doctorName);
+        }
+        return doctorRepository.findAll();
     }
 }

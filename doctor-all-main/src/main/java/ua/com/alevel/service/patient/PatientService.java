@@ -9,6 +9,7 @@ import ua.com.alevel.persistence.entity.vaccination.Vaccination;
 import ua.com.alevel.service.BaseCrudService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public interface PatientService extends BaseCrudService<Patient> {
@@ -24,4 +25,6 @@ public interface PatientService extends BaseCrudService<Patient> {
     Set<PatientAppointment> getAppointments(Long id);
 
     Set<Vaccination> getVaccinations(Long id);
+
+    List<Doctor> search(Map<String, Object> queryMap);
 }

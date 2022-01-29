@@ -25,9 +25,7 @@ import ua.com.alevel.web.dto.response.patient.PatientResponseDto;
 import ua.com.alevel.web.dto.response.slot.SlotResponseDto;
 import ua.com.alevel.web.dto.response.vaccination.VaccinationResponseDto;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -163,5 +161,18 @@ public class PatientFacadeImpl implements PatientFacade {
             set.add(vaccinationResponseDto);
         }
         return set;
+    }
+
+    @Override
+    public List<DoctorResponseDto> search(WebRequest webRequest) {
+        Map<String, Object> queryMap = new HashMap<>();
+        if (webRequest.getParameterMap().get(WebUtil.DOCTOR_SEARCH_PARAM) != null) {
+            String[] params = webRequest.getParameterMap().get(WebUtil.DOCTOR_SEARCH_PARAM);
+            String doctorName = params[0];
+            queryMap.put(WebUtil.DOCTOR_SEARCH_PARAM, doctorName);
+        }
+        List<Doctor> doctors = patientService.search(queryMap);
+        List<DoctorResponseDto> doctorPLPDtos = doctors.stream().map(DoctorResponseDto::new).toList();
+        return doctorPLPDtos;
     }
 }

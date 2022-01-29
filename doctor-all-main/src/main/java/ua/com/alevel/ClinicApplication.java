@@ -7,13 +7,17 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ua.com.alevel.persistence.entity.vaccination.Vaccination;
+import ua.com.alevel.elastic.index.DoctorIndex;
+import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.repository.doctor.DoctorRepository;
 import ua.com.alevel.persistence.repository.user.AdminUserRepository;
 import ua.com.alevel.persistence.repository.user.DoctorUserRepository;
 import ua.com.alevel.persistence.repository.user.PatientUserRepository;
 import ua.com.alevel.persistence.repository.vaccination.VaccinationRepository;
+
+import javax.annotation.PreDestroy;
 
 @SpringBootApplication(exclude = {
         DataSourceAutoConfiguration.class,
@@ -27,21 +31,28 @@ public class ClinicApplication {
     private final DoctorRepository doctorRepository;
     private final PatientUserRepository patientUserRepository;
     private final VaccinationRepository vaccinationRepository;
+    private final ElasticsearchOperations elasticsearchOperations;
 
     public ClinicApplication(BCryptPasswordEncoder encoder,
                              AdminUserRepository adminUserRepository,
                              DoctorUserRepository doctorUserRepository,
-                             DoctorRepository doctorRepository, PatientUserRepository patientUserRepository, VaccinationRepository vaccinationRepository) {
+                             DoctorRepository doctorRepository, PatientUserRepository patientUserRepository, VaccinationRepository vaccinationRepository, ElasticsearchOperations elasticsearchOperations) {
         this.encoder = encoder;
         this.adminUserRepository = adminUserRepository;
         this.doctorUserRepository = doctorUserRepository;
         this.doctorRepository = doctorRepository;
         this.patientUserRepository = patientUserRepository;
         this.vaccinationRepository = vaccinationRepository;
+        this.elasticsearchOperations = elasticsearchOperations;
     }
 
     public static void main(String[] args) {
         SpringApplication.run(ClinicApplication.class, args);
+    }
+
+    @PreDestroy
+    public void deleteIndex() {
+        elasticsearchOperations.indexOps(DoctorIndex.class).delete();
     }
 
     @EventListener(ApplicationReadyEvent.class)

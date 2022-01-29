@@ -9,6 +9,8 @@ import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.patient.Patient;
 import ua.com.alevel.persistence.repository.BaseRepository;
 
+import java.util.List;
+
 @Repository
 public interface DoctorRepository extends BaseRepository<Doctor> {
 
@@ -17,4 +19,6 @@ public interface DoctorRepository extends BaseRepository<Doctor> {
 
     @Query("select d from Doctor d INNER JOIN d.department dt WHERE dt.id  = ?1")
     Page<Doctor> getDoctorsByDepartmentId(Long id, Pageable pageable);
+
+    List<Doctor> findByDoctorNameContaining(String doctorName);
 }

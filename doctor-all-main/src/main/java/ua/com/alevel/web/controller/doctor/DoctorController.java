@@ -5,14 +5,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.com.alevel.facade.doctor.DoctorFacade;
 import ua.com.alevel.facade.doctor.DoctorRegistrationFacade;
+import ua.com.alevel.facade.elastic.SearchDoctorFacade;
 import ua.com.alevel.facade.patient.PatientFacade;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.user.DoctorUser;
@@ -44,11 +43,13 @@ public class DoctorController extends AbstractController {
         };
     }
     
+    private final SearchDoctorFacade searchDoctorFacade;
     private final DoctorRegistrationFacade doctorUserFacade;
     private final DoctorFacade doctorFacade;
     private final PatientFacade patientFacade;
 
-    public DoctorController(DoctorRegistrationFacade doctorUserFacade, DoctorFacade doctorFacade, PatientFacade patientFacade) {
+    public DoctorController(SearchDoctorFacade searchDoctorFacade, DoctorRegistrationFacade doctorUserFacade, DoctorFacade doctorFacade, PatientFacade patientFacade) {
+        this.searchDoctorFacade = searchDoctorFacade;
         this.doctorUserFacade = doctorUserFacade;
         this.doctorFacade = doctorFacade;
         this.patientFacade = patientFacade;
@@ -132,6 +133,20 @@ public class DoctorController extends AbstractController {
     public String detailsByDoctorId(@PathVariable Long patientId, Model model) {
         model.addAttribute("patient", patientFacade.findById(patientId));
         return "pages/doctor/about_patient";
+    }
+
+    @PostMapping("/search")
+    private String allDoctorsSearch(
+            RedirectAttributes redirectAttributes, @RequestParam String doctorSearch) {
+        redirectAttributes.addAttribute("doctorSearch", doctorSearch);
+        return "redirect:/patient/all_doctors";
+    }
+
+    @GetMapping("/suggestions")
+    @ResponseBody
+    public List<String> fetchSuggestions(@RequestParam(value = "q", required = false) String query) {
+        System.out.println("OpenBookController.fetchSuggestions: " + query);
+        return searchDoctorFacade.fetchSuggestions(query);
     }
 
     private List<HeaderData> getHeaderDataList(HeaderName[] columnTitles, PageData<PatientResponseDto> response) {

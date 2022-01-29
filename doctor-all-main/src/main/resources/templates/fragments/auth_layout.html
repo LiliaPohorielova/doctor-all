@@ -43,9 +43,9 @@
                     <a class="nav-item nav-link" th:href="@{/patient/appointments}">Appointments</a>
                     <a class="nav-item nav-link" th:href="@{/patient/my_vaccinations}">Vaccinations</a>
                     <a class="nav-item nav-link" th:href="@{/patient/news}">News</a>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    <form class="d-flex" method="POST" th:action="@{/doctor/search}" id="bookSearch">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="bookNamed">
+                        <button class="btn btn-outline-success" type="submit" id="btnBookSearch">Search</button>
                     </form>
                     <a class="btn btn-outline-danger a5" onclick="document.forms['logoutForm'].submit()" style="cursor: pointer !important;">Logout</a>
                 </nav>
@@ -100,5 +100,8 @@
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
+<th:block layout:fragment="scripts">
+    <script type="text/javascript" th:src="@{/js/search.js}"></script>
+</th:block>
 </body>
 </html>

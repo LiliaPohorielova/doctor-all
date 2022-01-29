@@ -1,5 +1,6 @@
 package ua.com.alevel.facade.patient;
 
+import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.facade.BaseFacade;
 import ua.com.alevel.persistence.entity.user.PatientUser;
 import ua.com.alevel.web.dto.request.patient.PatientRequestDto;
@@ -26,4 +27,6 @@ public interface PatientFacade extends BaseFacade<PatientRequestDto, PatientResp
     void addVaccination(Long vaccinationId, Long patientId);
 
     Set<VaccinationResponseDto> getVaccinations(Long id);
+
+    List<DoctorResponseDto> search(WebRequest webRequest);
 }

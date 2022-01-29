@@ -17,6 +17,7 @@ public final class WebUtil {
     public static final String DEFAULT_ORDER_PARAM_VALUE = "desc";
     public static final int DEFAULT_PAGE_PARAM_VALUE = 1;
     public static final int DEFAULT_SIZE_PARAM_VALUE = 10;
+    public static final String DOCTOR_SEARCH_PARAM = "doctorSearch";
 
     private WebUtil() { }
 
