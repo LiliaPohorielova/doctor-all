@@ -1,5 +1,9 @@
 package ua.com.alevel.service.patient.impl;
 
+import org.apache.commons.collections4.MapUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -100,5 +104,36 @@ public class PatientServiceImpl implements PatientService {
             return doctorRepository.findByLastnameContaining(doctorName);
         }
         return doctorRepository.findAll();
+    }
+
+    @Override
+    public DataTableResponse<Doctor> findDoctorsByPatient(Patient patient, DataTableRequest dataTableRequest) {
+        int page = dataTableRequest.getPage() - 1;
+        int size = dataTableRequest.getSize();
+        String sortParam = dataTableRequest.getSort();
+        String orderParam = dataTableRequest.getOrder();
+
+        Sort sort = orderParam.equals("desc")
+                ? Sort.by(sortParam).descending()
+                : Sort.by(sortParam).ascending();
+
+        if (MapUtils.isNotEmpty(dataTableRequest.getRequestParamMap())) {
+            System.out.println("dataTableRequest = " + dataTableRequest.getRequestParamMap());
+        }
+
+        PageRequest request = PageRequest.of(page, size, sort);
+
+        Page<Doctor> pageEntity = patientRepository.getDoctorsById(patient.getId(), request);
+
+        DataTableResponse<Doctor> dataTableResponse = new DataTableResponse<>();
+        dataTableResponse.setSort(sortParam);
+        dataTableResponse.setOrder(orderParam);
+        dataTableResponse.setPageSize(size);
+        dataTableResponse.setCurrentPage(page);
+        dataTableResponse.setItemsSize(pageEntity.getTotalElements());
+        dataTableResponse.setTotalPageSize(pageEntity.getTotalPages());
+        dataTableResponse.setItems(pageEntity.getContent());
+
+        return dataTableResponse;
     }
 }

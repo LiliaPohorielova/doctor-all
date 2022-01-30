@@ -113,7 +113,7 @@ public class DoctorController extends AbstractController {
         doctorFacade.addPatient(doctor.getId(), patientId);
         Set<PatientResponseDto> patients = doctorFacade.getPatients(doctor.getId());
         model.addAttribute("patients", patients);
-        return "pages/doctor/my_patients";
+        return "pages/doctor/my_patients_table";
     }
 
     @GetMapping("/delete_patient/{patientId}")
@@ -124,7 +124,7 @@ public class DoctorController extends AbstractController {
         doctorFacade.removePatient(doctor.getId(), patientId);
         Set<PatientResponseDto> patients = doctorFacade.getPatients(doctor.getId());
         model.addAttribute("patients", patients);
-        return "pages/doctor/my_patients";
+        return "pages/doctor/my_patients_table";
     }
 
     @GetMapping("/about_patient/{patientId}")

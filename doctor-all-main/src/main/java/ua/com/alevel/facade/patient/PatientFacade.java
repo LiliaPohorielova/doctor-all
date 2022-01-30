@@ -4,6 +4,7 @@ import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.facade.BaseFacade;
 import ua.com.alevel.persistence.entity.user.PatientUser;
 import ua.com.alevel.web.dto.request.patient.PatientRequestDto;
+import ua.com.alevel.web.dto.response.PageData;
 import ua.com.alevel.web.dto.response.appointment.AppointmentResponseDto;
 import ua.com.alevel.web.dto.response.doctor.DoctorResponseDto;
 import ua.com.alevel.web.dto.response.patient.PatientResponseDto;
@@ -15,6 +16,8 @@ import java.util.Set;
 public interface PatientFacade extends BaseFacade<PatientRequestDto, PatientResponseDto> {
 
     Set<DoctorResponseDto> getDoctors(Long id);
+
+    PageData<DoctorResponseDto> getDoctorsTable(Long id, WebRequest request);
 
     Set<AppointmentResponseDto> getAppointments(Long id);
 

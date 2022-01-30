@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      layout:decorate="~{fragments/doctor_layout}">
+      layout:decorate="~{fragments/patient_layout}">
 <head>
     <meta charset="utf-8">
     <title>Doctor - My Patients</title>
@@ -12,25 +12,26 @@
 
 
 <div layout:fragment="data_table_content">
-        <tr th:each="patient,iter : ${pageData.getItems()}">
+        <tr th:each="doctor,iter : ${pageData.getItems()}">
             <td th:text="${iter.count}"></td>
-            <td th:text="${patient.getLastname()}"></td>
-            <td th:text="${patient.getFirstname()}"></td>
-            <td th:text="${patient.getGender().toString()}"></td>
-            <td th:text="${patient.getPatientUser().getEmail()}"></td>
+            <td th:text="${doctor.getLastname()}"></td>
+            <td th:text="${doctor.getFirstname()}"></td>
+            <td th:text="${doctor.getMiddleName()}"></td>
+            <td th:text="${doctor.getSpecialization()}"></td>
+            <td th:text="${doctor.getDoctorUser().getEmail()}"></td>
             <td>
-                <a th:href="@{'/doctor/about_patient/' + ${patient.getId()}}"
+                <a th:href="@{'/patient/about_doctor/' + ${doctor.getId()}}"
                    type="button" class="btn btn-success">details</a>
             </td>
             <td>
-                <a th:href="@{'/doctor/delete_patient/' + ${patient.getId()}}"
+                <a th:href="@{'/patient/delete_doctor/' + ${doctor.getId()}}"
                    type="button" class="btn btn-danger"
-                   onclick="return confirm('Are you sure you want to Delete this Patient?');">delete</a>
+                   onclick="return confirm('Are you sure you want to Delete this Doctor?');">delete</a>
             </td>
         </tr>
 </div>
 <div layout:fragment="add_to_table_content">
-    <a th:href="@{'/doctor/all_patients/'}" class="btn btn-primary">+ Add patient</a>
+    <a th:href="@{'/patient/all_doctors/'}" class="btn btn-primary">+ Add doctor</a>
 </div>
 <th:block layout:fragment="scripts">
     <script type="text/javascript" th:src="@{/js/pagination.js}"></script>

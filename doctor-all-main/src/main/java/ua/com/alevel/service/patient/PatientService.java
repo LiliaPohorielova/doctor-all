@@ -29,4 +29,6 @@ public interface PatientService extends BaseCrudService<Patient> {
     List<Doctor> searchDoctor(Map<String, Object> queryMap);
 
     List<Patient> searchPatient(Map<String, Object> queryMap);
+
+    DataTableResponse<Doctor> findDoctorsByPatient(Patient patient, DataTableRequest dataTableRequest);
 }

@@ -33,7 +33,6 @@
                     <a class="nav-item nav-link" th:href="@{/admin/doctors}">Doctors</a>
                     <a class="nav-item nav-link" th:href="@{/admin/patients}">Patients</a>
                     <a class="nav-item nav-link" th:href="@{/admin/departments}">Departments</a>
-                    <a class="nav-item nav-link" th:href="@{/admin/news}">News</a>
                     <a class="btn btn-outline-primary a5" th:href="@{/admin/doctors/registration}">New Doctor</a>
                     <a class="btn btn-outline-primary a5" th:href="@{/admin/patients/registration}">New Patient</a>
                     <a class="btn btn-outline-danger a5" onclick="document.forms['logoutForm'].submit()"
@@ -44,10 +43,9 @@
             <div sec:authorize="hasRole('ROLE_PATIENT')">
                 <nav class="navbar navbar-dark bg-dark" style="padding-right: 15px">
                     <a class="nav-item nav-link" th:href="@{/patient/dashboard}">Dashboard</a>
-                    <a class="nav-item nav-link" th:href="@{/patient/my_doctors}">Doctors</a>
+                    <a class="nav-item nav-link" th:href="@{/patient/my_doctors_table}">Doctors</a>
                     <a class="nav-item nav-link" th:href="@{/patient/appointments}">Appointments</a>
                     <a class="nav-item nav-link" th:href="@{/patient/my_vaccinations}">Vaccinations</a>
-                    <a class="nav-item nav-link" th:href="@{/patient/news}">News</a>
                     <form class="d-flex" id="doctorSearch" method="POST" th:action="@{/doctors/search}">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
                                id="doctorNamed">
@@ -62,9 +60,8 @@
             <div sec:authorize="hasRole('ROLE_DOCTOR')">
                 <nav class="navbar navbar-dark bg-dark" style="padding-right: 15px">
                     <a class="nav-item nav-link" th:href="@{/doctor/dashboard}">Dashboard</a>
-                    <a class="nav-item nav-link" th:href="@{/doctor/my_patients}">Patients</a>
+                    <a class="nav-item nav-link" th:href="@{/doctor/my_patients_table}">Patients</a>
                     <a class="nav-item nav-link" th:href="@{/doctor/slots}">Slots</a>
-                    <a class="nav-item nav-link" th:href="@{/doctor/news}">News</a>
                     <form class="d-flex" id="patientSearch" method="POST" th:action="@{/patients/search}">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
                                id="patientNamed">
