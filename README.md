@@ -20,11 +20,12 @@ Appointment management system using Hospital as an example. Web application incl
 *  2 Modules: Main, Supplier
 
 ### Get Started:
-1. Run Vaccination Supplier (data from supplier.sql)
-2. Run Clinic Application (data from doc-all-data.sql)
-3. Check init.mode = never and init = false in application.properties
-4. Go to http://localhost:8080/open/dashboard/
-5. Login/Register as doctor/patient or use login data.
+1. Run ElasticSearch (bin/elasticsearch from https://www.elastic.co/downloads/elasticsearch)
+2. Run Vaccination Supplier (data from supplier.sql)
+3. Run Clinic Application (data from doc-all-data.sql)
+4. Check init.mode = never and init = false in application.properties
+5. Go to http://localhost:8080/open/dashboard/
+6. Login/Register as doctor/patient or use login data.
 
 ### Login Data:
 1. Admin
