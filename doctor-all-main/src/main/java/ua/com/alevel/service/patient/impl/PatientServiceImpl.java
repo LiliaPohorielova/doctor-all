@@ -15,10 +15,7 @@ import ua.com.alevel.persistence.repository.patient.PatientRepository;
 import ua.com.alevel.service.patient.PatientService;
 import ua.com.alevel.util.WebUtil;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -88,7 +85,16 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public List<Doctor> search(Map<String, Object> queryMap) {
+    public List<Patient> searchPatient(Map<String, Object> queryMap) {
+        if (queryMap.get(WebUtil.PATIENT_SEARCH_PARAM) != null) {
+            String patientName = (String) queryMap.get(WebUtil.PATIENT_SEARCH_PARAM);
+            return patientRepository.findByLastnameContaining(patientName);
+        }
+        return patientRepository.findAll();
+    }
+
+    @Override
+    public List<Doctor> searchDoctor(Map<String, Object> queryMap) {
         if (queryMap.get(WebUtil.DOCTOR_SEARCH_PARAM) != null) {
             String doctorName = (String) queryMap.get(WebUtil.DOCTOR_SEARCH_PARAM);
             return doctorRepository.findByLastnameContaining(doctorName);

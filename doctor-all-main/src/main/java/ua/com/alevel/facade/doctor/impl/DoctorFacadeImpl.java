@@ -257,8 +257,6 @@ public class DoctorFacadeImpl implements DoctorFacade {
         return doc;
     }
 
-
-
     @Override
     public List<DoctorResponseDto> search(WebRequest webRequest) {
         Map<String, Object> queryMap = new HashMap<>();
@@ -267,8 +265,7 @@ public class DoctorFacadeImpl implements DoctorFacade {
             String doctorName = params[0];
             queryMap.put(WebUtil.DOCTOR_SEARCH_PARAM, doctorName);
         }
-        List<Doctor> doctors = patientService.search(queryMap);
-        List<DoctorResponseDto> doctorPLPDtos = doctors.stream().map(DoctorResponseDto::new).toList();
-        return doctorPLPDtos;
+        List<Doctor> doctors = patientService.searchDoctor(queryMap);
+        return doctors.stream().map(DoctorResponseDto::new).toList();
     }
 }

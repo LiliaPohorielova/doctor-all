@@ -10,6 +10,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ua.com.alevel.elastic.index.DoctorIndex;
+import ua.com.alevel.elastic.index.PatientIndex;
 import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.repository.doctor.DoctorRepository;
 import ua.com.alevel.persistence.repository.user.AdminUserRepository;
@@ -54,6 +55,7 @@ public class ClinicApplication {
     public void deleteIndex()
     {
         elasticsearchOperations.indexOps(DoctorIndex.class).delete();
+        elasticsearchOperations.indexOps(PatientIndex.class).delete();
     }
 
     @EventListener(ApplicationReadyEvent.class)

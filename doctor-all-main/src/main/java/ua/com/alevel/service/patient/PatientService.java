@@ -26,5 +26,7 @@ public interface PatientService extends BaseCrudService<Patient> {
 
     Set<Vaccination> getVaccinations(Long id);
 
-    List<Doctor> search(Map<String, Object> queryMap);
+    List<Doctor> searchDoctor(Map<String, Object> queryMap);
+
+    List<Patient> searchPatient(Map<String, Object> queryMap);
 }

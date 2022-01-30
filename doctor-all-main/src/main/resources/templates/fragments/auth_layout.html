@@ -65,9 +65,11 @@
                     <a class="nav-item nav-link" th:href="@{/doctor/my_patients}">Patients</a>
                     <a class="nav-item nav-link" th:href="@{/doctor/slots}">Slots</a>
                     <a class="nav-item nav-link" th:href="@{/doctor/news}">News</a>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    <form class="d-flex" id="patientSearch" method="POST" th:action="@{/patients/search}">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                               id="patientNamed">
+                        <button class="btn btn-outline-success" type="submit" id="btnPatientSearch">Search
+                        </button>
                     </form>
                     <a class="btn btn-outline-danger a5" onclick="document.forms['logoutForm'].submit()"
                        style="cursor: pointer !important;">Logout</a>

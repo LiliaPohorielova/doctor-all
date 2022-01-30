@@ -162,4 +162,17 @@ public class PatientFacadeImpl implements PatientFacade {
         }
         return set;
     }
+
+    @Override
+    public List<PatientResponseDto> search(WebRequest webRequest) {
+        Map<String, Object> queryMap = new HashMap<>();
+        if (webRequest.getParameterMap().get(WebUtil.PATIENT_SEARCH_PARAM) != null) {
+            String[] params = webRequest.getParameterMap().get(WebUtil.PATIENT_SEARCH_PARAM);
+            String patientName = params[0];
+            String mainPatientName = patientName.split(",", 2)[0];
+            queryMap.put(WebUtil.PATIENT_SEARCH_PARAM, mainPatientName);
+        }
+        List<Patient> patients = patientService.searchPatient(queryMap);
+        return patients.stream().map(PatientResponseDto::new).toList();
+    }
 }
