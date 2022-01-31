@@ -4,6 +4,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import ua.com.alevel.logs.LogLevel;
+import ua.com.alevel.logs.LogService;
 import ua.com.alevel.persistence.crud.CrudRepositoryHelper;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
@@ -25,15 +27,17 @@ import java.util.Optional;
 @Service
 public class SlotServiceImpl implements SlotService {
 
+    private final LogService logService;
     private final SlotRepository slotRepository;
     private final CrudRepositoryHelper<Slot, SlotRepository> slotRepositoryHelper;
     private final PatientAppointmentRepository patientAppointmentRepository;
     private final PatientRepository patientRepository;
 
-    public SlotServiceImpl(SlotRepository slotRepository,
+    public SlotServiceImpl(LogService logService, SlotRepository slotRepository,
                            CrudRepositoryHelper<Slot, SlotRepository> slotRepositoryHelper,
                            PatientAppointmentRepository patientAppointmentRepository,
                            PatientRepository patientRepository) {
+        this.logService = logService;
         this.slotRepository = slotRepository;
         this.slotRepositoryHelper = slotRepositoryHelper;
         this.patientAppointmentRepository = patientAppointmentRepository;
@@ -92,12 +96,14 @@ public class SlotServiceImpl implements SlotService {
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public void create(Slot entity) {
         slotRepositoryHelper.create(slotRepository, entity);
+        logService.log(LogLevel.INFO, "slot " + entity.getId() + " was successfully created");
     }
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public void update(Slot entity) {
         slotRepositoryHelper.update(slotRepository, entity);
+        logService.log(LogLevel.INFO, "slot " + entity.getId() + " was successfully updated");
     }
 
     @Override
@@ -111,7 +117,7 @@ public class SlotServiceImpl implements SlotService {
             slotRepositoryHelper.delete(slotRepository, id);
         }
         else slot.setStatus(SlotStatus.CANCELLED);
-
+        logService.log(LogLevel.WARN, "slot " + id + " was canceled");
     }
 
     @Override

@@ -7,6 +7,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import ua.com.alevel.logs.LogLevel;
+import ua.com.alevel.logs.LogService;
 import ua.com.alevel.persistence.crud.CrudRepositoryHelper;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
@@ -24,11 +26,13 @@ import java.util.*;
 @Service
 public class PatientServiceImpl implements PatientService {
 
+    private final LogService logService;
     private final DoctorRepository doctorRepository;
     private final PatientRepository patientRepository;
     private final CrudRepositoryHelper<Patient, PatientRepository> patientRepositoryHelper;
 
-    public PatientServiceImpl(DoctorRepository doctorRepository, PatientRepository patientRepository, CrudRepositoryHelper<Patient, PatientRepository> patientRepositoryHelper) {
+    public PatientServiceImpl(LogService logService, DoctorRepository doctorRepository, PatientRepository patientRepository, CrudRepositoryHelper<Patient, PatientRepository> patientRepositoryHelper) {
+        this.logService = logService;
         this.doctorRepository = doctorRepository;
         this.patientRepository = patientRepository;
         this.patientRepositoryHelper = patientRepositoryHelper;
@@ -42,18 +46,21 @@ public class PatientServiceImpl implements PatientService {
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public void create(Patient entity) {
         patientRepositoryHelper.create(patientRepository, entity);
+        logService.log(LogLevel.INFO, entity.getFirstname() + " was successfully created");
     }
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public void update(Patient entity) {
         patientRepositoryHelper.update(patientRepository, entity);
+        logService.log(LogLevel.INFO, entity.getFirstname() + " was successfully updated");
     }
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public void delete(Long id) {
         patientRepositoryHelper.delete(patientRepository, id);
+        logService.log(LogLevel.WARN, "patient " + id + " was deleted");
     }
 
     @Override
