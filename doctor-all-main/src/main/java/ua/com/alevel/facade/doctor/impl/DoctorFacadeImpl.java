@@ -263,7 +263,8 @@ public class DoctorFacadeImpl implements DoctorFacade {
         if (webRequest.getParameterMap().get(WebUtil.DOCTOR_SEARCH_PARAM) != null) {
             String[] params = webRequest.getParameterMap().get(WebUtil.DOCTOR_SEARCH_PARAM);
             String doctorName = params[0];
-            queryMap.put(WebUtil.DOCTOR_SEARCH_PARAM, doctorName);
+            String mainDoctorName = doctorName.split(",", 2)[0];
+            queryMap.put(WebUtil.DOCTOR_SEARCH_PARAM, mainDoctorName);
         }
         List<Doctor> doctors = patientService.searchDoctor(queryMap);
         return doctors.stream().map(DoctorResponseDto::new).toList();
