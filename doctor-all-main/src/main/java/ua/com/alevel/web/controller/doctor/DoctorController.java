@@ -17,7 +17,9 @@ import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.user.DoctorUser;
 import ua.com.alevel.util.SecurityUtil;
 import ua.com.alevel.web.controller.AbstractController;
+import ua.com.alevel.web.dto.request.doctor.DoctorRequestDto;
 import ua.com.alevel.web.dto.response.PageData;
+import ua.com.alevel.web.dto.response.doctor.DoctorResponseDto;
 import ua.com.alevel.web.dto.response.patient.PatientResponseDto;
 
 import java.util.ArrayList;
@@ -111,9 +113,7 @@ public class DoctorController extends AbstractController {
         DoctorUser doctorUserData = doctorUserFacade.findByEmail(user);
         Doctor doctor = doctorUserData.getDoctor();
         doctorFacade.addPatient(doctor.getId(), patientId);
-        Set<PatientResponseDto> patients = doctorFacade.getPatients(doctor.getId());
-        model.addAttribute("patients", patients);
-        return "pages/doctor/my_patients_table";
+        return "redirect:/doctor/my_patients_table";
     }
 
     @GetMapping("/delete_patient/{patientId}")
@@ -122,15 +122,33 @@ public class DoctorController extends AbstractController {
         DoctorUser doctorUserData = doctorUserFacade.findByEmail(user);
         Doctor doctor = doctorUserData.getDoctor();
         doctorFacade.removePatient(doctor.getId(), patientId);
-        Set<PatientResponseDto> patients = doctorFacade.getPatients(doctor.getId());
-        model.addAttribute("patients", patients);
-        return "pages/doctor/my_patients_table";
+        return "redirect:/doctor/my_patients_table";
     }
 
     @GetMapping("/about_patient/{patientId}")
     public String detailsByDoctorId(@PathVariable Long patientId, Model model) {
         model.addAttribute("patient", patientFacade.findById(patientId));
         return "pages/doctor/about_patient";
+    }
+
+    @GetMapping("/edit_profile")
+    public String redirectToUpdateDoctorPage(Model model) {
+        String user = SecurityUtil.getUsername();
+        DoctorUser doctorUserData = doctorUserFacade.findByEmail(user);
+        Doctor doctor = doctorUserData.getDoctor();
+        DoctorResponseDto doctorResponseDto = doctorFacade.findById(doctor.getId());
+        model.addAttribute("doctor",doctor);
+        model.addAttribute("doctorForm", doctorResponseDto);
+        return "pages/doctor/edit_profile";
+    }
+
+    @PostMapping("/edit_profile")
+    public String updateDoctor(@ModelAttribute("doctorForm") DoctorRequestDto doctorRequestDto) {
+        String user = SecurityUtil.getUsername();
+        DoctorUser doctorUserData = doctorUserFacade.findByEmail(user);
+        Doctor doctor = doctorUserData.getDoctor();
+        doctorFacade.update(doctorRequestDto, doctor.getId());
+        return "redirect:/doctor/dashboard";
     }
 
     private List<HeaderData> getHeaderDataList(HeaderName[] columnTitles, PageData<PatientResponseDto> response) {

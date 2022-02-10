@@ -115,9 +115,7 @@ public class PatientController extends AbstractController {
         PatientUser patientUserData = patientUserFacade.findByEmail(user);
         Patient patient = patientUserData.getPatient();
         doctorFacade.addPatient(doctorId, patient.getId());
-        Set<DoctorResponseDto> doctors = patientFacade.getDoctors(patient.getId());
-        model.addAttribute("doctors", doctors);
-        return "pages/patient/my_doctors";
+        return "redirect:/patient/my_doctors_table";
     }
 
     @GetMapping("/my_vaccinations")
@@ -154,9 +152,7 @@ public class PatientController extends AbstractController {
         PatientUser patientUserData = patientUserFacade.findByEmail(user);
         Patient patient = patientUserData.getPatient();
         doctorFacade.removePatient(doctorId, patient.getId());
-        Set<DoctorResponseDto> doctors = patientFacade.getDoctors(patient.getId());
-        model.addAttribute("doctors", doctors);
-        return "pages/patient/my_doctors_table";
+        return "redirect:/patient/my_doctors_table";
     }
 
     @GetMapping("/about_doctor/{doctorId}")
