@@ -34,9 +34,12 @@
                 <a th:href="@{'/admin/patients/update/' + ${patient.getId()}}" type="button"
                    class="btn btn-success">edit</a>
             </td>
-            <td>
+<!--            <td>
                 <a th:href="@{'/admin/patients/delete/' + ${patient.getId()}}" type="button" class="btn btn-danger"
                    onclick="return confirm('Are you sure you want to Delete this Patient?');">delete</a>
+            </td>-->
+            <td>
+                <a href="#" type="button" class="btn btn-danger">delete</a>
             </td>
         </tr>
     </div>

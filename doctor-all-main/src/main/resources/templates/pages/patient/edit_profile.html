@@ -14,46 +14,49 @@
         <div class="row">
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                    <img class="rounded-circle mt-5" width="150px" src="https://i.ibb.co/Xb00T10/Orblopym.png">
+                    <img class="rounded-circle mt-5" width="150px" src="https://i.ibb.co/B4q638y/pat-icon.png">
+                         <!--src="https://i.ibb.co/Xb00T10/Orblopym.png">-->
                     <span class="font-weight-bold" th:text="${patient.getFirstname()}"></span>
                     <span class="text-black-50" th:text="${patient.getPatientUser().getEmail()}"></span><span> </span>
                 </div>
             </div>
             <div class="col-md-5 border-right">
-                <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <h4 class="text-right">Account Information</h4>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-12"><label class="labels">Firstname</label><input type="text"
-                                                                                             class="form-control"
-                                                                                             th:value="${patient.getFirstname()}">
+                <form method="POST" th:object="${patientForm}" th:action="@{/patient/edit_profile}">
+                    <div class="p-3 py-5">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h4 class="text-right">Account Information</h4>
                         </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-12"><label class="labels">Lastname</label><input type="text"
-                                                                                            class="form-control"
-                                                                                            th:value="${patient.getLastname()}">
+                        <div class="row mt-2">
+                            <div class="col-md-12"><label class="labels">Firstname</label><input type="text"
+                                                                                                 class="form-control"
+                                                                                                 th:field="*{firstname}">
+                            </div>
                         </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-12"><label class="labels">Gender</label><input type="text"
-                                                                                          class="form-control"
-                                                                                          th:value="${T(ua.com.alevel.persistence.type.Gender).valueOf(patient.getGender())}">
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-12"><label class="labels">Phone Number</label><input type="text"
+                        <div class="row mt-2">
+                            <div class="col-md-12"><label class="labels">Lastname</label><input type="text"
                                                                                                 class="form-control"
-                                                                                                th:value="${patient.getPhoneNumber()}">
+                                                                                                th:field="*{lastname}">
+                            </div>
                         </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-12"><label class="labels">Date Of Birth</label>
-                            <div class="input-group date" id="datepicker1">
-                                <input type="text" class="form-control"
-                                       th:value="${patient.getDateOfBirthChangeFormat()}">
-                                <span class="input-group-append">
+                        <div class="row mt-2">
+                            <div class="col-md-12">
+                                <label class="labels">Gender</label>
+                                <input type="text" class="form-control" th:value="${T(ua.com.alevel.persistence.type.Gender).valueOf(patient.getGender())}"
+                                       th:field="*{gender}" readonly>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12"><label class="labels">Phone Number</label><input type="text"
+                                                                                                    class="form-control"
+                                                                                                    th:field="*{phoneNumber}">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12"><label class="labels">Date Of Birth</label>
+                                <div class="input-group date" id="datepicker1">
+                                    <input type="text" class="form-control"
+                                           th:field="*{dateOfBirth}">
+                                    <span class="input-group-append">
                                     <span class="input-group-text bg-white d-block">
                                         <i class="fa fa-calendar"
                                            onclick="$(function() {
@@ -64,55 +67,14 @@
                                         </i>
                                     </span>
                                 </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-5 text-center">
-                        <button class="btn btn-primary profile-button" type="button">Edit Profile</button>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                            Create new appointment
-                        </button>
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Appointment</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="col-md-12 dateOfBirth"><label class="labels">Date Of
-                                            appointment</label>
-                                            <div class="input-group date" id="datepicker">
-                                                <input type="text" class="form-control">
-                                                <span class="input-group-append">
-                                                         <span class="input-group-text bg-white d-block">
-                                                             <i class="fa fa-calendar"
-                                                                onclick="$(function() {
-                                                                console.log(window.location.toString());
-                                                                $('#datepicker').datepicker();
-                                                                console.log(window.location.toString());
-                                                                });">
-                                                            </i>
-                                                        </span>
-                                                    </span>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                Close
-                                            </button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
-
+                        <div class="mt-5 text-center">
+                            <button class="btn btn-success profile-button" type="submit">Save</button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

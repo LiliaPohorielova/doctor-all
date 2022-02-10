@@ -12,10 +12,14 @@ import ua.com.alevel.facade.doctor.DoctorFacade;
 import ua.com.alevel.facade.patient.PatientFacade;
 import ua.com.alevel.facade.patient.PatientRegistrationFacade;
 import ua.com.alevel.facade.vaccination.VaccinationFacade;
+import ua.com.alevel.persistence.entity.doctor.Doctor;
 import ua.com.alevel.persistence.entity.patient.Patient;
+import ua.com.alevel.persistence.entity.user.DoctorUser;
 import ua.com.alevel.persistence.entity.user.PatientUser;
 import ua.com.alevel.util.SecurityUtil;
 import ua.com.alevel.web.controller.AbstractController;
+import ua.com.alevel.web.dto.request.doctor.DoctorRequestDto;
+import ua.com.alevel.web.dto.request.patient.PatientRequestDto;
 import ua.com.alevel.web.dto.response.PageData;
 import ua.com.alevel.web.dto.response.doctor.DoctorResponseDto;
 import ua.com.alevel.web.dto.response.patient.PatientResponseDto;
@@ -159,6 +163,26 @@ public class PatientController extends AbstractController {
     public String detailsByDoctorId(@PathVariable Long doctorId, Model model) {
         model.addAttribute("doctor", doctorFacade.findById(doctorId));
         return "pages/patient/about_doctor";
+    }
+
+    @GetMapping("/edit_profile")
+    public String redirectToUpdateDoctorPage(Model model) {
+        String user = SecurityUtil.getUsername();
+        PatientUser patientUserData = patientUserFacade.findByEmail(user);
+        Patient patient = patientUserData.getPatient();
+        PatientResponseDto patientResponseDto = patientFacade.findById(patient.getId());
+        model.addAttribute("patient",patient);
+        model.addAttribute("patientForm", patientResponseDto);
+        return "pages/patient/edit_profile";
+    }
+
+    @PostMapping("/edit_profile")
+    public String updateDoctor(@ModelAttribute("doctorForm") PatientRequestDto patientRequestDto) {
+        String user = SecurityUtil.getUsername();
+        PatientUser patientUserData = patientUserFacade.findByEmail(user);
+        Patient patient = patientUserData.getPatient();
+        patientFacade.update(patientRequestDto, patient.getId());
+        return "redirect:/patient/dashboard";
     }
 
     private List<HeaderData> getHeaderDataList(HeaderName[] columnTitles, PageData<DoctorResponseDto> response) {
