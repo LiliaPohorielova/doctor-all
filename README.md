@@ -28,14 +28,21 @@ Appointment management system using Hospital as an example. Web application incl
 6. Login/Register as doctor/patient or use login data.
 
 ### Login Data:
-1. Admin
-- admin@mail.com
-- rootroot
+- Admin (email - [admin@mail.com](), password - **rootroot**)
+- Patient (email - [patient@mail.com](), password - **rootroot**)
+- Doctor (email - [doctor@mail.com](), password - **rootroot**)
 
-2. Patient
-- patient@mail.com
-- rootroot
+---
+# Screenshots:
+![](doctor-all-main/src/main/resources/images/dashboard.png)
+![](doctor-all-main/src/main/resources/images/doctors.png)
+![](doctor-all-main/src/main/resources/images/departments.png)
+![](doctor-all-main/src/main/resources/images/vacination.png)
+![](doctor-all-main/src/main/resources/images/contact.png)
+![](doctor-all-main/src/main/resources/images/footer.png)
 
-3. Doctor
-- doctor@mail.com
-- rootroot
+# Authorization:
+![](doctor-all-main/src/main/resources/images/login.png)
+![](doctor-all-main/src/main/resources/images/doc-profile.png)
+![](doctor-all-main/src/main/resources/images/appoint.png)
+![](doctor-all-main/src/main/resources/images/doc-table.png)
