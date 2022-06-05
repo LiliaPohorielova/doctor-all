@@ -27,22 +27,5 @@
             <version>20041127.091804</version>
             <scope>compile</scope>
         </dependency>
-<!--        &lt;!&ndash; h2database &ndash;&gt;
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>test</scope>
-        </dependency>-->
-<!--        &lt;!&ndash; test &ndash;&gt;
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
-        </dependency>-->
     </dependencies>
 </project>
